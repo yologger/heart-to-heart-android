@@ -6,6 +6,8 @@ object Dependencies {
     const val LOGGER = "com.orhanobut:logger:${Versions.LOGGER}"
     const val HILT_ANDROID = "com.google.dagger:hilt-android:${Versions.HILT}"
     const val HILT_ANDROID_COMPILER = "com.google.dagger:hilt-android-compiler:${Versions.HILT}"
+    const val RXJAVA = "io.reactivex.rxjava3:rxjava:${Versions.RXJAVA}"
+    const val RXANDROID = "io.reactivex.rxjava3:rxandroid:${Versions.RXANDROID}"
 }
 
 object TestDependencies {

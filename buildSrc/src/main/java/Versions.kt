@@ -7,6 +7,8 @@ object Versions {
     const val CONSTRAINT_LAYOUT = "2.1.2"
     const val LOGGER = "2.2.0"
     const val HILT = "2.38.1"
+    const val RXJAVA = "3.1.2"
+    const val RXANDROID = "3.0.0"
 }
 
 object TestVersions {

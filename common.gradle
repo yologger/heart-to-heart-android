@@ -5,6 +5,8 @@ dependencies {
     implementation Dependencies.CONSTRAINT_LAYOUT
     implementation Dependencies.LOGGER
     implementation Dependencies.HILT_ANDROID
+    implementation Dependencies.RXJAVA
+    implementation Dependencies.RXANDROID
     kapt Dependencies.HILT_ANDROID_COMPILER
     testImplementation TestDependencies.JUNIT
     androidTestImplementation AndroidTestDependencies.JUNIT
