@@ -1,0 +1,13 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+apply from: "../common.gradle"
+apply from: "../common_android.gradle"
+
+dependencies {
+    implementation project(Modules.presentation)
+}

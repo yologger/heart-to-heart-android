@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/white"/>
+    <item
+        android:width="75dp"
+        android:height="75dp"
+        android:drawable="@drawable/logo_background_white"
+        android:gravity="center"/>
+</layer-list>
