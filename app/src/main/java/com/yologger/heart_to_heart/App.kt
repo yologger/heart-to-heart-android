@@ -33,8 +33,7 @@ class App: Application() {
     }
 
     private fun initTheme() {
-        val currentTheme = ThemeManager.getCurrentTheme(context = applicationContext)
-        when (currentTheme) {
+        when (ThemeManager.getCurrentTheme(context = applicationContext)) {
             ThemeManager.ThemeMode.DARK -> { ThemeManager.applyTheme(applicationContext, ThemeManager.ThemeMode.DARK) }
             ThemeManager.ThemeMode.LIGHT -> { ThemeManager.applyTheme(applicationContext, ThemeManager.ThemeMode.LIGHT) }
             ThemeManager.ThemeMode.DEFAULT -> { ThemeManager.applyTheme(applicationContext, ThemeManager.ThemeMode.DEFAULT) }

@@ -44,8 +44,7 @@ object ThemeManager {
 
     fun getCurrentTheme(context: Context): ThemeMode {
         val sharedPreferences = context.getSharedPreferences(Constant.KEY_PREFERENCE, Context.MODE_PRIVATE)
-        val currentThemeValue = sharedPreferences.getInt(Constant.KEY_THEME, ThemeMode.DEFAULT.value)
-        val currentTheme = when(currentThemeValue) {
+        val currentTheme = when(sharedPreferences.getInt(Constant.KEY_THEME, ThemeMode.DEFAULT.value)) {
             ThemeMode.LIGHT.value -> { ThemeMode.LIGHT }
             ThemeMode.DARK.value -> { ThemeMode.DARK }
             else -> { ThemeMode.DARK }

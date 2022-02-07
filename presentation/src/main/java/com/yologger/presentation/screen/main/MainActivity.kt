@@ -1,22 +1,29 @@
 package com.yologger.presentation.screen.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.google.android.material.navigation.NavigationBarView
+import com.orhanobut.logger.Logger
 import com.yologger.presentation.R
 import com.yologger.presentation.databinding.ActivityMainBinding
 import com.yologger.presentation.screen.main.follow.FollowFragment
 import com.yologger.presentation.screen.main.home.HomeFragment
 import com.yologger.presentation.screen.main.settings.SettingsFragment
-import dagger.hilt.android.AndroidEntryPoint
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener, NavigationBarView.OnItemReselectedListener  {
 
     private lateinit var binding: ActivityMainBinding
+    
+    private val homeFragment: HomeFragment by lazy { HomeFragment.newInstance() }
+    private val followFragment: FollowFragment by lazy { FollowFragment.newInstance() }
+    private val settingsFragment: SettingsFragment by lazy { SettingsFragment.newInstance() }
+
+    private var activeFragment: Fragment = homeFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         initBinding()
         initBottomNavigationView()
     }
@@ -27,23 +34,38 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initBottomNavigationView() {
-        supportFragmentManager.beginTransaction().add(R.id.activity_main_frameLayout, HomeFragment.newInstance()).commit()
-        binding.activityMainBottomNavigationView.setOnItemSelectedListener {
-            when(it.itemId) {
-                R.id.activity_main_menu_bottom_navigation_view_item_home -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.activity_main_frameLayout, HomeFragment.newInstance()).commit()
-                    return@setOnItemSelectedListener true
-                }
-                R.id.activity_main_menu_bottom_navigation_view_item_follow -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.activity_main_frameLayout, FollowFragment.newInstance()).commit()
-                    return@setOnItemSelectedListener true
-                }
-                R.id.activity_main_menu_bottom_navigation_view_item_settings -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.activity_main_frameLayout, SettingsFragment.newInstance()).commit()
-                    return@setOnItemSelectedListener true
-                }
+        binding.activityMainBottomNavigationView.setOnItemSelectedListener(this)
+        binding.activityMainBottomNavigationView.setOnItemReselectedListener(this)
+
+        supportFragmentManager.beginTransaction().apply {
+            add(R.id.activity_main_frameLayout, homeFragment).show(homeFragment)
+            add(R.id.activity_main_frameLayout, followFragment).hide(followFragment)
+            add(R.id.activity_main_frameLayout, settingsFragment).hide(settingsFragment)
+        }.commit()
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.activity_main_menu_bottom_navigation_view_item_home -> {
+                supportFragmentManager.beginTransaction().hide(activeFragment).show(homeFragment).commit()
+                activeFragment = homeFragment
+                return true
             }
-            return@setOnItemSelectedListener false
+            R.id.activity_main_menu_bottom_navigation_view_item_follow -> {
+                supportFragmentManager.beginTransaction().hide(activeFragment).show(followFragment).commit()
+                activeFragment = followFragment
+                return true
+            }
+            R.id.activity_main_menu_bottom_navigation_view_item_settings -> {
+                supportFragmentManager.beginTransaction().hide(activeFragment).show(settingsFragment).commit()
+                activeFragment = settingsFragment
+                return true
+            }
         }
+        return false
+    }
+
+    override fun onNavigationItemReselected(item: MenuItem) { 
+        
     }
 }
