@@ -10,6 +10,7 @@ import com.yologger.presentation.R
 import com.yologger.presentation.databinding.ActivityMainBinding
 import com.yologger.presentation.screen.main.follow.FollowFragment
 import com.yologger.presentation.screen.main.home.HomeFragment
+import com.yologger.presentation.screen.main.more.MoreFragment
 import com.yologger.presentation.screen.main.settings.SettingsFragment
 
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener, NavigationBarView.OnItemReselectedListener  {
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     
     private val homeFragment: HomeFragment by lazy { HomeFragment.newInstance() }
     private val followFragment: FollowFragment by lazy { FollowFragment.newInstance() }
-    private val settingsFragment: SettingsFragment by lazy { SettingsFragment.newInstance() }
+    private val moreFragment: MoreFragment by lazy { MoreFragment.newInstance() }
 
     private var activeFragment: Fragment = homeFragment
 
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         supportFragmentManager.beginTransaction().apply {
             add(R.id.activity_main_frameLayout, homeFragment).show(homeFragment)
             add(R.id.activity_main_frameLayout, followFragment).hide(followFragment)
-            add(R.id.activity_main_frameLayout, settingsFragment).hide(settingsFragment)
+            add(R.id.activity_main_frameLayout, moreFragment).hide(moreFragment)
         }.commit()
     }
 
@@ -57,8 +58,8 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 return true
             }
             R.id.activity_main_menu_bottom_navigation_view_item_settings -> {
-                supportFragmentManager.beginTransaction().hide(activeFragment).show(settingsFragment).commit()
-                activeFragment = settingsFragment
+                supportFragmentManager.beginTransaction().hide(activeFragment).show(moreFragment).commit()
+                activeFragment = moreFragment
                 return true
             }
         }
