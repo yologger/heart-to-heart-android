@@ -9,6 +9,9 @@ object Versions {
     const val HILT = "2.38.1"
     const val RXJAVA = "3.1.2"
     const val RXANDROID = "3.0.0"
+    const val ACTIVITY_KIX = "1.4.0"
+    const val FRAGMENT_KTX = "1.4.0"
+    const val NAVIGATION = "2.4.0"
 }
 
 object TestVersions {

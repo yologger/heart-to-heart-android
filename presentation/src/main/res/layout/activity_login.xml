@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
+        app:title="Log In"
         android:theme="?attr/actionBarTheme" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -20,7 +21,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="email"
+        android:hint="Email"
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -30,6 +31,30 @@
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutPassword"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        app:errorEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputEditTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/buttonForgotPassword"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:layout_gravity="right"
+        android:text="Forgot password?" />
+
     <Button
         android:id="@+id/buttonLogin"
         android:layout_width="match_parent"
@@ -37,4 +62,13 @@
         android:padding="@dimen/padding_md"
         android:text="LOG IN" />
 
+
+    <Button
+        android:id="@+id/buttonJoin"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Join us"
+        android:textAllCaps="false"/>
 </LinearLayout>

@@ -8,6 +8,10 @@ object Dependencies {
     const val HILT_ANDROID_COMPILER = "com.google.dagger:hilt-android-compiler:${Versions.HILT}"
     const val RXJAVA = "io.reactivex.rxjava3:rxjava:${Versions.RXJAVA}"
     const val RXANDROID = "io.reactivex.rxjava3:rxandroid:${Versions.RXANDROID}"
+    const val ACTIVITY_KTX = "androidx.activity:activity-ktx:${Versions.ACTIVITY_KIX}"
+    const val FRAGMENT_KTX =  "androidx.fragment:fragment-ktx:${Versions.FRAGMENT_KTX}"
+    const val NAVIGATION_FRAGMENT_KTX = "androidx.navigation:navigation-fragment:${Versions.NAVIGATION}"
+    const val NAVIGATION_UI = "androidx.navigation:navigation-ui:${Versions.NAVIGATION}"
 }
 
 object TestDependencies {

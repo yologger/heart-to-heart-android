@@ -4,10 +4,19 @@
 
     <application android:theme="@style/Theme.Heart_to_heart">
         <activity
-            android:name=".screen.auth.login.LoginActivity"
+            android:name=".screen.auth.verify_email.VerifyEmailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".screen.main.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".screen.auth.find_password.FindPasswordActivity"
             android:exported="false" />
         <activity
             android:name=".screen.auth.join.JoinActivity"
+            android:exported="false" />
+        <activity
+            android:name=".screen.auth.login.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".screen.splash.SplashActivity"
