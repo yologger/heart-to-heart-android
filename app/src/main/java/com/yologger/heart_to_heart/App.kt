@@ -5,6 +5,7 @@ import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.FormatStrategy
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
+import com.yologger.common.ThemeManager
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
@@ -12,6 +13,7 @@ class App: Application() {
     override fun onCreate() {
         super.onCreate()
         initLogger()
+        initTheme()
     }
 
     private fun initLogger() {
@@ -28,5 +30,14 @@ class App: Application() {
                 return BuildConfig.DEBUG
             }
         })
+    }
+
+    private fun initTheme() {
+        val currentTheme = ThemeManager.getCurrentTheme(context = applicationContext)
+        when (currentTheme) {
+            ThemeManager.ThemeMode.DARK -> { ThemeManager.applyTheme(applicationContext, ThemeManager.ThemeMode.DARK) }
+            ThemeManager.ThemeMode.LIGHT -> { ThemeManager.applyTheme(applicationContext, ThemeManager.ThemeMode.LIGHT) }
+            ThemeManager.ThemeMode.DEFAULT -> { ThemeManager.applyTheme(applicationContext, ThemeManager.ThemeMode.DEFAULT) }
+        }
     }
 }

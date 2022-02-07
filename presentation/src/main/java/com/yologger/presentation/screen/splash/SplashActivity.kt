@@ -8,7 +8,7 @@ import com.yologger.presentation.screen.main.MainActivity
 
 class SplashActivity : AppCompatActivity() {
 
-    val isLoggedIn = false
+    val isLoggedIn = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

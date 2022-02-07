@@ -9,3 +9,4 @@ dependencyResolutionManagement {
 rootProject.name = "heart_to_heart"
 include ':app'
 include ':presentation'
+include ':common'

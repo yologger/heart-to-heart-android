@@ -4,6 +4,9 @@
 
     <application android:theme="@style/Theme.Heart_to_heart">
         <activity
+            android:name=".screen.main.settings.theme.ThemeActivity"
+            android:exported="false" />
+        <activity
             android:name=".screen.auth.verify_email.VerifyEmailActivity"
             android:exported="false" />
         <activity
