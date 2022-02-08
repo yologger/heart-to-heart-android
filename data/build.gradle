@@ -1,0 +1,19 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+apply from: "../common.gradle"
+apply from: "../common_android.gradle"
+
+dependencies {
+    implementation project(Modules.common)
+    implementation project(Modules.domain)
+
+    implementation Dependencies.RETROFIT2
+    implementation Dependencies.RETROFIT_GSON_CONVERTER
+    implementation Dependencies.MOCK_WEB_SERVER
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+}

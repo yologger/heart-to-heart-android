@@ -9,6 +9,9 @@ dependencies {
     implementation Dependencies.RXANDROID
     kapt Dependencies.HILT_ANDROID_COMPILER
     testImplementation TestDependencies.JUNIT
-    androidTestImplementation AndroidTestDependencies.JUNIT
+    testImplementation TestDependencies.TRUTH
+    testImplementation TestDependencies.ANDROIDX_TEST_CORE
     androidTestImplementation AndroidTestDependencies.ESPRESSO_CORE
+    androidTestImplementation AndroidTestDependencies.JUNIT
+    androidTestImplementation AndroidTestDependencies.ANDROIDX_TEST_EXTENSION_TRUTH
 }

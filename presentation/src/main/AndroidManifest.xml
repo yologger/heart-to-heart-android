@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yologger.presentation">
 
-    <application android:theme="@style/Theme.Heart_to_heart">
+    <application android:theme="@style/AppTheme">
         <activity
             android:name=".screen.main.settings.theme.ThemeActivity"
             android:exported="false" />

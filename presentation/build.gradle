@@ -22,5 +22,4 @@ dependencies {
     implementation Dependencies.CONSTRAINT_LAYOUT
     implementation Dependencies.ACTIVITY_KTX
     implementation Dependencies.FRAGMENT_KTX
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 }
