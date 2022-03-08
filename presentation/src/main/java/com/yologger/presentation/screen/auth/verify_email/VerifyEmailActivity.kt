@@ -47,29 +47,37 @@ class VerifyEmailActivity : AppCompatActivity() {
     private fun observeViewModel() {
         viewModel.liveState.observe(this) {
             when (it) {
-                is VerifyEmailViewModel.State.SUCCESS -> {
+                is VerifyEmailViewModel.State.EMAIL_VERIFICATION_CODE_SUCCESS -> {
                     val builder = AlertDialog.Builder(this@VerifyEmailActivity)
                     val alertDialog = builder
-                        .setTitle("인증코드가 발송되었습니다.")
-                        .setMessage("메일로 발송된 인증 번호를 입력해주세요")
+                        .setTitle("이메일로 인증코드가 발송되었습니다.")
+                        .setMessage("인증번호의 유효 시간은 5분입니다.")
                         .setPositiveButton("OK") { _, _ -> }
                         .create()
-
                     alertDialog.show()
                 }
-                is VerifyEmailViewModel.State.FAILURE -> handleFailure(it.error)
+                is VerifyEmailViewModel.State.EMAIL_VERIFICATION_CODE_FAILURE -> {
+                    when(it.error) {
+                        VerifyEmailViewModel.EMAIL_VERIFICATION_CODE_ERROR.UNKNOWN_SERVER_ERROR -> showToast("Unknown server error")
+                        VerifyEmailViewModel.EMAIL_VERIFICATION_CODE_ERROR.NETWORK_ERROR -> showToast("Network error")
+                        VerifyEmailViewModel.EMAIL_VERIFICATION_CODE_ERROR.MEMBER_ALREADY_EXIST -> showToast("User already exists")
+                        VerifyEmailViewModel.EMAIL_VERIFICATION_CODE_ERROR.INVALID_INPUT_VALUE -> showToast("Invalid inputs")
+                    }
+                }
+                is VerifyEmailViewModel.State.CONFIRM_VERIFICATION_CODE_SUCCESS -> {
+                    showToast("인증 성공")
+                }
+
+                is VerifyEmailViewModel.State.CONFIRM_VERIFICATION_CODE_FAILURE -> {
+                    when(it.error) {
+                        VerifyEmailViewModel.CONFIRM_VERIFICATION_CODE_ERROR.UNKNOWN_SERVER_ERROR -> showToast("Unknown server error")
+                        VerifyEmailViewModel.CONFIRM_VERIFICATION_CODE_ERROR.NETWORK_ERROR -> showToast("Network error")
+                        VerifyEmailViewModel.CONFIRM_VERIFICATION_CODE_ERROR.INVALID_EMAIL -> showToast("Invalid email")
+                        VerifyEmailViewModel.CONFIRM_VERIFICATION_CODE_ERROR.EXPIRED_VERIFICATION_CODE -> showToast("Expired verification code")
+                        VerifyEmailViewModel.CONFIRM_VERIFICATION_CODE_ERROR.INVALID_VERIFICATION_CODE -> showToast("Invalid verification code")
+                    }
+                }
             }
         }
     }
-
-    private fun handleFailure(error: VerifyEmailViewModel.Error) {
-        when (error) {
-            VerifyEmailViewModel.Error.UNKNOWN_SERVER_ERROR -> showToast("Unknown server error")
-            VerifyEmailViewModel.Error.NETWORK_ERROR -> showToast("Network error")
-            VerifyEmailViewModel.Error.MEMBER_ALREADY_EXIST -> showToast("User already exists")
-            VerifyEmailViewModel.Error.INVALID_INPUT_VALUE -> showToast("Invalid inputs")
-        }
-    }
-
-
 }

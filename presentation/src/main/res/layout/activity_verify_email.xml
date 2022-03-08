@@ -106,6 +106,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="@{viewModel.liveHasVerificationAlreadyRequested ? View.VISIBLE : View.GONE}"
+                android:onClick="@{() -> viewModel.confirmVerificationCode()}"
                 android:text="다음" />
         </LinearLayout>
     </LinearLayout>

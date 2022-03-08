@@ -4,5 +4,5 @@ public enum EmailVerificationCodeError {
     NETWORK_ERROR,
     INVALID_INPUT_VALUE,
     MEMBER_ALREADY_EXISTS,
-    UNKNOWN_SERVER_ERROR
+    UNKNOWN_SERVER_ERROR,
 }

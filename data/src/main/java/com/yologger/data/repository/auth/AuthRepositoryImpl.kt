@@ -4,6 +4,8 @@ import com.google.gson.Gson
 import com.orhanobut.logger.Logger
 import com.yologger.data.datasource.api.auth.*
 import com.yologger.domain.repository.AuthRepository
+import com.yologger.domain.usecase.confirm_verification_code.ConfirmVerificationCodeError
+import com.yologger.domain.usecase.confirm_verification_code.ConfirmVerificationCodeResult
 import com.yologger.domain.usecase.email_verification_code.EmailVerificationCodeError
 import com.yologger.domain.usecase.email_verification_code.EmailVerificationCodeResult
 import retrofit2.Call
@@ -35,4 +37,26 @@ class AuthRepositoryImpl @Inject constructor(
             return EmailVerificationCodeResult.FAILURE(EmailVerificationCodeError.NETWORK_ERROR)
         }
     }
+
+    override fun confirmVerificationCode(email: String, code: String): ConfirmVerificationCodeResult {
+        val request = ConfirmVerificationCodeRequest(email, code)
+        val response = authService.confirmVerificationCode(request).execute()
+        try {
+            return if (response.isSuccessful) {
+                return ConfirmVerificationCodeResult.SUCCESS
+            } else {
+                val failureResponse = gson.fromJson(response.errorBody()!!.string(), ConfirmVerificationCodeFailureResponse::class.java)
+                when (failureResponse.code) {
+                    ConfirmVerificationCodeFailureCode.INVALID_EMAIL -> ConfirmVerificationCodeResult.FAILURE(ConfirmVerificationCodeError.INVALID_EMAIL)
+                    ConfirmVerificationCodeFailureCode.INVALID_VERIFICATION_CODE -> ConfirmVerificationCodeResult.FAILURE(ConfirmVerificationCodeError.INVALID_VERIFICATION_CODE)
+                    ConfirmVerificationCodeFailureCode.EXPIRED_VERIFICATION_CODE -> ConfirmVerificationCodeResult.FAILURE(ConfirmVerificationCodeError.EXPIRED_VERIFICATION_CODE)
+                    else -> ConfirmVerificationCodeResult.FAILURE(ConfirmVerificationCodeError.UNKNOWN_SERVER_ERROR)
+                }
+            }
+        } catch (e: Exception) {
+            return ConfirmVerificationCodeResult.FAILURE(ConfirmVerificationCodeError.NETWORK_ERROR)
+        }
+    }
+
+
 }
