@@ -6,8 +6,19 @@ plugins {
 }
 
 apply from: "../common.gradle"
-apply from: "../common_android.gradle"
+
+android {
+    buildFeatures {
+        dataBinding true
+    }
+}
 
 dependencies {
+    implementation project(Modules.common)
     implementation project(Modules.presentation)
+    implementation project(Modules.data)
+
+    implementation Dependencies.RETROFIT2
+    implementation Dependencies.RETROFIT_GSON_CONVERTER
+    implementation Dependencies.RETROFIT_RXJAVA3_ADAPTER
 }

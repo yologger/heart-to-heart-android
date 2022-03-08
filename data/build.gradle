@@ -1,0 +1,19 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+apply from: "../common.gradle"
+
+dependencies {
+    implementation project(Modules.common)
+    api project(Modules.domain)
+
+    implementation Dependencies.RETROFIT2
+    implementation Dependencies.RETROFIT_GSON_CONVERTER
+    implementation Dependencies.RETROFIT_RXJAVA3_ADAPTER
+    testImplementation TestDependencies.MOCK_WEB_SERVER
+    testImplementation 'com.squareup.retrofit2:retrofit-mock:2.9.0'
+}

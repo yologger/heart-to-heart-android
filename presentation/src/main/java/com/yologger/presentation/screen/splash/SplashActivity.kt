@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.yologger.presentation.screen.auth.login.LoginActivity
+import com.yologger.presentation.screen.main.MainActivity
 
 class SplashActivity : AppCompatActivity() {
 
@@ -19,6 +20,8 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun navigateToMainScreen() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
 
     }
 
