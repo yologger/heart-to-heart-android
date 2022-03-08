@@ -1,25 +1,32 @@
 package com.yologger.presentation.screen.auth.verify_email
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import com.yologger.presentation.R
 import com.yologger.presentation.databinding.ActivityVerifyEmailBinding
-import com.yologger.presentation.screen.auth.join.JoinActivity
+import com.yologger.presentation.util.showToast
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class VerifyEmailActivity : AppCompatActivity() {
 
+    private val viewModel: VerifyEmailViewModel by viewModels()
     private lateinit var binding: ActivityVerifyEmailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initBinding()
         initUI()
+        observeViewModel()
     }
 
     private fun initBinding() {
-        binding = ActivityVerifyEmailBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_verify_email)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
     }
 
     private fun initUI() {
@@ -27,7 +34,7 @@ class VerifyEmailActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener { finish() }
         binding.toolbar.inflateMenu(R.menu.activity_verify_email_menu_toolbar)
         binding.toolbar.setOnMenuItemClickListener {
-            when(it.itemId) {
+            when (it.itemId) {
                 R.id.activity_verify_email_menu_toolbar_action_close -> {
                     finish()
                     true
@@ -35,11 +42,34 @@ class VerifyEmailActivity : AppCompatActivity() {
             }
             false
         }
+    }
 
-        binding.buttonNext.setOnClickListener {
-            val intent = Intent(this@VerifyEmailActivity, JoinActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
-            startActivity(intent)
+    private fun observeViewModel() {
+        viewModel.liveState.observe(this) {
+            when (it) {
+                is VerifyEmailViewModel.State.SUCCESS -> {
+                    val builder = AlertDialog.Builder(this@VerifyEmailActivity)
+                    val alertDialog = builder
+                        .setTitle("인증코드가 발송되었습니다.")
+                        .setMessage("메일로 발송된 인증 번호를 입력해주세요")
+                        .setPositiveButton("OK") { _, _ -> }
+                        .create()
+
+                    alertDialog.show()
+                }
+                is VerifyEmailViewModel.State.FAILURE -> handleFailure(it.error)
+            }
         }
-   }
+    }
+
+    private fun handleFailure(error: VerifyEmailViewModel.Error) {
+        when (error) {
+            VerifyEmailViewModel.Error.UNKNOWN_SERVER_ERROR -> showToast("Unknown server error")
+            VerifyEmailViewModel.Error.NETWORK_ERROR -> showToast("Network error")
+            VerifyEmailViewModel.Error.MEMBER_ALREADY_EXIST -> showToast("User already exists")
+            VerifyEmailViewModel.Error.INVALID_INPUT_VALUE -> showToast("Invalid inputs")
+        }
+    }
+
+
 }

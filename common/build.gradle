@@ -6,7 +6,6 @@ plugins {
 }
 
 apply from: "../common.gradle"
-apply from: "../common_android.gradle"
 
 dependencies {
 }

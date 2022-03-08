@@ -1,6 +1,8 @@
 package com.yologger.domain.usecase.auth
 
-class LoginUseCase {
+import com.yologger.domain.base.BaseUseCase
+
+class LoginUseCase : BaseUseCase {
     fun execute() {
 
     }

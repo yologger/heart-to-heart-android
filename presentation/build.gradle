@@ -6,20 +6,20 @@ plugins {
 }
 
 apply from: "../common.gradle"
-apply from: "../common_android.gradle"
 
 android {
-    viewBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding true
     }
 }
 
 dependencies {
+    api project(Modules.domain)
     implementation project(Modules.common)
 
     implementation Dependencies.APP_COMPAT
-    implementation Dependencies.MATERIAL
     implementation Dependencies.CONSTRAINT_LAYOUT
+    implementation Dependencies.MATERIAL
     implementation Dependencies.ACTIVITY_KTX
     implementation Dependencies.FRAGMENT_KTX
 }

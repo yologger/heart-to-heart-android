@@ -2,20 +2,20 @@ package com.yologger.presentation.screen.main
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
-import com.orhanobut.logger.Logger
 import com.yologger.presentation.R
-import com.yologger.presentation.databinding.ActivityMainBinding
 import com.yologger.presentation.screen.main.follow.FollowFragment
 import com.yologger.presentation.screen.main.home.HomeFragment
 import com.yologger.presentation.screen.main.more.MoreFragment
-import com.yologger.presentation.screen.main.settings.SettingsFragment
 
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener, NavigationBarView.OnItemReselectedListener  {
 
-    private lateinit var binding: ActivityMainBinding
+    private val frameLayout: FrameLayout by lazy { findViewById(R.id.activity_main_frameLayout) }
+    private val bottomNavigationView: BottomNavigationView by lazy { findViewById(R.id.activity_main_bottomNavigationView) }
     
     private val homeFragment: HomeFragment by lazy { HomeFragment.newInstance() }
     private val followFragment: FollowFragment by lazy { FollowFragment.newInstance() }
@@ -25,18 +25,13 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initBinding()
+        setContentView(R.layout.activity_main)
         initBottomNavigationView()
     }
 
-    private fun initBinding() {
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-    }
-
     private fun initBottomNavigationView() {
-        binding.activityMainBottomNavigationView.setOnItemSelectedListener(this)
-        binding.activityMainBottomNavigationView.setOnItemReselectedListener(this)
+        bottomNavigationView.setOnItemSelectedListener(this)
+        bottomNavigationView.setOnItemReselectedListener(this)
 
         supportFragmentManager.beginTransaction().apply {
             add(R.id.activity_main_frameLayout, homeFragment).show(homeFragment)

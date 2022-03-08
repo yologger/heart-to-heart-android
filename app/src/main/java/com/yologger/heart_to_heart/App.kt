@@ -24,7 +24,6 @@ class App: Application() {
             // .logStrategy(customLog) // (Optional) Changes the log strategy to print out. Default LogCat
             // .tag("PRETTY_LOGGER") // (Optional) Global tag for every log. Default PRETTY_LOGGER
             .build()
-
         Logger.addLogAdapter(object : AndroidLogAdapter(formatStrategy) {
             override fun isLoggable(priority: Int, tag: String?): Boolean {
                 return BuildConfig.DEBUG
