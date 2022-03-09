@@ -98,14 +98,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@={viewModel.liveCode}"
-                    android:inputType="number" />
+                    android:onTextChanged="@{viewModel.onTextFieldCodeChanged}"
+                    android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
+                android:enabled="@{viewModel.liveIsCodeValid}"
                 android:id="@+id/buttonNext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="@{viewModel.liveHasVerificationAlreadyRequested ? View.VISIBLE : View.GONE}"
+                android:onClick="@{() -> viewModel.confirmVerificationCode()}"
                 android:text="다음" />
         </LinearLayout>
     </LinearLayout>

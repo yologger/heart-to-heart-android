@@ -4,9 +4,11 @@ import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
 import com.yologger.data.datasource.api.auth.AuthService
 import com.yologger.data.datasource.api.auth.EmailVerificationCodeResponse
+import com.yologger.data.datasource.api.auth.JoinResponse
 import com.yologger.data.util.MockitoHelper.anyObject
 import com.yologger.domain.repository.AuthRepository
 import com.yologger.domain.usecase.email_verification_code.EmailVerificationCodeResult
+import com.yologger.domain.usecase.join.JoinResult
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -48,5 +50,20 @@ class AuthRepositoryImplTest {
 
         // Then
         assertThat(result).isEqualTo(EmailVerificationCodeResult.SUCCESS)
+    }
+
+    @Test
+    fun `test join success`() {
+        // Given
+        `when`(mockAuthService.join(anyObject()))
+            .thenReturn(Calls.response(JoinResponse("1")))
+
+        authRepository = AuthRepositoryImpl(mockAuthService, Gson())
+
+        // When
+        val result = authRepository.join("ronaldo@gmail.com", "ronaldo", "cr7", "123asd1")
+
+        // Then
+        assertThat(result).isEqualTo(JoinResult.SUCCESS)
     }
 }

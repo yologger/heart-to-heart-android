@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dialog_loading"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_dialog_loading"
+    android:padding="@dimen/padding_xl"
+    android:orientation="vertical">
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/dialog_button_circularProgressIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:indicatorColor="#8BACFF"
+        app:layout_constraintBottom_toTopOf="@+id/dialog_button_textView"
+        android:indeterminate="true"/>
+    <TextView
+        android:layout_marginTop="@dimen/margin_sm"
+        android:id="@+id/dialog_button_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Loading..."
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_button_circularProgressIndicator"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

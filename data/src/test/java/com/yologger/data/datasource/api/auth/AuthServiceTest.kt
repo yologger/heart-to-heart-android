@@ -29,11 +29,11 @@ class AuthServiceTest {
     }
 
     @Test
-    fun `test_emailVerificationCode`() {
+    fun `test emailVerificationCode success response`() {
         // Given
         val mockResponse = MockResponse()
             .setResponseCode(HttpURLConnection.HTTP_OK)
-            .setBody("{\"message\":\"verified\"}")
+            .setBody("{\"message\":\"sent\"}")
 
         mockServer.enqueue(mockResponse)
 
@@ -58,7 +58,7 @@ class AuthServiceTest {
     }
 
     @Test
-    fun `test_error`() {
+    fun `test emailVerificationCode failure response`() {
         // Given
         val mockResponse = MockResponse()
             .setResponseCode(HttpURLConnection.HTTP_BAD_REQUEST)
@@ -85,13 +85,62 @@ class AuthServiceTest {
         assertThat(response.isSuccessful).isFalse()
         response.errorBody()?.let {
             val gson = Gson()
-            val errorResponse = gson.fromJson(it.string(), EmailVerificationCodeFailureResponse::class.java)
+            val errorResponse =
+                gson.fromJson(it.string(), EmailVerificationCodeFailureResponse::class.java)
             assertThat(errorResponse.message).isEqualTo("Member Already Exists.")
             assertThat(errorResponse.code).isEqualTo(EmailVerificationCodeFailureCode.MEMBER_ALREADY_EXISTS)
         } ?: run {
             fail("errorBody() is null")
         }
-}
+    }
+
+    @Test
+    fun `test confirmVerificationCode success response`() {
+        // Given
+        val mockResponse = MockResponse()
+            .setResponseCode(HttpURLConnection.HTTP_OK)
+            .setBody("{\"message\":\"verified\"}")
+
+        mockServer.enqueue(mockResponse)
+
+        val okHttpClient = OkHttpClient.Builder()
+            .build()
+
+        val retrofit = Retrofit.Builder()
+            .client(okHttpClient)
+            .baseUrl(mockUrl)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        authService = retrofit.create(AuthService::class.java)
+
+        // When
+        val request = ConfirmVerificationCodeRequest("ronaldo@gmail.com", "weqwqe213")
+        val response = authService.confirmVerificationCode(request).execute()
+
+        // Then
+        assertThat(response.isSuccessful).isTrue()
+        assertThat(response.body()!!.message).isEqualTo("verified")
+    }
+
+    @Test
+    fun `test join fail`() {
+        // Given
+        val okHttpClient = OkHttpClient.Builder()
+            .build()
+        val retrofit = Retrofit.Builder()
+            .client(okHttpClient)
+            .baseUrl("http://localhost:8080")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        authService = retrofit.create(AuthService::class.java)
+
+        // When
+        val request = JoinRequest("ronaldo@gmail.com", "", "", "")
+        val response = authService.join(request).execute()
+
+        assertThat(response.isSuccessful).isFalse()
+    }
 
     @After
     fun tearDown() {
