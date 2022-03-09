@@ -13,4 +13,7 @@ interface AuthService {
 
     @POST("/auth/join")
     fun join(@Body request: JoinRequest): Call<JoinResponse>
+
+    @POST("/auth/login")
+    fun login(@Body request: LoginRequest): Call<LoginResponse>
 }

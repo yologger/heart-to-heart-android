@@ -139,6 +139,27 @@ class AuthServiceTest {
         val request = JoinRequest("ronaldo@gmail.com", "", "", "")
         val response = authService.join(request).execute()
 
+        // Then
+        assertThat(response.isSuccessful).isFalse()
+    }
+
+    @Test
+    fun `test login failure`() {
+        // Given
+        val okHttpClient = OkHttpClient.Builder()
+            .build()
+        val retrofit = Retrofit.Builder()
+            .client(okHttpClient)
+            .baseUrl("http://localhost:8080")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        authService = retrofit.create(AuthService::class.java)
+
+        // When
+        val request = LoginRequest(email= "yologger1013.dev@gmail.com", "123213")
+        val response = authService.login(request).execute()
+
+        // Then
         assertThat(response.isSuccessful).isFalse()
     }
 

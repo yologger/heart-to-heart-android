@@ -114,9 +114,7 @@ class JoinViewModel @Inject constructor(
             .subscribeBy { result ->
                 _liveIsLoading.value = false
                 when(result) {
-                    is JoinResult.SUCCESS -> {
-                        _liveState.value = State.SUCCESS
-                    }
+                    is JoinResult.SUCCESS -> _liveState.value = State.SUCCESS
                     is JoinResult.FAILURE -> {
                         when(result.error) {
                             JoinError.MEMBER_ALREADY_EXISTS -> _liveState.value = State.FAILURE(Error.MEMBER_ALREADY_EXISTS)
