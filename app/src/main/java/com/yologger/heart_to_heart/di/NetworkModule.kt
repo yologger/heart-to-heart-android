@@ -29,7 +29,7 @@ class NetworkModule {
         return Retrofit.Builder()
             .client(okHttpClient)
             // .baseUrl("http://10.0.2.2:8080")
-            .baseUrl("http://172.30.1.36:8080")
+            .baseUrl("http://172.30.1.6:8080")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

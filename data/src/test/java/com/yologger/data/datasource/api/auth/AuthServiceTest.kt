@@ -123,6 +123,25 @@ class AuthServiceTest {
         assertThat(response.body()!!.message).isEqualTo("verified")
     }
 
+    @Test
+    fun `test join fail`() {
+        // Given
+        val okHttpClient = OkHttpClient.Builder()
+            .build()
+        val retrofit = Retrofit.Builder()
+            .client(okHttpClient)
+            .baseUrl("http://localhost:8080")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        authService = retrofit.create(AuthService::class.java)
+
+        // When
+        val request = JoinRequest("ronaldo@gmail.com", "", "", "")
+        val response = authService.join(request).execute()
+
+        assertThat(response.isSuccessful).isFalse()
+    }
+
     @After
     fun tearDown() {
         mockServer.shutdown()

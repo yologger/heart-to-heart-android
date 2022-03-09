@@ -1,6 +1,7 @@
 package com.yologger.presentation.screen.auth.verify_email
 
 import android.text.TextUtils
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.orhanobut.logger.Logger
 import com.yologger.domain.usecase.confirm_verification_code.ConfirmVerificationCodeError
@@ -26,7 +27,7 @@ class VerifyEmailViewModel @Inject constructor(
     sealed class State {
         object EMAIL_VERIFICATION_CODE_SUCCESS: State()
         data class EMAIL_VERIFICATION_CODE_FAILURE(val error: EMAIL_VERIFICATION_CODE_ERROR): State()
-        object CONFIRM_VERIFICATION_CODE_SUCCESS: State()
+        data class CONFIRM_VERIFICATION_CODE_SUCCESS(val email: String): State()
         data class CONFIRM_VERIFICATION_CODE_FAILURE(val error: CONFIRM_VERIFICATION_CODE_ERROR): State()
     }
 
@@ -48,17 +49,23 @@ class VerifyEmailViewModel @Inject constructor(
     private val _liveState = SingleLiveEvent<State>()
     val liveState = _liveState
 
+    private val _liveIsLoading: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>().apply { value = false } }
+    val liveIsLoading: LiveData<Boolean> get() = _liveIsLoading
+
     val liveEmail: MutableLiveData<String> by lazy { MutableLiveData<String>().apply { value = "" } }
     val liveEmailErrorMessage: MutableLiveData<String> by lazy { MutableLiveData<String>().apply { value = "" } }
     val liveIsEmailValid: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>().apply { value = false } }
     val liveHasVerificationAlreadyRequested: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>().apply { value = false } }
     val liveCode: MutableLiveData<String> by lazy { MutableLiveData<String>().apply { value = "" } }
+    val liveIsCodeValid: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>().apply { value = false } }
 
     fun emailVerificationCode() {
-        val params = EmailVerificationCodeUseCase.Params(email = liveEmail.value!!)
+        val params = EmailVerificationCodeUseCase.Params(email = liveEmail.value!!.trim())
+        _liveIsLoading.value = true
         emailVerificationCodeUseCase.execute(params)
             .subscribeBy(
                 onNext = { result ->
+                    _liveIsLoading.value = false
                     when(result) {
                         is EmailVerificationCodeResult.SUCCESS -> {
                             liveHasVerificationAlreadyRequested.value = true
@@ -74,19 +81,20 @@ class VerifyEmailViewModel @Inject constructor(
                         }
                     }                         
                 },
-                onError = {},
-                onComplete = {}
+                onError = { _liveIsLoading.value = false },
+                onComplete = { _liveIsLoading.value = false }
             ).addTo(disposables)
     }
 
     fun confirmVerificationCode() {
-        val params = ConfirmVerificationCodeUseCase.Params(liveEmail.value!!, liveCode.value!!)
+        val params = ConfirmVerificationCodeUseCase.Params(liveEmail.value!!.trim(), liveCode.value!!.trim())
+        _liveIsLoading.value = true
         confirmVerificationCodeUseCase.execute(params)
             .subscribeBy { result ->
-                Logger.w("result: ${result}")
+                _liveIsLoading.value = false
                 when(result) {
                     is ConfirmVerificationCodeResult.SUCCESS -> {
-                        _liveState.value = State.CONFIRM_VERIFICATION_CODE_SUCCESS
+                        _liveState.value = State.CONFIRM_VERIFICATION_CODE_SUCCESS(email = liveEmail.value!!.trim())
                     }
                     is ConfirmVerificationCodeResult.FAILURE -> {
                         when (result.error) {
@@ -113,6 +121,14 @@ class VerifyEmailViewModel @Inject constructor(
                 liveEmailErrorMessage.value = ""
                 liveIsEmailValid.value = true
             }
+        }
+    }
+
+    fun onTextFieldCodeChanged(text: CharSequence, start: Int, count: Int, after: Int) {
+        if (text.trim().length < 1) {
+            liveIsCodeValid.value = false
+        } else {
+            liveIsCodeValid.value = true
         }
     }
 }

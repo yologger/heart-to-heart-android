@@ -1,12 +1,15 @@
 package com.yologger.presentation.screen.auth.verify_email
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.yologger.presentation.R
+import com.yologger.presentation.component.LoadingDialog
 import com.yologger.presentation.databinding.ActivityVerifyEmailBinding
+import com.yologger.presentation.screen.auth.join.JoinActivity
 import com.yologger.presentation.util.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,6 +18,7 @@ class VerifyEmailActivity : AppCompatActivity() {
 
     private val viewModel: VerifyEmailViewModel by viewModels()
     private lateinit var binding: ActivityVerifyEmailBinding
+    private var loadingDialog: LoadingDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +69,9 @@ class VerifyEmailActivity : AppCompatActivity() {
                     }
                 }
                 is VerifyEmailViewModel.State.CONFIRM_VERIFICATION_CODE_SUCCESS -> {
-                    showToast("인증 성공")
+                    val intent = Intent(this, JoinActivity::class.java)
+                    intent.putExtra("email", it.email)
+                    startActivity(intent)
                 }
 
                 is VerifyEmailViewModel.State.CONFIRM_VERIFICATION_CODE_FAILURE -> {
@@ -77,6 +83,16 @@ class VerifyEmailActivity : AppCompatActivity() {
                         VerifyEmailViewModel.CONFIRM_VERIFICATION_CODE_ERROR.INVALID_VERIFICATION_CODE -> showToast("Invalid verification code")
                     }
                 }
+            }
+        }
+
+        viewModel.liveIsLoading.observe(this) {
+            if (it) {
+                loadingDialog = LoadingDialog(this)
+                loadingDialog?.show("Loading")
+            } else {
+                loadingDialog?.dismiss()
+                loadingDialog = null
             }
         }
     }
