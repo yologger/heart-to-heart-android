@@ -2,6 +2,7 @@ package com.yologger.data.datasource.api.auth
 
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface AuthService {
@@ -16,4 +17,7 @@ interface AuthService {
 
     @POST("/auth/login")
     fun login(@Body request: LoginRequest): Call<LoginResponse>
+
+    @POST("/auth/logout")
+    fun logout(@Header("Authorization") accessToken: String): Call<LogoutResponse>
 }

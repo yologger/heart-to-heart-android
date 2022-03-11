@@ -3,16 +3,12 @@ package com.yologger.presentation.screen.auth.login
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.orhanobut.logger.Logger
 import com.yologger.presentation.R
 import com.yologger.presentation.component.LoadingDialog
 import com.yologger.presentation.databinding.ActivityLoginBinding
-import com.yologger.presentation.screen.auth.join.JoinViewModel
-import com.yologger.presentation.screen.auth.verify_email.VerifyEmailActivity
 import com.yologger.presentation.screen.main.MainActivity
 import com.yologger.presentation.util.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -71,5 +67,10 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    fun onJoinButtonClicked(view: View) {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
     }
 }

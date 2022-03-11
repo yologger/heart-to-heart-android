@@ -9,6 +9,7 @@ import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Assert.fail
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -29,6 +30,7 @@ class AuthServiceTest {
     }
 
     @Test
+    @Ignore
     fun `test emailVerificationCode success response`() {
         // Given
         val mockResponse = MockResponse()
@@ -58,6 +60,7 @@ class AuthServiceTest {
     }
 
     @Test
+    @Ignore
     fun `test emailVerificationCode failure response`() {
         // Given
         val mockResponse = MockResponse()
@@ -95,6 +98,7 @@ class AuthServiceTest {
     }
 
     @Test
+    @Ignore
     fun `test confirmVerificationCode success response`() {
         // Given
         val mockResponse = MockResponse()
@@ -124,6 +128,7 @@ class AuthServiceTest {
     }
 
     @Test
+    @Ignore
     fun `test join fail`() {
         // Given
         val okHttpClient = OkHttpClient.Builder()
@@ -144,6 +149,7 @@ class AuthServiceTest {
     }
 
     @Test
+    @Ignore
     fun `test login failure`() {
         // Given
         val okHttpClient = OkHttpClient.Builder()
@@ -161,6 +167,26 @@ class AuthServiceTest {
 
         // Then
         assertThat(response.isSuccessful).isFalse()
+    }
+
+    @Test
+    @Ignore
+    fun `test`() {
+        // Given
+        val okHttpClient = OkHttpClient.Builder()
+            .build()
+        val retrofit = Retrofit.Builder()
+            .client(okHttpClient)
+            .baseUrl("http://localhost:8080")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        authService = retrofit.create(AuthService::class.java)
+
+        // When
+        val response = authService.logout("Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZW1iZXIiLCJuYW1lIjoieW9sb2dnZXJkZXYiLCJuaWNrbmFtZSI6ImRldiIsImlkIjozLCJleHAiOjE2NDY5Mzg0MjgsImVtYWlsIjoieW9sb2dnZXIxMDEzLmRldkBnbWFpbC5jb20ifQ.xT4t1RsJyJ9etgxscB0M1zxW2e96kHUFwe4wGuqj0yM").execute()
+
+        // Then
+        assertThat(response.isSuccessful).isTrue()
     }
 
     @After

@@ -13,6 +13,8 @@ import com.yologger.domain.usecase.join.JoinError
 import com.yologger.domain.usecase.join.JoinResult
 import com.yologger.domain.usecase.login.LoginError
 import com.yologger.domain.usecase.login.LoginResult
+import com.yologger.domain.usecase.logout.LogoutError
+import com.yologger.domain.usecase.logout.LogoutResult
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
@@ -33,10 +35,17 @@ class AuthRepositoryImpl @Inject constructor(
             return if (response.isSuccessful) {
                 EmailVerificationCodeResult.SUCCESS
             } else {
-                val failureResponse = gson.fromJson(response.errorBody()!!.string(), EmailVerificationCodeFailureResponse::class.java)
+                val failureResponse = gson.fromJson(
+                    response.errorBody()!!.string(),
+                    EmailVerificationCodeFailureResponse::class.java
+                )
                 return when (failureResponse.code) {
-                    EmailVerificationCodeFailureCode.MEMBER_ALREADY_EXISTS -> EmailVerificationCodeResult.FAILURE(EmailVerificationCodeError.MEMBER_ALREADY_EXISTS)
-                    EmailVerificationCodeFailureCode.INVALID_INPUT_VALUE -> EmailVerificationCodeResult.FAILURE(EmailVerificationCodeError.INVALID_INPUT_VALUE)
+                    EmailVerificationCodeFailureCode.MEMBER_ALREADY_EXISTS -> EmailVerificationCodeResult.FAILURE(
+                        EmailVerificationCodeError.MEMBER_ALREADY_EXISTS
+                    )
+                    EmailVerificationCodeFailureCode.INVALID_INPUT_VALUE -> EmailVerificationCodeResult.FAILURE(
+                        EmailVerificationCodeError.INVALID_INPUT_VALUE
+                    )
                     else -> EmailVerificationCodeResult.FAILURE(EmailVerificationCodeError.UNKNOWN_SERVER_ERROR)
                 }
             }
@@ -45,18 +54,30 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun confirmVerificationCode(email: String, code: String): ConfirmVerificationCodeResult {
+    override fun confirmVerificationCode(
+        email: String,
+        code: String
+    ): ConfirmVerificationCodeResult {
         val request = ConfirmVerificationCodeRequest(email, code)
         try {
             val response = authService.confirmVerificationCode(request).execute()
             return if (response.isSuccessful) {
                 ConfirmVerificationCodeResult.SUCCESS
             } else {
-                val failureResponse = gson.fromJson(response.errorBody()!!.string(), ConfirmVerificationCodeFailureResponse::class.java)
+                val failureResponse = gson.fromJson(
+                    response.errorBody()!!.string(),
+                    ConfirmVerificationCodeFailureResponse::class.java
+                )
                 when (failureResponse.code) {
-                    ConfirmVerificationCodeFailureCode.INVALID_EMAIL -> ConfirmVerificationCodeResult.FAILURE(ConfirmVerificationCodeError.INVALID_EMAIL)
-                    ConfirmVerificationCodeFailureCode.INVALID_VERIFICATION_CODE -> ConfirmVerificationCodeResult.FAILURE(ConfirmVerificationCodeError.INVALID_VERIFICATION_CODE)
-                    ConfirmVerificationCodeFailureCode.EXPIRED_VERIFICATION_CODE -> ConfirmVerificationCodeResult.FAILURE(ConfirmVerificationCodeError.EXPIRED_VERIFICATION_CODE)
+                    ConfirmVerificationCodeFailureCode.INVALID_EMAIL -> ConfirmVerificationCodeResult.FAILURE(
+                        ConfirmVerificationCodeError.INVALID_EMAIL
+                    )
+                    ConfirmVerificationCodeFailureCode.INVALID_VERIFICATION_CODE -> ConfirmVerificationCodeResult.FAILURE(
+                        ConfirmVerificationCodeError.INVALID_VERIFICATION_CODE
+                    )
+                    ConfirmVerificationCodeFailureCode.EXPIRED_VERIFICATION_CODE -> ConfirmVerificationCodeResult.FAILURE(
+                        ConfirmVerificationCodeError.EXPIRED_VERIFICATION_CODE
+                    )
                     else -> ConfirmVerificationCodeResult.FAILURE(ConfirmVerificationCodeError.UNKNOWN_SERVER_ERROR)
                 }
             }
@@ -67,16 +88,20 @@ class AuthRepositoryImpl @Inject constructor(
 
     override fun join(email: String, name: String, nickname: String, password: String): JoinResult {
         try {
-            val request = JoinRequest(email = email, name = name, nickname = nickname, password = password)
+            val request =
+                JoinRequest(email = email, name = name, nickname = nickname, password = password)
             val response = authService.join(request).execute()
             return if (response.isSuccessful) {
                 JoinResult.SUCCESS
             } else {
-                val failureResponse = gson.fromJson(response.errorBody()!!.string(), JoinFailureResponse::class.java)
+                val failureResponse =
+                    gson.fromJson(response.errorBody()!!.string(), JoinFailureResponse::class.java)
                 when (failureResponse.code) {
                     JoinFailureCode.MEMBER_ALREADY_EXISTS -> JoinResult.FAILURE(JoinError.MEMBER_ALREADY_EXISTS)
                     JoinFailureCode.INVALID_INPUT_VALUE -> JoinResult.FAILURE(JoinError.INVALID_INPUT_VALUE)
-                    JoinFailureCode.HTTP_REQUEST_METHOD_NOT_SUPPORTED -> JoinResult.FAILURE(JoinError.NETWORK_ERROR)
+                    JoinFailureCode.HTTP_REQUEST_METHOD_NOT_SUPPORTED -> JoinResult.FAILURE(
+                        JoinError.NETWORK_ERROR
+                    )
                     JoinFailureCode.NOT_FOUND -> JoinResult.FAILURE(JoinError.NETWORK_ERROR)
                     else -> JoinResult.FAILURE(JoinError.UNKNOWN_SERVER_ERROR)
                 }
@@ -90,15 +115,25 @@ class AuthRepositoryImpl @Inject constructor(
         try {
             val request = LoginRequest(email = email, password = password)
             val response = authService.login(request).execute()
-            return if(response.isSuccessful) {
+            return if (response.isSuccessful) {
                 val successResponse = response.body()!!
-                val session = Session(userId = successResponse.userId, email = email, name = successResponse.name, nickname = successResponse.nickname, accessToken = successResponse.accessToken, refreshToken = successResponse.refreshToken)
+                val session = Session(
+                    userId = successResponse.userId,
+                    email = email,
+                    name = successResponse.name,
+                    nickname = successResponse.nickname,
+                    accessToken = successResponse.accessToken,
+                    refreshToken = successResponse.refreshToken
+                )
                 saveSession(session)
                 LoginResult.SUCCESS
             } else {
-                val failureResponse = gson.fromJson(response.errorBody()!!.string(), LoginFailureResponse::class.java)
+                val failureResponse =
+                    gson.fromJson(response.errorBody()!!.string(), LoginFailureResponse::class.java)
                 when (failureResponse.code) {
-                    LoginFailureCode.HTTP_REQUEST_METHOD_NOT_SUPPORTED -> LoginResult.FAILURE(LoginError.NETWORK_ERROR)
+                    LoginFailureCode.HTTP_REQUEST_METHOD_NOT_SUPPORTED -> LoginResult.FAILURE(
+                        LoginError.NETWORK_ERROR
+                    )
                     LoginFailureCode.INVALID_INPUT_VALUE -> LoginResult.FAILURE(LoginError.INVALID_INPUT_VALUE)
                     LoginFailureCode.NOT_FOUND -> LoginResult.FAILURE(LoginError.NETWORK_ERROR)
                     LoginFailureCode.INVALID_PASSWORD -> LoginResult.FAILURE(LoginError.INVALID_PASSWORD)
@@ -109,6 +144,56 @@ class AuthRepositoryImpl @Inject constructor(
             return LoginResult.FAILURE(LoginError.NETWORK_ERROR)
         }
     }
+
+    override fun logout(): LogoutResult {
+        try {
+            session?.let {
+                val response = authService.logout(it.accessToken).execute()
+                return if (response.isSuccessful) {
+                    clearSession()
+                    LogoutResult.SUCCESS
+                } else {
+                    val failureResponse = gson.fromJson(
+                        response.errorBody()!!.string(),
+                        LogoutFailureResponse::class.java
+                    )
+                    when (failureResponse.code) {
+                        LogoutFailureCode.AUTHORIZATION_HEADER_EMPTY -> {
+                            clearSession()
+                            LogoutResult.FAILURE(LogoutError.INVALID_ACCESS_TOKEN)
+                        }
+                        LogoutFailureCode.INVALID_ACCESS_TOKEN -> {
+                            clearSession()
+                            LogoutResult.FAILURE(LogoutError.INVALID_ACCESS_TOKEN)
+                        }
+                        LogoutFailureCode.EXPIRED_ACCESS_TOKEN -> {
+                            clearSession()
+                            LogoutResult.FAILURE(LogoutError.INVALID_ACCESS_TOKEN)
+                        }
+                        LogoutFailureCode.NOT_FOUND -> {
+                            LogoutResult.FAILURE(LogoutError.NETWORK_ERROR)
+                        }
+                        LogoutFailureCode.INVALID_INPUT_VALUE -> {
+                            LogoutResult.FAILURE(LogoutError.INVALID_INPUT_VALUE)
+                        }
+                        LogoutFailureCode.NOT_START_WITH_BEARER -> {
+                            clearSession()
+                            LogoutResult.FAILURE(LogoutError.INVALID_ACCESS_TOKEN)
+                        }
+                        LogoutFailureCode.HTTP_REQUEST_METHOD_NOT_SUPPORTED -> {
+                            LogoutResult.FAILURE(LogoutError.NETWORK_ERROR)
+                        }
+                    }
+                }
+            } ?: run {
+                return LogoutResult.FAILURE(LogoutError.ACCESS_TOKEN_EMPTY)
+            }
+
+        } catch (e: Exception) {
+            return LogoutResult.FAILURE(LogoutError.NETWORK_ERROR)
+        }
+    }
+
 
     private fun saveSession(session: Session) {
         sessionStore.putSession(session)

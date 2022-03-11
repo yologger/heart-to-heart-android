@@ -4,10 +4,12 @@ import com.yologger.domain.usecase.confirm_verification_code.ConfirmVerification
 import com.yologger.domain.usecase.email_verification_code.EmailVerificationCodeResult
 import com.yologger.domain.usecase.join.JoinResult
 import com.yologger.domain.usecase.login.LoginResult
+import com.yologger.domain.usecase.logout.LogoutResult
 
 interface AuthRepository {
     fun emailVerificationCode(email: String): EmailVerificationCodeResult
     fun confirmVerificationCode(email: String, code: String): ConfirmVerificationCodeResult
     fun join(email: String, name: String, nickname: String, password: String): JoinResult
     fun login(email: String, password: String): LoginResult
+    fun logout(): LogoutResult
 }

@@ -22,7 +22,6 @@ class SplashActivity : AppCompatActivity() {
     private fun navigateToMainScreen() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
-
     }
 
     private fun navigateToLoginScreen() {
