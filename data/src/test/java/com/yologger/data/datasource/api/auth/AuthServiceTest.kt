@@ -2,6 +2,13 @@ package com.yologger.data.datasource.api.auth
 
 import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
+import com.yologger.data.datasource.api.auth.model.confirm_verification_code.ConfirmVerificationCodeRequest
+import com.yologger.data.datasource.api.auth.model.email_verification_code.EmailVerificationCodeFailureCode
+import com.yologger.data.datasource.api.auth.model.email_verification_code.EmailVerificationCodeFailureResponse
+import com.yologger.data.datasource.api.auth.model.email_verification_code.EmailVerificationCodeRequest
+import com.yologger.data.datasource.api.auth.model.join.JoinRequest
+import com.yologger.data.datasource.api.auth.model.login.LoginRequest
+import com.yologger.data.datasource.api.auth.model.reissue_token.ReissueTokenRequest
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
@@ -91,7 +98,7 @@ class AuthServiceTest {
             val errorResponse =
                 gson.fromJson(it.string(), EmailVerificationCodeFailureResponse::class.java)
             assertThat(errorResponse.message).isEqualTo("Member Already Exists.")
-            assertThat(errorResponse.code).isEqualTo(EmailVerificationCodeFailureCode.MEMBER_ALREADY_EXISTS)
+            assertThat(errorResponse.code).isEqualTo(EmailVerificationCodeFailureCode.MEMBER_ALREADY_EXIST)
         } ?: run {
             fail("errorBody() is null")
         }
@@ -184,6 +191,46 @@ class AuthServiceTest {
 
         // When
         val response = authService.logout("Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZW1iZXIiLCJuYW1lIjoieW9sb2dnZXJkZXYiLCJuaWNrbmFtZSI6ImRldiIsImlkIjozLCJleHAiOjE2NDY5Mzg0MjgsImVtYWlsIjoieW9sb2dnZXIxMDEzLmRldkBnbWFpbC5jb20ifQ.xT4t1RsJyJ9etgxscB0M1zxW2e96kHUFwe4wGuqj0yM").execute()
+
+        // Then
+        assertThat(response.isSuccessful).isTrue()
+    }
+
+    @Test
+    @Ignore
+    fun `test verifyAccessToken`() {
+        // Given
+        val okHttpClient = OkHttpClient.Builder()
+            .build()
+        val retrofit = Retrofit.Builder()
+            .client(okHttpClient)
+            .baseUrl("http://localhost:8080")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        authService = retrofit.create(AuthService::class.java)
+
+        // When
+        val response = authService.verifyAccessToken("Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZW1iZXIiLCJuYW1lIjoieW9sb2dnZXJkZXYiLCJuaWNrbmFtZSI6ImRldiIsImlkIjozLCJleHAiOjE2NDY5Mzg0MjgsImVtYWlsIjoieW9sb2dnZXIxMDEzLmRldkBnbWFpbC5jb20ifQ.xT4t1RsJyJ9etgxscB0M1zxW2e96kHUFwe4wGuqj0yM").execute()
+
+        // Then
+        assertThat(response.isSuccessful).isTrue()
+    }
+
+    @Test
+    fun `reissueToken`() {
+        // Given
+        val okHttpClient = OkHttpClient.Builder()
+            .build()
+        val retrofit = Retrofit.Builder()
+            .client(okHttpClient)
+            .baseUrl("http://localhost:8080")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        authService = retrofit.create(AuthService::class.java)
+
+        // When
+        val request = ReissueTokenRequest(memberId = 3, refreshToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZW1iZXIiLCJuaWNrbmFtZSI6ImRldiIsImZ1bGxOYW1lIjoieW9sb2dnZXJkZXYiLCJpZCI6MywiZXhwIjoxNjQ3NTkxNjM3LCJlbWFpbCI6InlvbG9nZ2VyMTAxMy5kZXZAZ21haWwuY29tIn0.udX1btuzRoRFncP-ZL3CVzmSz6kxE9UEQX_wVWme0c8")
+        val response = authService.reissueToken(request).execute()
 
         // Then
         assertThat(response.isSuccessful).isTrue()

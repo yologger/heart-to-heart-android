@@ -1,7 +1,7 @@
 package com.yologger.data.datasource.pref
 
 data class Session constructor(
-    val userId: String,
+    val memberId: Long,
     val email: String,
     val name: String,
     val nickname: String,

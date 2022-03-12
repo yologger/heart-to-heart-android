@@ -1,9 +1,9 @@
 package com.yologger.presentation.screen.main.more
 
 import com.orhanobut.logger.Logger
-import com.yologger.domain.usecase.logout.LogoutError
-import com.yologger.domain.usecase.logout.LogoutResult
-import com.yologger.domain.usecase.logout.LogoutUseCase
+import com.yologger.domain.usecase.auth.logout.LogoutResultError
+import com.yologger.domain.usecase.auth.logout.LogoutResult
+import com.yologger.domain.usecase.auth.logout.LogoutUseCase
 import com.yologger.presentation.screen.base.BaseViewModel
 import com.yologger.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,26 +22,23 @@ class MoreViewModel @Inject constructor(
     }
 
     enum class Error {
-        NETWORK_ERROR
+        CLIENT_ERROR,
+        NETWORK_ERROR,
     }
 
     private val _liveState = SingleLiveEvent<State>()
     val liveState = _liveState
 
     fun logout() {
-        Logger.w("logout!")
         logoutUseCase.execute()
             .subscribeBy {
                 when(it) {
                     is LogoutResult.SUCCESS -> _liveState.value = State.SUCCESS
                     is LogoutResult.FAILURE -> {
                         when(it.error) {
-                            LogoutError.NETWORK_ERROR -> {
-                                _liveState.value = State.FAILURE(Error.NETWORK_ERROR)
-                            }
-                            else -> {
-                                _liveState.value = State.SUCCESS
-                            }
+                            LogoutResultError.NETWORK_ERROR -> _liveState.value = State.FAILURE(Error.NETWORK_ERROR)
+                            LogoutResultError.CLIENT_ERROR -> _liveState.value = State.FAILURE(Error.CLIENT_ERROR)
+                            else -> _liveState.value = State.SUCCESS
                         }
                     }
                 }

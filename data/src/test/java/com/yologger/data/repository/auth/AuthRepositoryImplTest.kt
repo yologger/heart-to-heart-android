@@ -3,13 +3,13 @@ package com.yologger.data.repository.auth
 import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
 import com.yologger.data.datasource.api.auth.AuthService
-import com.yologger.data.datasource.api.auth.EmailVerificationCodeResponse
-import com.yologger.data.datasource.api.auth.JoinResponse
+import com.yologger.data.datasource.api.auth.model.email_verification_code.EmailVerificationCodeResponse
+import com.yologger.data.datasource.api.auth.model.join.JoinResponse
 import com.yologger.data.datasource.pref.SessionStore
 import com.yologger.data.util.MockitoHelper.anyObject
 import com.yologger.domain.repository.AuthRepository
-import com.yologger.domain.usecase.email_verification_code.EmailVerificationCodeResult
-import com.yologger.domain.usecase.join.JoinResult
+import com.yologger.domain.usecase.auth.email_verification_code.EmailVerificationCodeResult
+import com.yologger.domain.usecase.auth.join.JoinResult
 import org.junit.After
 import org.junit.Before
 import org.junit.Test

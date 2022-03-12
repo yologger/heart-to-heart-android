@@ -74,10 +74,10 @@ class JoinActivity : AppCompatActivity() {
                 }
                 is JoinViewModel.State.FAILURE -> {
                     when(it.error) {
-                        JoinViewModel.Error.INVALID_INPUT_VALUE -> showToast("Invalid input error")
-                        JoinViewModel.Error.NETWORK_ERROR -> showToast("Network error")
-                        JoinViewModel.Error.UNKNOWN_SERVER_ERROR -> showToast("Unknown server error")
-                        JoinViewModel.Error.MEMBER_ALREADY_EXISTS -> showToast("중복된 이메일입니다.")
+                        JoinViewModel.Error.CLIENT_ERROR -> showToast("Client Error")
+                        JoinViewModel.Error.NETWORK_ERROR -> showToast("Network Error")
+                        JoinViewModel.Error.INVALID_PARAMS -> showToast("Invalid Parameters")
+                        JoinViewModel.Error.MEMBER_ALREADY_EXIST -> showToast("중복된 이메일입니다.")
                     }
                 }
             }

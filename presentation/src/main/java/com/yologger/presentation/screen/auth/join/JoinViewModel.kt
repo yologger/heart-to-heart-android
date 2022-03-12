@@ -2,9 +2,9 @@ package com.yologger.presentation.screen.auth.join
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.yologger.domain.usecase.join.JoinError
-import com.yologger.domain.usecase.join.JoinResult
-import com.yologger.domain.usecase.join.JoinUseCase
+import com.yologger.domain.usecase.auth.join.JoinResultError
+import com.yologger.domain.usecase.auth.join.JoinResult
+import com.yologger.domain.usecase.auth.join.JoinUseCase
 import com.yologger.presentation.screen.base.BaseViewModel
 import com.yologger.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,9 +25,9 @@ class JoinViewModel @Inject constructor(
 
     enum class Error {
         NETWORK_ERROR,
-        UNKNOWN_SERVER_ERROR,
-        INVALID_INPUT_VALUE,
-        MEMBER_ALREADY_EXISTS
+        CLIENT_ERROR,
+        MEMBER_ALREADY_EXIST,
+        INVALID_PARAMS
     }
 
     private val _liveState = SingleLiveEvent<State>()
@@ -117,10 +117,10 @@ class JoinViewModel @Inject constructor(
                     is JoinResult.SUCCESS -> _liveState.value = State.SUCCESS
                     is JoinResult.FAILURE -> {
                         when(result.error) {
-                            JoinError.MEMBER_ALREADY_EXISTS -> _liveState.value = State.FAILURE(Error.MEMBER_ALREADY_EXISTS)
-                            JoinError.INVALID_INPUT_VALUE -> _liveState.value = State.FAILURE(Error.INVALID_INPUT_VALUE)
-                            JoinError.NETWORK_ERROR -> _liveState.value = State.FAILURE(Error.NETWORK_ERROR)
-                            JoinError.UNKNOWN_SERVER_ERROR -> _liveState.value = State.FAILURE(Error.UNKNOWN_SERVER_ERROR)
+                            JoinResultError.MEMBER_ALREADY_EXIST -> _liveState.value = State.FAILURE(Error.MEMBER_ALREADY_EXIST)
+                            JoinResultError.NETWORK_ERROR -> _liveState.value = State.FAILURE(Error.NETWORK_ERROR)
+                            JoinResultError.INVALID_PARAMS -> _liveState.value = State.FAILURE(Error.INVALID_PARAMS)
+                            JoinResultError.CLIENT_ERROR -> _liveState.value = State.FAILURE(Error.CLIENT_ERROR)
                         }
                     }
                 }

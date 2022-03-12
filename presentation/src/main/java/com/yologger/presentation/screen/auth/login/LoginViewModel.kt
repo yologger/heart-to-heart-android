@@ -3,10 +3,9 @@ package com.yologger.presentation.screen.auth.login
 import android.text.TextUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.yologger.domain.usecase.login.LoginError
-import com.yologger.domain.usecase.login.LoginResult
-import com.yologger.domain.usecase.login.LoginUseCase
-import com.yologger.presentation.screen.auth.join.JoinViewModel
+import com.yologger.domain.usecase.auth.login.LoginResultError
+import com.yologger.domain.usecase.auth.login.LoginResult
+import com.yologger.domain.usecase.auth.login.LoginUseCase
 import com.yologger.presentation.screen.base.BaseViewModel
 import com.yologger.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,10 +26,10 @@ class LoginViewModel @Inject constructor(
 
     enum class Error {
         NETWORK_ERROR,
-        UNKNOWN_SERVER_ERROR,
-        INVALID_INPUT_VALUE,
+        CLIENT_ERROR,
         MEMBER_NOT_EXIST,
-        INVALID_PASSWORD
+        INVALID_PASSWORD,
+        INVALID_PARAMS
     }
 
     private val _liveState = SingleLiveEvent<State>()
@@ -102,11 +101,11 @@ class LoginViewModel @Inject constructor(
                     is LoginResult.SUCCESS -> _liveState.value = State.SUCCESS
                     is LoginResult.FAILURE -> {
                         when(it.error) {
-                            LoginError.MEMBER_NOT_EXIST -> _liveState.value = State.FAILURE(Error.MEMBER_NOT_EXIST)
-                            LoginError.INVALID_PASSWORD -> _liveState.value = State.FAILURE(Error.INVALID_PASSWORD)
-                            LoginError.NETWORK_ERROR -> _liveState.value = State.FAILURE(Error.NETWORK_ERROR)
-                            LoginError.UNKNOWN_SERVER_ERROR -> _liveState.value = State.FAILURE(Error.UNKNOWN_SERVER_ERROR)
-                            LoginError.INVALID_INPUT_VALUE -> _liveState.value = State.FAILURE(Error.INVALID_INPUT_VALUE)
+                            LoginResultError.MEMBER_NOT_EXIST -> _liveState.value = State.FAILURE(Error.MEMBER_NOT_EXIST)
+                            LoginResultError.INVALID_PASSWORD -> _liveState.value = State.FAILURE(Error.INVALID_PASSWORD)
+                            LoginResultError.NETWORK_ERROR -> _liveState.value = State.FAILURE(Error.NETWORK_ERROR)
+                            LoginResultError.CLIENT_ERROR -> _liveState.value = State.FAILURE(Error.CLIENT_ERROR)
+                            LoginResultError.INVALID_PARAMS -> _liveState.value = State.FAILURE(Error.INVALID_PARAMS)
                         }
                     }
                 }

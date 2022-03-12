@@ -42,7 +42,10 @@ class MoreFragment : Fragment() {
                     requireActivity().finish()
                 }
                 is MoreViewModel.State.FAILURE -> {
-                    showToast("Network error")
+                    when(it.error) {
+                        MoreViewModel.Error.NETWORK_ERROR -> showToast("Network Error")
+                        MoreViewModel.Error.CLIENT_ERROR -> showToast("Client Error")
+                    }
                 }
             }
         }

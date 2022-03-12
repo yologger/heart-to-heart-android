@@ -51,16 +51,15 @@ class LoginActivity : AppCompatActivity() {
         viewModel.liveState.observe(this) {
             when(it) {
                 is LoginViewModel.State.SUCCESS -> {
-                    showToast("로그인 성공")
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
                 is LoginViewModel.State.FAILURE -> {
                     when(it.error) {
-                        LoginViewModel.Error.INVALID_INPUT_VALUE -> showToast("Invalid input error")
-                        LoginViewModel.Error.NETWORK_ERROR -> showToast("Network error")
-                        LoginViewModel.Error.UNKNOWN_SERVER_ERROR -> showToast("Unknown server error")
+                        LoginViewModel.Error.CLIENT_ERROR -> showToast("Client Error")
+                        LoginViewModel.Error.NETWORK_ERROR -> showToast("Network Error")
+                        LoginViewModel.Error.INVALID_PARAMS -> showToast("Invalid Parameters")
                         LoginViewModel.Error.MEMBER_NOT_EXIST -> showToast("존재하지 않는 사용자입니다.")
                         LoginViewModel.Error.INVALID_PASSWORD -> showToast("잘못된 비밀번호입니다.")
                     }
