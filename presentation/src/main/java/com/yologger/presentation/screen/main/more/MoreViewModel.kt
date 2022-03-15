@@ -1,8 +1,7 @@
 package com.yologger.presentation.screen.main.more
 
-import com.orhanobut.logger.Logger
-import com.yologger.domain.usecase.auth.logout.LogoutResultError
 import com.yologger.domain.usecase.auth.logout.LogoutResult
+import com.yologger.domain.usecase.auth.logout.LogoutResultError
 import com.yologger.domain.usecase.auth.logout.LogoutUseCase
 import com.yologger.presentation.screen.base.BaseViewModel
 import com.yologger.presentation.util.SingleLiveEvent

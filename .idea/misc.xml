@@ -29,7 +29,9 @@
         <entry key="presentation/src/main/res/layout/dialog_loading.xml" value="0.28229166666666666" />
         <entry key="presentation/src/main/res/layout/fragment_follow.xml" value="0.3651041666666667" />
         <entry key="presentation/src/main/res/layout/fragment_get_user_info.xml" value="0.39351851851851855" />
-        <entry key="presentation/src/main/res/layout/fragment_home.xml" value="0.3651041666666667" />
+        <entry key="presentation/src/main/res/layout/fragment_home.xml" value="0.240625" />
+        <entry key="presentation/src/main/res/layout/fragment_home_holder_post.xml" value="0.5760416666666667" />
+        <entry key="presentation/src/main/res/layout/fragment_home_holder_post_include_images.xml" value="0.5760416666666667" />
         <entry key="presentation/src/main/res/layout/fragment_more.xml" value="0.29635416666666664" />
         <entry key="presentation/src/main/res/layout/fragment_settings.xml" value="0.3651041666666667" />
         <entry key="presentation/src/main/res/layout/fragment_settings_item.xml" value="0.3104166666666667" />

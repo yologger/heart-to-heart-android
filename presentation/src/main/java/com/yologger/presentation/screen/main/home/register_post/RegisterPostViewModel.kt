@@ -50,11 +50,15 @@ class RegisterPostViewModel @Inject constructor(
     }
 
     fun post() {
+        _liveIsLoading.value = true
         val params = RegisterPostUseCase.Params(content = liveContent.value!!, imageUris = _liveImageUris.value!!)
         registerPostUseCase.execute(params)
             .subscribeBy {
+                _liveIsLoading.value = false
                 when(it) {
-                    is RegisterPostResult.SUCCESS -> _liveEvent.value = Event.SUCCESS
+                    is RegisterPostResult.SUCCESS -> {
+                        _liveEvent.value = Event.SUCCESS
+                    }
                     is RegisterPostResult.FAILURE -> {
                         when (it.error) {
                             RegisterPostResultError.CLIENT_ERROR -> _liveEvent.value = Event.FAILURE(Error.CLIENT_ERROR)
