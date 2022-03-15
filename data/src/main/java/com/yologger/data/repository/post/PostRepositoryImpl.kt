@@ -2,12 +2,19 @@ package com.yologger.data.repository.post
 
 import android.net.Uri
 import com.google.gson.Gson
+import com.orhanobut.logger.Logger
+import com.yologger.data.datasource.api.auth.model.verify_access_token.VerifyAccessTokenFailureResponse
 import com.yologger.data.datasource.api.post.PostService
+import com.yologger.data.datasource.api.post.model.get_posts.GetPostsFailureCode
+import com.yologger.data.datasource.api.post.model.get_posts.GetPostsFailureResponse
 import com.yologger.data.datasource.api.post.model.register_post.RegisterPostFailureCode
 import com.yologger.data.datasource.api.post.model.register_post.RegisterPostFailureResponse
 import com.yologger.data.datasource.pref.SessionStore
 import com.yologger.data.util.FileUtil
 import com.yologger.domain.repository.PostRepository
+import com.yologger.domain.usecase.post.get_posts.GetPostsResult
+import com.yologger.domain.usecase.post.get_posts.GetPostsResultData
+import com.yologger.domain.usecase.post.get_posts.GetPostsResultError
 import com.yologger.domain.usecase.post.register_post.RegisterPostResult
 import com.yologger.domain.usecase.post.register_post.RegisterPostResultData
 import com.yologger.domain.usecase.post.register_post.RegisterPostResultError
@@ -51,11 +58,34 @@ class PostRepositoryImpl @Inject constructor(
                     }
                 }
             } catch (e: Exception) {
-                val error = e
                 return RegisterPostResult.FAILURE(RegisterPostResultError.NETWORK_ERROR)
             }
         } ?: run {
             return RegisterPostResult.FAILURE(RegisterPostResultError.NO_SESSION)
+        }
+    }
+
+    override fun getPosts(page: Int, size: Int): GetPostsResult {
+        try {
+            val response = postService.getPosts(page, size).execute()
+            if (response.isSuccessful) {
+                val successResponse = response.body()!!
+                val postDataList = successResponse.posts.map { it.toData() }
+                val data = GetPostsResultData(size = successResponse.size, posts = postDataList)
+                return GetPostsResult.Success(data = data)
+            } else {
+                val failureResponse = gson.fromJson(response.errorBody()!!.string(), GetPostsFailureResponse::class.java)
+                return when (failureResponse.code) {
+                    GetPostsFailureCode.NOT_FOUND -> GetPostsResult.Failure(error = GetPostsResultError.CLIENT_ERROR)
+                    GetPostsFailureCode.BEARER_NOT_INCLUDED -> GetPostsResult.Failure(error = GetPostsResultError.CLIENT_ERROR)
+                    GetPostsFailureCode.ILLEGAL_STATE -> GetPostsResult.Failure(error = GetPostsResultError.CLIENT_ERROR)
+                    GetPostsFailureCode.INVALID_INPUT_VALUE -> GetPostsResult.Failure(error = GetPostsResultError.CLIENT_ERROR)
+                    GetPostsFailureCode.MISSING_AUTHORIZATION_HEADER -> GetPostsResult.Failure(error = GetPostsResultError.CLIENT_ERROR)
+                }
+            }
+        } catch (e: Exception) {
+            Logger.w("error: ${e.localizedMessage}")
+            return GetPostsResult.Failure(error = GetPostsResultError.NETWORK_ERROR)
         }
     }
 }

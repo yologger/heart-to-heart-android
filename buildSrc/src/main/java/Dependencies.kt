@@ -19,6 +19,7 @@ object Dependencies {
     const val TED_IMAGE_PICKER = "io.github.ParkSangGwon:tedimagepicker:${Versions.TED_IMAGE_PICKER}"
     const val GLIDE = "com.github.bumptech.glide:glide:${Versions.GLIDE}"
     const val GLIDE_COMPILER = "com.github.bumptech.glide:compiler:${Versions.GLIDE}"
+    const val SLIDER_GLIDE = "com.ouattararomuald:slider-glide:${Versions.SLIDER_GLIDE}"
 }
 
 object TestDependencies {
