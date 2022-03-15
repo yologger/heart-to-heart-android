@@ -9,4 +9,5 @@ data class ReissueTokenSuccessResponse constructor(
     @SerializedName("name") val name: String,
     @SerializedName("nickname") val nickname: String,
     @SerializedName("email") val email: String,
+    @SerializedName("avatarUrl") val avatarUrl: String? = null,
 )

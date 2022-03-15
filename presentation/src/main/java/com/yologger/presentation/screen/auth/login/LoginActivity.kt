@@ -9,6 +9,8 @@ import androidx.databinding.DataBindingUtil
 import com.yologger.presentation.R
 import com.yologger.presentation.component.LoadingDialog
 import com.yologger.presentation.databinding.ActivityLoginBinding
+import com.yologger.presentation.screen.auth.join.JoinActivity
+import com.yologger.presentation.screen.auth.verify_email.VerifyEmailActivity
 import com.yologger.presentation.screen.main.MainActivity
 import com.yologger.presentation.util.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -69,7 +71,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun onJoinButtonClicked(view: View) {
-        val intent = Intent(this, LoginActivity::class.java)
+        val intent = Intent(this, VerifyEmailActivity::class.java)
         startActivity(intent)
     }
 }

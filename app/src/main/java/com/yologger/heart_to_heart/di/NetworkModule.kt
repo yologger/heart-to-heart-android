@@ -1,14 +1,17 @@
 package com.yologger.heart_to_heart.di
 
+import com.google.gson.Gson
+import com.yologger.common.Constant
+import com.yologger.data.datasource.api.AuthInterceptor
 import com.yologger.data.datasource.api.auth.AuthService
-import com.yologger.data.util.EnumConverterFactory
+import com.yologger.data.datasource.api.post.PostService
+import com.yologger.data.datasource.pref.SessionStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
@@ -18,25 +21,47 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun providesOkHttpClient() : OkHttpClient {
+    fun providesAuthInterceptor(
+        sessionStore: SessionStore,
+        gson: Gson
+    ): AuthInterceptor = AuthInterceptor(sessionStore, gson)
+
+    @Singleton
+    @OkHttpClientWithAuthInterceptor
+    @Provides
+    fun providesOkHttpClientWithAuthFilter(authInterceptor: AuthInterceptor): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor(authInterceptor)
+            .build()
+    }
+
+    @Singleton
+    @OkHttpClientWithoutAnyInterceptor
+    @Provides
+    fun providesOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .build()
     }
 
     @Singleton
     @Provides
-    fun providesRetrofit(okHttpClient: OkHttpClient) : Retrofit {
+    fun providesAuthService(@OkHttpClientWithoutAnyInterceptor okHttpClient: OkHttpClient): AuthService {
         return Retrofit.Builder()
             .client(okHttpClient)
-            // .baseUrl("http://10.0.2.2:8080")
-            .baseUrl("http://172.30.1.29:8080")
+            .baseUrl(Constant.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+            .create(AuthService::class.java)
     }
 
     @Singleton
     @Provides
-    fun providesAuthService(retrofit: Retrofit): AuthService {
-        return retrofit.create(AuthService::class.java)
+    fun providesPostService(@OkHttpClientWithAuthInterceptor okHttpClient: OkHttpClient): PostService {
+        return Retrofit.Builder()
+            .client(okHttpClient)
+            .baseUrl(Constant.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(PostService::class.java)
     }
 }

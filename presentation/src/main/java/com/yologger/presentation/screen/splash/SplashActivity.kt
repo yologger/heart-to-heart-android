@@ -27,8 +27,14 @@ class SplashActivity : AppCompatActivity() {
                 }
                 is SplashViewModel.State.FAILURE -> {
                     when(it.error) {
-                        SplashViewModel.ERROR.CLIENT_ERROR -> showToast("Client Error")
-                        SplashViewModel.ERROR.NETWORK_ERROR -> showToast("Network Error")
+                        SplashViewModel.ERROR.CLIENT_ERROR -> {
+                            showToast("Client Error")
+                            finish()
+                        }
+                        SplashViewModel.ERROR.NETWORK_ERROR -> {
+                            showToast("Network Error")
+                            finish()
+                        }
                     }
                 }
             }

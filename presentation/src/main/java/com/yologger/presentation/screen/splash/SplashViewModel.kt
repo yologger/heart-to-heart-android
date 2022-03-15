@@ -1,11 +1,9 @@
 package com.yologger.presentation.screen.splash
 
-import com.orhanobut.logger.Logger
 import com.yologger.domain.usecase.auth.verify_access_token.VerifyAccessTokenResult
 import com.yologger.domain.usecase.auth.verify_access_token.VerifyAccessTokenResultData
 import com.yologger.domain.usecase.auth.verify_access_token.VerifyAccessTokenResultError
 import com.yologger.domain.usecase.auth.verify_access_token.VerifyAccessTokenUseCase
-import com.yologger.presentation.screen.auth.verify_email.VerifyEmailViewModel
 import com.yologger.presentation.screen.base.BaseViewModel
 import com.yologger.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel

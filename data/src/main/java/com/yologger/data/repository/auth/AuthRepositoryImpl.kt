@@ -46,9 +46,6 @@ class AuthRepositoryImpl @Inject constructor(
     private val sessionStore: SessionStore
 ) : AuthRepository {
 
-    private var session: Session? = null
-        get() { return sessionStore.getSession() }
-
     override fun emailVerificationCode(email: String): EmailVerificationCodeResult {
         return try {
             val request = EmailVerificationCodeRequest(email)
@@ -113,7 +110,7 @@ class AuthRepositoryImpl @Inject constructor(
             if (response.isSuccessful) {
                 val successResponse = response.body()!!
                 val session = Session(memberId = successResponse.memberId, email = email, name = successResponse.name, nickname = successResponse.nickname, accessToken = successResponse.accessToken, refreshToken = successResponse.refreshToken)
-                saveSession(session)
+                sessionStore.putSession(session)
                 LoginResult.SUCCESS
             } else {
                 val failureResponse = gson.fromJson(response.errorBody()!!.string(), LoginFailureResponse::class.java)
@@ -130,20 +127,20 @@ class AuthRepositoryImpl @Inject constructor(
 
     override fun logout(): LogoutResult {
         return try {
-            session?.let {
+            sessionStore.getSession()?.let {
                 val response = authService.logout("Bearer ${it.accessToken}").execute()
                 if (response.isSuccessful) {
-                    clearSession()
+                    sessionStore.deleteSession()
                     LogoutResult.SUCCESS
                 } else {
                     val failureResponse = gson.fromJson(response.errorBody()!!.string(), LogoutFailureResponse::class.java)
                     when (failureResponse.code) {
                         LogoutFailureCode.INVALID_ACCESS_TOKEN -> {
-                            clearSession()
+                            sessionStore.deleteSession()
                             LogoutResult.FAILURE(LogoutResultError.INVALID_ACCESS_TOKEN)
                         }
                         LogoutFailureCode.EXPIRED_ACCESS_TOKEN -> {
-                            clearSession()
+                            sessionStore.deleteSession()
                             LogoutResult.FAILURE(LogoutResultError.INVALID_ACCESS_TOKEN)
                         }
                         else -> LogoutResult.FAILURE(LogoutResultError.CLIENT_ERROR)
@@ -158,7 +155,7 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override fun verifyAccessToken(): VerifyAccessTokenResponse {
-        session?.let {
+        sessionStore.getSession()?.let {
             return try {
                 val response = authService.verifyAccessToken("Bearer ${it.accessToken}").execute()
                 if (response.isSuccessful) {
@@ -181,14 +178,14 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override fun reissueToken(): ReissueTokenResponse {
-        session?.let {
+        sessionStore.getSession()?.let {
             try {
-                val request = ReissueTokenRequest(memberId = session!!.memberId, refreshToken = session!!.refreshToken)
+                val request = ReissueTokenRequest(memberId = it.memberId, refreshToken = it!!.refreshToken)
                 val response = authService.reissueToken(request).execute()
                 return if (response.isSuccessful) {
                     val successResponse = response.body()!!
                     val newSession = Session(memberId = successResponse.memberId, name = successResponse.name, nickname = successResponse.nickname, accessToken = successResponse.accessToken, refreshToken = successResponse.refreshToken, email = successResponse.email)
-                    saveSession(newSession)
+                    sessionStore.putSession(newSession)
                     ReissueTokenResponse.SUCCESS
                 } else {
                     val failureResponse = gson.fromJson(response.errorBody()!!.string(), ReissueTokenFailureResponse::class.java)
@@ -205,15 +202,5 @@ class AuthRepositoryImpl @Inject constructor(
         } ?: run {
             return ReissueTokenResponse.FAILURE(ReissueTokenResponseError.EMPTY_REFRESH_TOKEN)
         }
-    }
-
-    private fun saveSession(session: Session) {
-        sessionStore.putSession(session)
-        this.session = session
-    }
-
-    private fun clearSession() {
-        sessionStore.deleteSession()
-        this.session = null
     }
 }

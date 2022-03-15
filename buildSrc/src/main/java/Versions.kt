@@ -16,6 +16,8 @@ object Versions {
     const val RETROFIT2 = "2.9.0"
     const val RETROFIT_RXJAVA3_ADAPTER = "2.9.0"
     const val RETROFIT_GSON_CONVERTER = "2.9.0"
+    const val TED_IMAGE_PICKER = "1.2.4"
+    const val GLIDE = "4.12.0"
 }
 
 object TestVersions {
