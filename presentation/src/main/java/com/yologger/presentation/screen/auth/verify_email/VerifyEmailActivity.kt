@@ -62,10 +62,11 @@ class VerifyEmailActivity : AppCompatActivity() {
                 }
                 is VerifyEmailViewModel.State.EMAIL_VERIFICATION_CODE_FAILURE -> {
                     when(it.error) {
-                        VerifyEmailViewModel.EMAIL_VERIFICATION_CODE_ERROR.UNKNOWN_SERVER_ERROR -> showToast("Unknown server error")
-                        VerifyEmailViewModel.EMAIL_VERIFICATION_CODE_ERROR.NETWORK_ERROR -> showToast("Network error")
-                        VerifyEmailViewModel.EMAIL_VERIFICATION_CODE_ERROR.MEMBER_ALREADY_EXIST -> showToast("User already exists")
-                        VerifyEmailViewModel.EMAIL_VERIFICATION_CODE_ERROR.INVALID_INPUT_VALUE -> showToast("Invalid inputs")
+                        VerifyEmailViewModel.EMAIL_VERIFICATION_CODE_ERROR.NETWORK_ERROR -> showToast("Network Error")
+                        VerifyEmailViewModel.EMAIL_VERIFICATION_CODE_ERROR.MAIL_ERROR -> showToast("Mail Server Error")
+                        VerifyEmailViewModel.EMAIL_VERIFICATION_CODE_ERROR.CLIENT_ERROR -> showToast("Client Request Error")
+                        VerifyEmailViewModel.EMAIL_VERIFICATION_CODE_ERROR.MEMBER_ALREADY_EXIST -> showToast("Member Already Exists")
+                        VerifyEmailViewModel.EMAIL_VERIFICATION_CODE_ERROR.INVALID_PARAMS -> showToast("Invalid Parameters")
                     }
                 }
                 is VerifyEmailViewModel.State.CONFIRM_VERIFICATION_CODE_SUCCESS -> {
@@ -76,11 +77,11 @@ class VerifyEmailActivity : AppCompatActivity() {
 
                 is VerifyEmailViewModel.State.CONFIRM_VERIFICATION_CODE_FAILURE -> {
                     when(it.error) {
-                        VerifyEmailViewModel.CONFIRM_VERIFICATION_CODE_ERROR.UNKNOWN_SERVER_ERROR -> showToast("Unknown server error")
-                        VerifyEmailViewModel.CONFIRM_VERIFICATION_CODE_ERROR.NETWORK_ERROR -> showToast("Network error")
-                        VerifyEmailViewModel.CONFIRM_VERIFICATION_CODE_ERROR.INVALID_EMAIL -> showToast("Invalid email")
-                        VerifyEmailViewModel.CONFIRM_VERIFICATION_CODE_ERROR.EXPIRED_VERIFICATION_CODE -> showToast("Expired verification code")
-                        VerifyEmailViewModel.CONFIRM_VERIFICATION_CODE_ERROR.INVALID_VERIFICATION_CODE -> showToast("Invalid verification code")
+                        VerifyEmailViewModel.CONFIRM_VERIFICATION_CODE_ERROR.CLIENT_ERROR -> showToast("Client Request Error")
+                        VerifyEmailViewModel.CONFIRM_VERIFICATION_CODE_ERROR.NETWORK_ERROR -> showToast("Network Error")
+                        VerifyEmailViewModel.CONFIRM_VERIFICATION_CODE_ERROR.INVALID_EMAIL -> showToast("Invalid Email")
+                        VerifyEmailViewModel.CONFIRM_VERIFICATION_CODE_ERROR.EXPIRED_VERIFICATION_CODE -> showToast("Expired Verification Code")
+                        VerifyEmailViewModel.CONFIRM_VERIFICATION_CODE_ERROR.INVALID_VERIFICATION_CODE -> showToast("Invalid Verification Code")
                     }
                 }
             }

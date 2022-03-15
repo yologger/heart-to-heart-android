@@ -3,12 +3,13 @@ package com.yologger.data.repository.auth
 import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
 import com.yologger.data.datasource.api.auth.AuthService
-import com.yologger.data.datasource.api.auth.EmailVerificationCodeResponse
-import com.yologger.data.datasource.api.auth.JoinResponse
+import com.yologger.data.datasource.api.auth.model.email_verification_code.EmailVerificationCodeResponse
+import com.yologger.data.datasource.api.auth.model.join.JoinResponse
+import com.yologger.data.datasource.pref.SessionStore
 import com.yologger.data.util.MockitoHelper.anyObject
 import com.yologger.domain.repository.AuthRepository
-import com.yologger.domain.usecase.email_verification_code.EmailVerificationCodeResult
-import com.yologger.domain.usecase.join.JoinResult
+import com.yologger.domain.usecase.auth.email_verification_code.EmailVerificationCodeResult
+import com.yologger.domain.usecase.auth.join.JoinResult
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -24,6 +25,9 @@ class AuthRepositoryImplTest {
 
     @Mock
     lateinit var mockAuthService: AuthService
+
+    @Mock
+    lateinit var sessionStore: SessionStore
 
     lateinit var authRepository: AuthRepository
 
@@ -43,7 +47,7 @@ class AuthRepositoryImplTest {
         `when`(mockAuthService.emailVerificationCode(anyObject()))
             .thenReturn(Calls.response(EmailVerificationCodeResponse("sented")))
 
-        authRepository = AuthRepositoryImpl(mockAuthService, Gson())
+        authRepository = AuthRepositoryImpl(mockAuthService, Gson(), sessionStore)
 
         // When
         val result = authRepository.emailVerificationCode("paul")
@@ -58,7 +62,7 @@ class AuthRepositoryImplTest {
         `when`(mockAuthService.join(anyObject()))
             .thenReturn(Calls.response(JoinResponse("1")))
 
-        authRepository = AuthRepositoryImpl(mockAuthService, Gson())
+        authRepository = AuthRepositoryImpl(mockAuthService, Gson(), sessionStore)
 
         // When
         val result = authRepository.join("ronaldo@gmail.com", "ronaldo", "cr7", "123asd1")

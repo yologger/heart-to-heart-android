@@ -3,17 +3,15 @@ package com.yologger.presentation.screen.auth.verify_email
 import android.text.TextUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.orhanobut.logger.Logger
-import com.yologger.domain.usecase.confirm_verification_code.ConfirmVerificationCodeError
-import com.yologger.domain.usecase.confirm_verification_code.ConfirmVerificationCodeResult
-import com.yologger.domain.usecase.confirm_verification_code.ConfirmVerificationCodeUseCase
-import com.yologger.domain.usecase.email_verification_code.EmailVerificationCodeError
-import com.yologger.domain.usecase.email_verification_code.EmailVerificationCodeResult
-import com.yologger.domain.usecase.email_verification_code.EmailVerificationCodeUseCase
+import com.yologger.domain.usecase.auth.confirm_verification_code.ConfirmVerificationCodeResultError
+import com.yologger.domain.usecase.auth.confirm_verification_code.ConfirmVerificationCodeResult
+import com.yologger.domain.usecase.auth.confirm_verification_code.ConfirmVerificationCodeUseCase
+import com.yologger.domain.usecase.auth.email_verification_code.EmailVerificationCodeResultError
+import com.yologger.domain.usecase.auth.email_verification_code.EmailVerificationCodeResult
+import com.yologger.domain.usecase.auth.email_verification_code.EmailVerificationCodeUseCase
 import com.yologger.presentation.screen.base.BaseViewModel
 import com.yologger.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import javax.inject.Inject
@@ -32,15 +30,16 @@ class VerifyEmailViewModel @Inject constructor(
     }
 
     enum class EMAIL_VERIFICATION_CODE_ERROR {
-        UNKNOWN_SERVER_ERROR,
         NETWORK_ERROR,
+        MAIL_ERROR,
+        CLIENT_ERROR,
         MEMBER_ALREADY_EXIST,
-        INVALID_INPUT_VALUE,
+        INVALID_PARAMS
     }
 
     enum class CONFIRM_VERIFICATION_CODE_ERROR {
-        UNKNOWN_SERVER_ERROR,
         NETWORK_ERROR,
+        CLIENT_ERROR,
         INVALID_EMAIL,
         EXPIRED_VERIFICATION_CODE,
         INVALID_VERIFICATION_CODE,
@@ -73,10 +72,11 @@ class VerifyEmailViewModel @Inject constructor(
                         }
                         is EmailVerificationCodeResult.FAILURE -> {
                            when (result.error) {
-                               EmailVerificationCodeError.INVALID_INPUT_VALUE -> _liveState.value = State.EMAIL_VERIFICATION_CODE_FAILURE(EMAIL_VERIFICATION_CODE_ERROR.INVALID_INPUT_VALUE)
-                               EmailVerificationCodeError.MEMBER_ALREADY_EXISTS -> _liveState.value = State.EMAIL_VERIFICATION_CODE_FAILURE(EMAIL_VERIFICATION_CODE_ERROR.MEMBER_ALREADY_EXIST)
-                               EmailVerificationCodeError.NETWORK_ERROR -> _liveState.value = State.EMAIL_VERIFICATION_CODE_FAILURE(EMAIL_VERIFICATION_CODE_ERROR.NETWORK_ERROR)
-                               EmailVerificationCodeError.UNKNOWN_SERVER_ERROR -> _liveState.value = State.EMAIL_VERIFICATION_CODE_FAILURE(EMAIL_VERIFICATION_CODE_ERROR.UNKNOWN_SERVER_ERROR)
+                               EmailVerificationCodeResultError.MAIL_ERROR -> _liveState.value = State.EMAIL_VERIFICATION_CODE_FAILURE(EMAIL_VERIFICATION_CODE_ERROR.MAIL_ERROR)
+                               EmailVerificationCodeResultError.CLIENT_ERROR -> _liveState.value = State.EMAIL_VERIFICATION_CODE_FAILURE(EMAIL_VERIFICATION_CODE_ERROR.CLIENT_ERROR)
+                               EmailVerificationCodeResultError.MEMBER_ALREADY_EXIST -> _liveState.value = State.EMAIL_VERIFICATION_CODE_FAILURE(EMAIL_VERIFICATION_CODE_ERROR.MEMBER_ALREADY_EXIST)
+                               EmailVerificationCodeResultError.INVALID_PARAMS -> _liveState.value = State.EMAIL_VERIFICATION_CODE_FAILURE(EMAIL_VERIFICATION_CODE_ERROR.INVALID_PARAMS)
+                               EmailVerificationCodeResultError.NETWORK_ERROR -> _liveState.value = State.EMAIL_VERIFICATION_CODE_FAILURE(EMAIL_VERIFICATION_CODE_ERROR.NETWORK_ERROR)
                            } 
                         }
                     }                         
@@ -98,11 +98,11 @@ class VerifyEmailViewModel @Inject constructor(
                     }
                     is ConfirmVerificationCodeResult.FAILURE -> {
                         when (result.error) {
-                            ConfirmVerificationCodeError.EXPIRED_VERIFICATION_CODE -> _liveState.value = State.CONFIRM_VERIFICATION_CODE_FAILURE(CONFIRM_VERIFICATION_CODE_ERROR.EXPIRED_VERIFICATION_CODE)
-                            ConfirmVerificationCodeError.INVALID_EMAIL -> _liveState.value = State.CONFIRM_VERIFICATION_CODE_FAILURE(CONFIRM_VERIFICATION_CODE_ERROR.INVALID_EMAIL)
-                            ConfirmVerificationCodeError.INVALID_VERIFICATION_CODE -> _liveState.value = State.CONFIRM_VERIFICATION_CODE_FAILURE(CONFIRM_VERIFICATION_CODE_ERROR.INVALID_VERIFICATION_CODE)
-                            ConfirmVerificationCodeError.NETWORK_ERROR ->  _liveState.value = State.CONFIRM_VERIFICATION_CODE_FAILURE(CONFIRM_VERIFICATION_CODE_ERROR.NETWORK_ERROR)
-                            ConfirmVerificationCodeError.UNKNOWN_SERVER_ERROR ->  _liveState.value = State.CONFIRM_VERIFICATION_CODE_FAILURE(CONFIRM_VERIFICATION_CODE_ERROR.UNKNOWN_SERVER_ERROR)
+                            ConfirmVerificationCodeResultError.EXPIRED_VERIFICATION_CODE -> _liveState.value = State.CONFIRM_VERIFICATION_CODE_FAILURE(CONFIRM_VERIFICATION_CODE_ERROR.EXPIRED_VERIFICATION_CODE)
+                            ConfirmVerificationCodeResultError.INVALID_EMAIL -> _liveState.value = State.CONFIRM_VERIFICATION_CODE_FAILURE(CONFIRM_VERIFICATION_CODE_ERROR.INVALID_EMAIL)
+                            ConfirmVerificationCodeResultError.INVALID_VERIFICATION_CODE -> _liveState.value = State.CONFIRM_VERIFICATION_CODE_FAILURE(CONFIRM_VERIFICATION_CODE_ERROR.INVALID_VERIFICATION_CODE)
+                            ConfirmVerificationCodeResultError.NETWORK_ERROR ->  _liveState.value = State.CONFIRM_VERIFICATION_CODE_FAILURE(CONFIRM_VERIFICATION_CODE_ERROR.NETWORK_ERROR)
+                            ConfirmVerificationCodeResultError.CLIENT_ERROR ->  _liveState.value = State.CONFIRM_VERIFICATION_CODE_FAILURE(CONFIRM_VERIFICATION_CODE_ERROR.CLIENT_ERROR)
                         }
                     }
                 }

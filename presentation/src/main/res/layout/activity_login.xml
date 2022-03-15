@@ -30,12 +30,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Email"
+            app:errorText="@{viewModel.liveEmailErrorMessage}"
+            app:endIconMode="clear_text"
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textInputEditTextEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@={viewModel.liveEmail}"
+                android:onTextChanged="@{viewModel.onTextFieldEmailChanged}"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -44,14 +48,18 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:passwordToggleEnabled="true"
             android:hint="Password"
+            app:errorText="@{viewModel.livePasswordErrorMessage}"
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textInputEditTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress" />
+                android:text="@={viewModel.livePassword}"
+                android:onTextChanged="@{viewModel.onTextFieldPasswordChanged}"
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -65,9 +73,11 @@
 
         <Button
             android:id="@+id/buttonLogin"
+            android:enabled="@{viewModel.liveAreAllInputsValid}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/padding_md"
+            android:onClick="@{() -> viewModel.login()}"
             android:text="LOG IN" />
 
         <Button

@@ -11,12 +11,14 @@ import com.yologger.presentation.R
 import com.yologger.presentation.screen.main.follow.FollowFragment
 import com.yologger.presentation.screen.main.home.HomeFragment
 import com.yologger.presentation.screen.main.more.MoreFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener, NavigationBarView.OnItemReselectedListener  {
 
     private val frameLayout: FrameLayout by lazy { findViewById(R.id.activity_main_frameLayout) }
     private val bottomNavigationView: BottomNavigationView by lazy { findViewById(R.id.activity_main_bottomNavigationView) }
-    
+
     private val homeFragment: HomeFragment by lazy { HomeFragment.newInstance() }
     private val followFragment: FollowFragment by lazy { FollowFragment.newInstance() }
     private val moreFragment: MoreFragment by lazy { MoreFragment.newInstance() }

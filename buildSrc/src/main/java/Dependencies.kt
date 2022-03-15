@@ -16,6 +16,9 @@ object Dependencies {
     const val RETROFIT2 = "com.squareup.retrofit2:retrofit:${Versions.RETROFIT2}"
     const val RETROFIT_RXJAVA3_ADAPTER = "com.squareup.retrofit2:adapter-rxjava3:${Versions.RETROFIT_RXJAVA3_ADAPTER}"
     const val RETROFIT_GSON_CONVERTER = "com.squareup.retrofit2:converter-gson:${Versions.RETROFIT_GSON_CONVERTER}"
+    const val TED_IMAGE_PICKER = "io.github.ParkSangGwon:tedimagepicker:${Versions.TED_IMAGE_PICKER}"
+    const val GLIDE = "com.github.bumptech.glide:glide:${Versions.GLIDE}"
+    const val GLIDE_COMPILER = "com.github.bumptech.glide:compiler:${Versions.GLIDE}"
 }
 
 object TestDependencies {

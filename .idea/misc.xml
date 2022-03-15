@@ -19,6 +19,8 @@
         <entry key="presentation/src/main/res/layout/activity_join.xml" value="0.25" />
         <entry key="presentation/src/main/res/layout/activity_login.xml" value="0.2740740740740741" />
         <entry key="presentation/src/main/res/layout/activity_main.xml" value="0.31851851851851853" />
+        <entry key="presentation/src/main/res/layout/activity_register_post.xml" value="0.18518518518518517" />
+        <entry key="presentation/src/main/res/layout/activity_register_post_holder_selected_image.xml" value="0.403125" />
         <entry key="presentation/src/main/res/layout/activity_splash.xml" value="0.32864583333333336" />
         <entry key="presentation/src/main/res/layout/activity_theme.xml" value="0.3453125" />
         <entry key="presentation/src/main/res/layout/activity_theme_item.xml" value="0.3453125" />
@@ -34,6 +36,7 @@
         <entry key="presentation/src/main/res/layout/fragment_verify_email.xml" value="0.39351851851851855" />
         <entry key="presentation/src/main/res/menu/activity_join_menu_toolbar.xml" value="0.5484375" />
         <entry key="presentation/src/main/res/menu/activity_main_menu_bottom_navigation_view.xml" value="0.3651041666666667" />
+        <entry key="presentation/src/main/res/menu/activity_register_post_toolbar.xml" value="0.5009259259259259" />
         <entry key="presentation/src/main/res/menu/activity_verify_email_menu_toolbar.xml" value="0.403125" />
       </map>
     </option>
