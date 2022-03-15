@@ -6,5 +6,5 @@ data class RegisterPostSuccessResponse constructor(
     @SerializedName("writer_id") val writerId: Long,
     @SerializedName("post_id") val postId: Long,
     @SerializedName("content") val content: String,
-    @SerializedName("image_urls") val imageUrls: List<String>
+    @SerializedName("image_urls") val imageUrls: List<String>? = null
 )

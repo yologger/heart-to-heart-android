@@ -1,13 +1,10 @@
 package com.yologger.data.repository.post
 
 import android.net.Uri
-import android.util.Log
 import com.google.gson.Gson
-import com.orhanobut.logger.Logger
 import com.yologger.data.datasource.api.post.PostService
 import com.yologger.data.datasource.api.post.model.register_post.RegisterPostFailureCode
 import com.yologger.data.datasource.api.post.model.register_post.RegisterPostFailureResponse
-import com.yologger.data.datasource.pref.Session
 import com.yologger.data.datasource.pref.SessionStore
 import com.yologger.data.util.FileUtil
 import com.yologger.domain.repository.PostRepository
@@ -33,12 +30,8 @@ class PostRepositoryImpl @Inject constructor(
             try {
                 val response = postService.registerPost(memberId = memberIdBody, content = contentBody, images = imagesBody).execute()
                 if (response.isSuccessful) {
-                    val data = RegisterPostResultData(
-                        writerId = response.body()!!.writerId,
-                        postId = response.body()!!.postId,
-                        content = response.body()!!.content,
-                        imageUrls = response.body()!!.imageUrls,
-                    )
+                    val successResponse = response.body()!!
+                    val data = RegisterPostResultData(writerId = successResponse.writerId, postId = successResponse.postId, content = successResponse.content, imageUrls = successResponse.imageUrls)
                     return RegisterPostResult.SUCCESS(data)
                 } else {
                     val failureResponse = gson.fromJson(response.errorBody()!!.string(), RegisterPostFailureResponse::class.java)
@@ -58,6 +51,7 @@ class PostRepositoryImpl @Inject constructor(
                     }
                 }
             } catch (e: Exception) {
+                val error = e
                 return RegisterPostResult.FAILURE(RegisterPostResultError.NETWORK_ERROR)
             }
         } ?: run {

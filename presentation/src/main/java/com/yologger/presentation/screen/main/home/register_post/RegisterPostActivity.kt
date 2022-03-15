@@ -16,7 +16,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.orhanobut.logger.Logger
 import com.yologger.presentation.R
+import com.yologger.presentation.component.LoadingDialog
 import com.yologger.presentation.databinding.ActivityRegisterPostBinding
+import com.yologger.presentation.util.navigateToLogin
+import com.yologger.presentation.util.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import gun0912.tedimagepicker.builder.TedImagePicker
 
@@ -30,6 +33,7 @@ class RegisterPostActivity : AppCompatActivity() {
     private val viewModel: RegisterPostViewModel by viewModels()
     private lateinit var binding: ActivityRegisterPostBinding
     private lateinit var recyclerViewAdapter: SelectedImagesRVAdapter
+    private var loadingDialog: LoadingDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,12 +71,45 @@ class RegisterPostActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
+        viewModel.liveIsLoading.observe(this) {
+            if (it) {
+                loadingDialog = LoadingDialog(this)
+                loadingDialog?.show("Loading")
+            } else {
+                loadingDialog?.dismiss()
+                loadingDialog = null
+            }
+        }
+
         viewModel.liveImageUris.observe(this) { imageUris ->
             recyclerViewAdapter.updateImageUris(imageUris)
         }
 
         viewModel.liveEvent.observe(this) {
-            Logger.w("event: ${it.toString()}")
+            when(it) {
+                is RegisterPostViewModel.Event.SUCCESS -> {
+                    finish()
+                }
+                is RegisterPostViewModel.Event.FAILURE -> {
+                    when(it.error) {
+                        RegisterPostViewModel.Error.CLIENT_ERROR -> {
+                            showToast("Client Error")
+                            navigateToLogin()
+                        }
+                        RegisterPostViewModel.Error.NETWORK_ERROR -> {
+                            showToast("Network Error")
+                            navigateToLogin()
+                        }
+                        RegisterPostViewModel.Error.FILE_UPLOAD_ERROR -> {
+                            showToast("File Upload Error")
+                            navigateToLogin()
+                        }
+                        RegisterPostViewModel.Error.NO_SESSION -> {
+                            navigateToLogin()
+                        }
+                    }
+                }
+            }
         }
     }
 

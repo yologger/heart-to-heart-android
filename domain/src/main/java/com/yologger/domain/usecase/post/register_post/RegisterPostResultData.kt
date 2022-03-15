@@ -4,5 +4,5 @@ data class RegisterPostResultData constructor(
     val writerId: Long,
     val postId: Long,
     val content: String,
-    val imageUrls: List<String>
+    val imageUrls: List<String>? = null
 )
