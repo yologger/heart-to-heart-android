@@ -1,8 +1,6 @@
-package com.yologger.heart_to_heart.di
+package com.yologger.data.di
 
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonDeserializer
 import com.yologger.common.Constant
 import com.yologger.data.datasource.api.AuthInterceptor
 import com.yologger.data.datasource.api.auth.AuthService
@@ -15,7 +13,6 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.time.LocalDateTime
 import javax.inject.Singleton
 
 @Module
@@ -60,7 +57,6 @@ class NetworkModule {
     @Singleton
     @Provides
     fun providesPostService(@OkHttpClientWithAuthInterceptor okHttpClient: OkHttpClient): PostService {
-
         return Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(Constant.BASE_URL)

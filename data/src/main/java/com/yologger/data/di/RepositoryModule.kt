@@ -1,4 +1,4 @@
-package com.yologger.heart_to_heart.di
+package com.yologger.data.di
 
 import com.yologger.data.repository.auth.AuthRepositoryImpl
 import com.yologger.data.repository.post.PostRepositoryImpl

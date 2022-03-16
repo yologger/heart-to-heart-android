@@ -26,7 +26,8 @@ android {
         jvmTarget = '1.8'
     }
     hilt {
-        enableExperimentalClasspathAggregation = true
+        // enableExperimentalClasspathAggregation = true
+        enableAggregatingTask = true
     }
 }
 
@@ -38,6 +39,10 @@ dependencies {
     implementation Dependencies.LOGGER
     implementation Dependencies.HILT_ANDROID
     kapt Dependencies.HILT_ANDROID_COMPILER
+//    testImplementation TestDependencies.HILT_TESTING
+//    kaptTest TestDependencies.HILT_ANDROID_COMPILER
+    androidTestImplementation TestDependencies.HILT_TESTING
+    kaptAndroidTest TestDependencies.HILT_ANDROID_COMPILER
     implementation Dependencies.RXJAVA
     implementation Dependencies.RXKOTLIN
     implementation Dependencies.RXANDROID
@@ -50,4 +55,5 @@ dependencies {
     testImplementation TestDependencies.MOCKITO_CORE
     testImplementation TestDependencies.MOCKITO_INLINE
     androidTestImplementation AndroidTestDependencies.MOCKITO_ANDROID
+    implementation Dependencies.GUAVA
 }
