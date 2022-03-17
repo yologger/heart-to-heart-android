@@ -49,6 +49,8 @@ class RegisterPostViewModel @Inject constructor(
         _liveImageUris.value = imageUris
     }
 
+    fun getCurrentImagesCount() = imageUris.size
+
     fun post() {
         _liveIsLoading.value = true
         val params = RegisterPostUseCase.Params(content = liveContent.value!!, imageUris = _liveImageUris.value!!)

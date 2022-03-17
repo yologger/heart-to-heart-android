@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.provider.Settings
 import android.view.View
 import android.webkit.MimeTypeMap
@@ -126,27 +127,69 @@ class RegisterPostActivity : AppCompatActivity() {
                 }
             }
         }
+
+        viewModel.liveContent.observe(this) {
+            val button = binding.toolbar.menu.findItem(R.id.activity_register_post_menu_toolbar_action_done)
+            button.isEnabled = !it.isNullOrBlank()
+        }
     }
 
     fun onOpenGalleryButtonClicked(view: View) {
         TedImagePicker.with(this@RegisterPostActivity)
             .image()
             .startMultiImage { imageUris ->
-                // 파일 타입 검증
-                val mimeTypeMap = MimeTypeMap.getSingleton()
-                val extensions = listOf("png", "jpg")
-                val mimeTypeList = extensions.map { extension ->
-                    mimeTypeMap.getMimeTypeFromExtension(extension)
-                }
-                val validImageUris = imageUris.filter {
-                    mimeTypeList.contains(contentResolver.getType(it))
-                }
-                if (imageUris.size != validImageUris.size) {
-                    val snackbar = Snackbar.make(binding.rootView, "지원하지 않는 사진 포맷입니다. PNG, JPG 이미지를 사용해주세요.", Snackbar.LENGTH_SHORT)
+                // 파일 개수 검증
+                if (viewModel.getCurrentImagesCount() + imageUris.size > 7) {
+                    val snackbar = Snackbar.make(binding.rootView, "이미지는 최대 7장 업로드할 수 있습니다.", Snackbar.LENGTH_SHORT)
                     snackbar.show()
-                    viewModel.addImageUris(validImageUris)
                 } else {
-                    viewModel.addImageUris(imageUris)
+                    // 파일 크기 검증
+                    val validSizeImageUris = arrayListOf<Uri>()
+                    imageUris.forEach { uri ->
+                        contentResolver.query(uri, null, null, null, null)?.let { cursor ->
+                            val sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE)
+                            cursor.moveToFirst()
+                            val size = cursor.getLong(sizeIndex)
+                            if (size < 10000000) {
+                                validSizeImageUris.add(uri)
+                            }
+                        }
+                    }
+
+                    // 파일 타입 검증
+                    if (validSizeImageUris.size != imageUris.size) {
+                        val snackbar = Snackbar.make(binding.rootView, "10MB 이상의 파일은 업로드할 수 없습니다.", Snackbar.LENGTH_SHORT)
+                        snackbar.show()
+                        val mimeTypeMap = MimeTypeMap.getSingleton()
+                        val extensions = listOf("png", "jpg")
+                        val mimeTypeList = extensions.map { extension ->
+                            mimeTypeMap.getMimeTypeFromExtension(extension)
+                        }
+                        val validTypeImageUris = validSizeImageUris.filter {
+                            mimeTypeList.contains(contentResolver.getType(it))
+                        }
+                        if (validTypeImageUris.size != validSizeImageUris.size) {
+                            viewModel.addImageUris(validTypeImageUris)
+                        } else {
+                            viewModel.addImageUris(validSizeImageUris)
+                        }
+                    } else {
+                        val mimeTypeMap = MimeTypeMap.getSingleton()
+                        val extensions = listOf("png", "jpg")
+                        val mimeTypeList = extensions.map { extension ->
+                            mimeTypeMap.getMimeTypeFromExtension(extension)
+                        }
+                        val validTypeImageUris = validSizeImageUris.filter {
+                            mimeTypeList.contains(contentResolver.getType(it))
+                        }
+                        if (validTypeImageUris.size != validSizeImageUris.size) {
+                            val snackbar = Snackbar.make(binding.rootView, "지원하지 않는 사진 포맷입니다. PNG, JPG 이미지를 사용해주세요.", Snackbar.LENGTH_SHORT)
+                            snackbar.show()
+                            viewModel.addImageUris(validTypeImageUris)
+                        } else {
+                            viewModel.addImageUris(validSizeImageUris)
+                        }
+                    }
                 }
             }
     }

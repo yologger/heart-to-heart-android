@@ -53,21 +53,11 @@ class PostRepositoryImpl @Inject constructor(
                 } else {
                     val failureResponse = gson.fromJson(response.errorBody()!!.string(), RegisterPostFailureResponse::class.java)
                     return when(failureResponse.code) {
-                        RegisterPostFailureCode.INVALID_REFRESH_TOKEN, RegisterPostFailureCode.EXPIRED_REFRESH_TOKEN, RegisterPostFailureCode.MEMBER_NOT_EXIST -> {
-                            RegisterPostResult.FAILURE(RegisterPostResultError.NO_SESSION)
-                        }
-                        RegisterPostFailureCode.NOT_FOUND, RegisterPostFailureCode.INVALID_INPUT_VALUE, RegisterPostFailureCode.ILLEGAL_STATE-> {
-                            RegisterPostResult.FAILURE(RegisterPostResultError.CLIENT_ERROR)
-                        }
-                        RegisterPostFailureCode.FILE_UPLOAD_ERROR -> {
-                            RegisterPostResult.FAILURE(RegisterPostResultError.FILE_UPLOAD_ERROR)
-                        }
-                        RegisterPostFailureCode.FILE_SIZE_LIMIT_EXCEEDED -> {
-                            RegisterPostResult.FAILURE(RegisterPostResultError.FILE_SIZE_LIMIT_EXCEEDED)
-                        }
-                        else -> {
-                            RegisterPostResult.FAILURE(RegisterPostResultError.CLIENT_ERROR)
-                        }
+                        RegisterPostFailureCode.INVALID_REFRESH_TOKEN, RegisterPostFailureCode.EXPIRED_REFRESH_TOKEN, RegisterPostFailureCode.MEMBER_NOT_EXIST -> RegisterPostResult.FAILURE(RegisterPostResultError.NO_SESSION)
+                        RegisterPostFailureCode.NOT_FOUND, RegisterPostFailureCode.INVALID_INPUT_VALUE, RegisterPostFailureCode.ILLEGAL_STATE-> RegisterPostResult.FAILURE(RegisterPostResultError.CLIENT_ERROR)
+                        RegisterPostFailureCode.FILE_UPLOAD_ERROR -> RegisterPostResult.FAILURE(RegisterPostResultError.FILE_UPLOAD_ERROR)
+                        RegisterPostFailureCode.FILE_SIZE_LIMIT_EXCEEDED -> RegisterPostResult.FAILURE(RegisterPostResultError.FILE_SIZE_LIMIT_EXCEEDED)
+                        else -> RegisterPostResult.FAILURE(RegisterPostResultError.CLIENT_ERROR)
                     }
                 }
             } catch (e: Exception) {
