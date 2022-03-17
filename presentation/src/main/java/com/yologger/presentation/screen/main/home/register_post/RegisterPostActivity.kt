@@ -4,17 +4,16 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.orhanobut.logger.Logger
 import com.yologger.presentation.R
 import com.yologger.presentation.component.LoadingDialog
 import com.yologger.presentation.databinding.ActivityRegisterPostBinding
@@ -56,8 +55,10 @@ class RegisterPostActivity : AppCompatActivity() {
             when(it.itemId) {
                 R.id.activity_register_post_menu_toolbar_action_done -> {
                     viewModel.post()
-                    // finish()
                     true
+                }
+                else -> {
+                    false
                 }
             }
             false

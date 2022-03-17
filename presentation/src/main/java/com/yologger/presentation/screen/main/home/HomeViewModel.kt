@@ -2,6 +2,7 @@ package com.yologger.presentation.screen.main.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.orhanobut.logger.Logger
 import com.yologger.domain.usecase.post.get_posts.GetPostsResult
 import com.yologger.domain.usecase.post.get_posts.GetPostsUseCase
 import com.yologger.domain.usecase.post.get_posts.PostData
@@ -60,11 +61,21 @@ class HomeViewModel @Inject constructor(
                         hasMore = it.data.posts.size == size
                         _livePosts.value = posts
                         page += 1
+                        Logger.d("loaded data: posts.size=${posts.size}, hasMore: ${hasMore}")
                     }
                     is GetPostsResult.Failure -> {
                         
                     }
                 }
             }.addTo(disposables)
+    }
+
+    fun reloadData() {
+        posts = mutableListOf<PostData>()
+        page = 0
+        hasMore = true
+        _liveIsLoading.value = false
+        _livePosts.value = posts
+        loadData()
     }
 }

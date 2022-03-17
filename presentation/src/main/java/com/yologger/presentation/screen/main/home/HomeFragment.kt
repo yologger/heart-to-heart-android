@@ -58,6 +58,17 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
+        binding.toolbar.inflateMenu(R.menu.fragment_home_toolbar)
+        binding.toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.fragment_home_menu_toolbar_action_refresh -> {
+                    viewModel.reloadData()
+                    true
+                }
+            }
+            false
+        }
+
         recyclerViewAdapter = PostsRVAdapter(requireContext())
         binding.recyclerView.adapter = recyclerViewAdapter
         val layoutManager = LinearLayoutManager(requireActivity())
