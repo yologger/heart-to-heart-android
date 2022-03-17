@@ -2,7 +2,6 @@ package com.yologger.presentation.screen.main.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.orhanobut.logger.Logger
 import com.yologger.domain.usecase.post.get_posts.GetPostsResult
 import com.yologger.domain.usecase.post.get_posts.GetPostsUseCase
 import com.yologger.domain.usecase.post.get_posts.PostData
@@ -38,15 +37,15 @@ class HomeViewModel @Inject constructor(
     private val _liveIsLoading: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>().apply { value = false } }
     val liveIsLoading: LiveData<Boolean> get() = _liveIsLoading
 
-    private val posts = mutableListOf<PostData>()
+    private var posts = mutableListOf<PostData>()
     private var _livePosts: MutableLiveData<MutableList<PostData>> = MutableLiveData(posts)
     val livePosts = _livePosts
 
     init {
-        fetchData()
+        loadData()
     }
     
-    fun fetchData() {
+    fun loadData() {
         if (!hasMore) { return }
         _liveIsLoading.value = true
         
@@ -61,7 +60,6 @@ class HomeViewModel @Inject constructor(
                         hasMore = it.data.posts.size == size
                         _livePosts.value = posts
                         page += 1
-                        Logger.w("data fetched: posts.size=${posts.size}, hasMore: ${hasMore}")
                     }
                     is GetPostsResult.Failure -> {
                         

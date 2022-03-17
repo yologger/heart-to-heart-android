@@ -29,8 +29,6 @@ class InfiniteScrollListener(
             lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
         }
 
-        if (!viewModel.liveIsLoading.value!! && totalItemCount <= lastVisibleItemPosition + visibleThreshold) {
-            viewModel.fetchData()
-        }
+        if (!viewModel.liveIsLoading.value!! && totalItemCount <= lastVisibleItemPosition + visibleThreshold) viewModel.loadData()
     }
 }
