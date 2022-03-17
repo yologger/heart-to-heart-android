@@ -30,17 +30,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initUI()
         observeViewModel()
-    }
-    
-    private fun initUI() {
-        binding.floatingActionButton.setOnClickListener {
-            val intent = Intent(requireContext(), RegisterPostActivity::class.java)
-            startActivity(intent)
-        }
-
-
+        initUI()
     }
     
     private fun observeViewModel() {
@@ -52,11 +43,27 @@ class HomeFragment : Fragment() {
             recyclerViewAdapter.updatePosts(it)
         }
 
+        viewModel.liveIsLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
+                recyclerViewAdapter.showLoadingView()
+            } else {
+                recyclerViewAdapter.hideLoadingView()
+            }
+        }
+    }
+
+    private fun initUI() {
+        binding.floatingActionButton.setOnClickListener {
+            val intent = Intent(requireContext(), RegisterPostActivity::class.java)
+            startActivity(intent)
+        }
+
         recyclerViewAdapter = PostsRVAdapter(requireContext())
         binding.recyclerView.adapter = recyclerViewAdapter
         val layoutManager = LinearLayoutManager(requireActivity())
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         binding.recyclerView.layoutManager = layoutManager
+        binding.recyclerView.addOnScrollListener(InfiniteScrollListener(layoutManager, viewModel))
     }
     
     

@@ -1,11 +1,11 @@
 package com.yologger.presentation.screen.main.home
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.orhanobut.logger.Logger
 import com.yologger.domain.usecase.post.get_posts.GetPostsResult
 import com.yologger.domain.usecase.post.get_posts.GetPostsUseCase
 import com.yologger.domain.usecase.post.get_posts.PostData
-import com.yologger.presentation.screen.auth.login.LoginViewModel
 import com.yologger.presentation.screen.base.BaseViewModel
 import com.yologger.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,9 +27,16 @@ class HomeViewModel @Inject constructor(
         NETWORK_ERROR,
         CLIENT_ERROR
     }
-
+    
+    private var page = 0
+    private val size = 10
+    private var hasMore = true
+    
     private val _liveState = SingleLiveEvent<State>()
     val liveState = _liveState
+
+    private val _liveIsLoading: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>().apply { value = false } }
+    val liveIsLoading: LiveData<Boolean> get() = _liveIsLoading
 
     private val posts = mutableListOf<PostData>()
     private var _livePosts: MutableLiveData<MutableList<PostData>> = MutableLiveData(posts)
@@ -39,16 +46,26 @@ class HomeViewModel @Inject constructor(
         fetchData()
     }
     
-    private fun fetchData() {
-        val params = GetPostsUseCase.Params(size = 30, page = 1)
+    fun fetchData() {
+        if (!hasMore) { return }
+        _liveIsLoading.value = true
+        
+        val params = GetPostsUseCase.Params(size = size, page = page)
         getPostsUseCase.execute(params)
-            .subscribeBy { 
+            .take(1)
+            .subscribeBy {
+                _liveIsLoading.value = false
                 when (it) {
                     is GetPostsResult.Success -> {
                         posts.addAll(it.data.posts)
+                        hasMore = it.data.posts.size == size
                         _livePosts.value = posts
+                        page += 1
+                        Logger.w("data fetched: posts.size=${posts.size}, hasMore: ${hasMore}")
                     }
-                    is GetPostsResult.Failure -> {}
+                    is GetPostsResult.Failure -> {
+                        
+                    }
                 }
             }.addTo(disposables)
     }
