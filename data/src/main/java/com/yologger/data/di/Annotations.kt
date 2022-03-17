@@ -1,4 +1,4 @@
-package com.yologger.heart_to_heart.di
+package com.yologger.data.di
 
 import javax.inject.Qualifier
 

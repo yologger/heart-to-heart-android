@@ -6,6 +6,7 @@ enum class RegisterPostFailureCode {
     @SerializedName("GLOBAL001") NOT_FOUND,
     @SerializedName("GLOBAL002") INVALID_INPUT_VALUE,
     @SerializedName("GLOBAL006") ILLEGAL_STATE,
+    @SerializedName("GLOBAL008") FILE_SIZE_LIMIT_EXCEEDED,
 
     @SerializedName("GLOBAL100") MISSING_AUTHORIZATION_HEADER,
     @SerializedName("GLOBAL101") BEARER_NOT_INCLUDED,

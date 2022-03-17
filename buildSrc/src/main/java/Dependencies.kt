@@ -20,6 +20,7 @@ object Dependencies {
     const val GLIDE = "com.github.bumptech.glide:glide:${Versions.GLIDE}"
     const val GLIDE_COMPILER = "com.github.bumptech.glide:compiler:${Versions.GLIDE}"
     const val SLIDER_GLIDE = "com.ouattararomuald:slider-glide:${Versions.SLIDER_GLIDE}"
+    const val GUAVA = "com.google.guava:guava:${Versions.GUAVA}"
 }
 
 object TestDependencies {
@@ -29,6 +30,8 @@ object TestDependencies {
     const val MOCK_WEB_SERVER = "com.squareup.okhttp3:mockwebserver:${TestVersions.MOCK_WEB_SERVER}"
     const val MOCKITO_CORE = "org.mockito:mockito-core:${TestVersions.MOCKITO_CORE}"
     const val MOCKITO_INLINE = "org.mockito:mockito-inline:${TestVersions.MOCKITO_INLINE}"
+    const val HILT_TESTING = "com.google.dagger:hilt-android-testing:${TestVersions.HILT}"
+    const val HILT_ANDROID_COMPILER = "com.google.dagger:hilt-android-compiler:${TestVersions.HILT}"
 }
 
 object AndroidTestDependencies {
@@ -36,4 +39,6 @@ object AndroidTestDependencies {
     const val ANDROIDX_TEST_EXTENSION_TRUTH = "androidx.test.ext:truth:${AndroidTestVersions.ANDROIDX_TEST_EXTENSION_TRUTH}"
     const val ESPRESSO_CORE = "androidx.test.espresso:espresso-core:${AndroidTestVersions.ESPRESSO_CORE}"
     const val MOCKITO_ANDROID = "org.mockito:mockito-android:${AndroidTestVersions.MOCKITO_ANDROID}"
+    const val HILT_TESTING = "com.google.dagger:hilt-android-testing:${AndroidTestVersions.HILT}"
+    const val HILT_ANDROID_COMPILER = "com.google.dagger:hilt-android-compiler:${AndroidTestVersions.HILT}"
 }

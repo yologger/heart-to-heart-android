@@ -1,9 +1,10 @@
-package com.yologger.heart_to_heart.di
+package com.yologger.data.di
 
 import android.content.Context
 import com.google.gson.Gson
 import com.yologger.data.datasource.pref.SessionStore
 import com.yologger.data.util.FileUtil
+import com.yologger.data.util.TestUtil
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,5 +32,11 @@ class UtilModule {
     @Provides
     fun providesFileUtil(@ApplicationContext appContext: Context): FileUtil {
         return FileUtil(appContext)
+    }
+
+    @Singleton
+    @Provides
+    fun providesTestUtil(): TestUtil {
+        return TestUtil()
     }
 }

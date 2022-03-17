@@ -15,10 +15,15 @@ import com.yologger.presentation.R
 
 class PostsRVAdapter constructor(
     private val context: Context,
-    private var posts: MutableList<PostData> = mutableListOf()
+    private var posts: MutableList<PostData?> = mutableListOf()
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+    companion object {
+        private const val VIEW_TYPE_ITEM = 0
+        private const val VIEW_TYPE_LOADING = 1
+    }
+
+    inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val imageAvatar: ImageView = itemView.findViewById(R.id.fragment_home_imageView_avatar)
         private val imageSlider: ImageSlider = itemView.findViewById(R.id.fragment_home_imageSlider)
         private val textViewNickname: TextView = itemView.findViewById(R.id.fragment_home_textView_nickname)
@@ -29,7 +34,7 @@ class PostsRVAdapter constructor(
             textViewEmail.text = post.writerEmail
             textViewNickname.text = post.writerNickname
             textViewContent.text = post.content
-            if (post.imageUrls == null) {
+            if (post.imageUrls == null || post.imageUrls!!.size == 0) {
                 imageSlider.visibility = View.GONE
             } else {
                 imageSlider.visibility = View.VISIBLE
@@ -38,13 +43,38 @@ class PostsRVAdapter constructor(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_home_holder_post, parent, false)
-        return Holder(view)
+    inner class LoadingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bind() {}
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (posts[position] == null) {
+            VIEW_TYPE_LOADING
+        } else {
+            VIEW_TYPE_ITEM
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when(viewType) {
+            VIEW_TYPE_ITEM -> {
+                val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_home_holder_post, parent, false)
+                Holder(view)
+            }
+            VIEW_TYPE_LOADING -> {
+                val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_home_holder_post_loading, parent, false)
+                LoadingViewHolder(view)
+            }
+            else -> throw RuntimeException("VIEW TYPE ERROR")
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as Holder).bind(posts[position])
+        if (holder.itemViewType == VIEW_TYPE_ITEM) {
+            (holder as Holder).bind(posts[position]!!)
+        } else {
+            (holder as LoadingViewHolder).bind()
+        }
     }
 
     override fun getItemCount(): Int = posts.size
@@ -52,5 +82,17 @@ class PostsRVAdapter constructor(
     fun updatePosts(newPosts: List<PostData>) {
         posts = newPosts.toMutableList()
         notifyDataSetChanged()
+    }
+
+    fun showLoadingView() {
+        posts.add(null)
+        notifyItemInserted(posts.size - 1)
+    }
+
+    fun hideLoadingView()  {
+        if (posts.size != 0) {
+            posts.removeAt(posts.size - 1)
+            notifyItemRemoved(posts.size)
+        }
     }
 }

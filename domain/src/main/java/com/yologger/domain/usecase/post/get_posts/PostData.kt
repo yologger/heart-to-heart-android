@@ -1,5 +1,7 @@
 package com.yologger.domain.usecase.post.get_posts
 
+import java.io.Serializable
+
 data class PostData constructor(
     val id: Long,
     val writerId: Long,
@@ -10,4 +12,6 @@ data class PostData constructor(
     val imageUrls: List<String>? = null,
     val createdAt: String,
     val updatedAt: String
-)
+) : Serializable {
+    private val serialVersionUID = 1L
+}

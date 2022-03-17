@@ -1,20 +1,23 @@
 package com.yologger.presentation.screen.main.home.register_post
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.provider.Settings
 import android.view.View
+import android.webkit.MimeTypeMap
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.orhanobut.logger.Logger
+import com.google.android.material.snackbar.Snackbar
 import com.yologger.presentation.R
 import com.yologger.presentation.component.LoadingDialog
 import com.yologger.presentation.databinding.ActivityRegisterPostBinding
@@ -56,8 +59,10 @@ class RegisterPostActivity : AppCompatActivity() {
             when(it.itemId) {
                 R.id.activity_register_post_menu_toolbar_action_done -> {
                     viewModel.post()
-                    // finish()
                     true
+                }
+                else -> {
+                    false
                 }
             }
             false
@@ -88,6 +93,10 @@ class RegisterPostActivity : AppCompatActivity() {
         viewModel.liveEvent.observe(this) {
             when(it) {
                 is RegisterPostViewModel.Event.SUCCESS -> {
+                    val createdPost = it.post
+                    val intent = Intent()
+                    intent.putExtra("created_post", createdPost)
+                    setResult(Activity.RESULT_OK, intent)
                     finish()
                 }
                 is RegisterPostViewModel.Event.FAILURE -> {
@@ -107,14 +116,82 @@ class RegisterPostActivity : AppCompatActivity() {
                         RegisterPostViewModel.Error.NO_SESSION -> {
                             navigateToLogin()
                         }
+                        RegisterPostViewModel.Error.NETWORK_ERROR -> {
+                            navigateToLogin()
+                        }
+                        RegisterPostViewModel.Error.FILE_SIZE_LIMIT_EXCEEDED -> {
+                            showToast("10MB 이하의 사진만 업로드할 수 있습니다.")
+                            navigateToLogin()
+                        }
                     }
                 }
             }
         }
+
+        viewModel.liveContent.observe(this) {
+            val button = binding.toolbar.menu.findItem(R.id.activity_register_post_menu_toolbar_action_done)
+            button.isEnabled = !it.isNullOrBlank()
+        }
     }
 
     fun onOpenGalleryButtonClicked(view: View) {
-        if (isCameraPermissionGranted()) openGallery()
+        TedImagePicker.with(this@RegisterPostActivity)
+            .image()
+            .startMultiImage { imageUris ->
+                // 파일 개수 검증
+                if (viewModel.getCurrentImagesCount() + imageUris.size > 7) {
+                    val snackbar = Snackbar.make(binding.rootView, "이미지는 최대 7장 업로드할 수 있습니다.", Snackbar.LENGTH_SHORT)
+                    snackbar.show()
+                } else {
+                    // 파일 크기 검증
+                    val validSizeImageUris = arrayListOf<Uri>()
+                    imageUris.forEach { uri ->
+                        contentResolver.query(uri, null, null, null, null)?.let { cursor ->
+                            val sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE)
+                            cursor.moveToFirst()
+                            val size = cursor.getLong(sizeIndex)
+                            if (size < 10000000) {
+                                validSizeImageUris.add(uri)
+                            }
+                        }
+                    }
+
+                    // 파일 타입 검증
+                    if (validSizeImageUris.size != imageUris.size) {
+                        val snackbar = Snackbar.make(binding.rootView, "10MB 이상의 파일은 업로드할 수 없습니다.", Snackbar.LENGTH_SHORT)
+                        snackbar.show()
+                        val mimeTypeMap = MimeTypeMap.getSingleton()
+                        val extensions = listOf("png", "jpg")
+                        val mimeTypeList = extensions.map { extension ->
+                            mimeTypeMap.getMimeTypeFromExtension(extension)
+                        }
+                        val validTypeImageUris = validSizeImageUris.filter {
+                            mimeTypeList.contains(contentResolver.getType(it))
+                        }
+                        if (validTypeImageUris.size != validSizeImageUris.size) {
+                            viewModel.addImageUris(validTypeImageUris)
+                        } else {
+                            viewModel.addImageUris(validSizeImageUris)
+                        }
+                    } else {
+                        val mimeTypeMap = MimeTypeMap.getSingleton()
+                        val extensions = listOf("png", "jpg")
+                        val mimeTypeList = extensions.map { extension ->
+                            mimeTypeMap.getMimeTypeFromExtension(extension)
+                        }
+                        val validTypeImageUris = validSizeImageUris.filter {
+                            mimeTypeList.contains(contentResolver.getType(it))
+                        }
+                        if (validTypeImageUris.size != validSizeImageUris.size) {
+                            val snackbar = Snackbar.make(binding.rootView, "지원하지 않는 사진 포맷입니다. PNG, JPG 이미지를 사용해주세요.", Snackbar.LENGTH_SHORT)
+                            snackbar.show()
+                            viewModel.addImageUris(validTypeImageUris)
+                        } else {
+                            viewModel.addImageUris(validSizeImageUris)
+                        }
+                    }
+                }
+            }
     }
 
     private fun isCameraPermissionGranted(): Boolean {

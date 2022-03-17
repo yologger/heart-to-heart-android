@@ -1,15 +1,18 @@
 package com.yologger.presentation.screen.main.home
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.orhanobut.logger.Logger
+import com.yologger.domain.usecase.post.get_posts.PostData
 import com.yologger.presentation.R
 import com.yologger.presentation.databinding.FragmentHomeBinding
 import com.yologger.presentation.screen.main.home.register_post.RegisterPostActivity
@@ -30,17 +33,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initUI()
         observeViewModel()
-    }
-    
-    private fun initUI() {
-        binding.floatingActionButton.setOnClickListener {
-            val intent = Intent(requireContext(), RegisterPostActivity::class.java)
-            startActivity(intent)
-        }
-
-
+        initUI()
     }
     
     private fun observeViewModel() {
@@ -52,14 +46,50 @@ class HomeFragment : Fragment() {
             recyclerViewAdapter.updatePosts(it)
         }
 
+        viewModel.liveIsLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
+                recyclerViewAdapter.showLoadingView()
+            } else {
+                recyclerViewAdapter.hideLoadingView()
+            }
+        }
+    }
+
+    private val startRegisterPostActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            (it.data?.extras?.getSerializable("created_post") as PostData).let {
+                viewModel.addPost(it)
+            }
+        }
+    }
+
+    private fun initUI() {
+        binding.floatingActionButton.setOnClickListener {
+            val intent = Intent(requireContext(), RegisterPostActivity::class.java)
+            startRegisterPostActivity.launch(intent)
+        }
+
+        binding.toolbar.inflateMenu(R.menu.fragment_home_toolbar)
+        binding.toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.fragment_home_menu_toolbar_action_refresh -> {
+                    viewModel.reloadData()
+                    true
+                }
+            }
+            false
+        }
+
         recyclerViewAdapter = PostsRVAdapter(requireContext())
         binding.recyclerView.adapter = recyclerViewAdapter
         val layoutManager = LinearLayoutManager(requireActivity())
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         binding.recyclerView.layoutManager = layoutManager
+        binding.recyclerView.addOnScrollListener(InfiniteScrollListener(layoutManager, viewModel))
     }
-    
-    
+
+    fun moveToTop() = binding.recyclerView.smoothScrollToPosition(0)
+
     companion object {
         @JvmStatic
         fun newInstance() = HomeFragment().apply {}

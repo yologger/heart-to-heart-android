@@ -3,7 +3,6 @@ package com.yologger.data.repository.post
 import android.net.Uri
 import com.google.gson.Gson
 import com.orhanobut.logger.Logger
-import com.yologger.data.datasource.api.auth.model.verify_access_token.VerifyAccessTokenFailureResponse
 import com.yologger.data.datasource.api.post.PostService
 import com.yologger.data.datasource.api.post.model.get_posts.GetPostsFailureCode
 import com.yologger.data.datasource.api.post.model.get_posts.GetPostsFailureResponse
@@ -30,6 +29,7 @@ class PostRepositoryImpl @Inject constructor(
 ) : PostRepository {
 
     override fun registerPost(content: String, imageUris: List<Uri>) : RegisterPostResult {
+
         sessionStore.getSession()?.let {
             val imagesBody = imageUris.map { uri: Uri -> fileUtil.getMultipart("files", uri)!! }
             val memberIdBody = RequestBody.create(MediaType.parse("multipart/form-data"), it.memberId.toString())
@@ -38,26 +38,30 @@ class PostRepositoryImpl @Inject constructor(
                 val response = postService.registerPost(memberId = memberIdBody, content = contentBody, images = imagesBody).execute()
                 if (response.isSuccessful) {
                     val successResponse = response.body()!!
-                    val data = RegisterPostResultData(writerId = successResponse.writerId, postId = successResponse.postId, content = successResponse.content, imageUrls = successResponse.imageUrls)
+                    val data = RegisterPostResultData(
+                        postId = successResponse.postId,
+                        writerId = successResponse.writerId,
+                        writerEmail = successResponse.writerEmail,
+                        writerNickname = successResponse.writerNickname,
+                        avatarUrl = successResponse.avatarUrl,
+                        content = successResponse.content,
+                        imageUrls = successResponse.imageUrls,
+                        createdAt = successResponse.createdAt,
+                        updatedAt = successResponse.updatedAt
+                    )
                     return RegisterPostResult.SUCCESS(data)
                 } else {
                     val failureResponse = gson.fromJson(response.errorBody()!!.string(), RegisterPostFailureResponse::class.java)
                     return when(failureResponse.code) {
-                        RegisterPostFailureCode.INVALID_REFRESH_TOKEN, RegisterPostFailureCode.EXPIRED_REFRESH_TOKEN, RegisterPostFailureCode.MEMBER_NOT_EXIST -> {
-                            RegisterPostResult.FAILURE(RegisterPostResultError.NO_SESSION)
-                        }
-                        RegisterPostFailureCode.NOT_FOUND, RegisterPostFailureCode.INVALID_INPUT_VALUE, RegisterPostFailureCode.ILLEGAL_STATE-> {
-                            RegisterPostResult.FAILURE(RegisterPostResultError.CLIENT_ERROR)
-                        }
-                        RegisterPostFailureCode.FILE_UPLOAD_ERROR -> {
-                            RegisterPostResult.FAILURE(RegisterPostResultError.FILE_UPLOAD_ERROR)
-                        }
-                        else -> {
-                            RegisterPostResult.FAILURE(RegisterPostResultError.CLIENT_ERROR)
-                        }
+                        RegisterPostFailureCode.INVALID_REFRESH_TOKEN, RegisterPostFailureCode.EXPIRED_REFRESH_TOKEN, RegisterPostFailureCode.MEMBER_NOT_EXIST -> RegisterPostResult.FAILURE(RegisterPostResultError.NO_SESSION)
+                        RegisterPostFailureCode.NOT_FOUND, RegisterPostFailureCode.INVALID_INPUT_VALUE, RegisterPostFailureCode.ILLEGAL_STATE-> RegisterPostResult.FAILURE(RegisterPostResultError.CLIENT_ERROR)
+                        RegisterPostFailureCode.FILE_UPLOAD_ERROR -> RegisterPostResult.FAILURE(RegisterPostResultError.FILE_UPLOAD_ERROR)
+                        RegisterPostFailureCode.FILE_SIZE_LIMIT_EXCEEDED -> RegisterPostResult.FAILURE(RegisterPostResultError.FILE_SIZE_LIMIT_EXCEEDED)
+                        else -> RegisterPostResult.FAILURE(RegisterPostResultError.CLIENT_ERROR)
                     }
                 }
             } catch (e: Exception) {
+                e.printStackTrace()
                 return RegisterPostResult.FAILURE(RegisterPostResultError.NETWORK_ERROR)
             }
         } ?: run {

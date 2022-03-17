@@ -7,6 +7,12 @@ plugins {
 
 apply from: "../common.gradle"
 
+android {
+    defaultConfig {
+        testInstrumentationRunner "com.yologger.data.util.CustomTestRunner"
+    }
+}
+
 dependencies {
     implementation project(Modules.common)
     api project(Modules.domain)
@@ -14,6 +20,7 @@ dependencies {
     implementation Dependencies.RETROFIT2
     implementation Dependencies.RETROFIT_GSON_CONVERTER
     implementation Dependencies.RETROFIT_RXJAVA3_ADAPTER
-    testImplementation TestDependencies.MOCK_WEB_SERVER
+
     testImplementation 'com.squareup.retrofit2:retrofit-mock:2.9.0'
+    testImplementation TestDependencies.MOCK_WEB_SERVER
 }
