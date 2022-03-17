@@ -5,5 +5,6 @@ enum class RegisterPostResultError {
     CLIENT_ERROR,
     FILE_UPLOAD_ERROR,
     INVALID_PARAMS,
-    NO_SESSION
+    NO_SESSION,
+    FILE_SIZE_LIMIT_EXCEEDED
 }

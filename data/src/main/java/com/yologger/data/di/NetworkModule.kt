@@ -31,7 +31,7 @@ class NetworkModule {
     @Provides
     fun providesOkHttpClientWithAuthFilter(authInterceptor: AuthInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(authInterceptor)
+            // .addInterceptor(authInterceptor)
             .build()
     }
 

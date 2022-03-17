@@ -11,6 +11,11 @@ import okhttp3.RequestBody
 class FileUtil (
     private val context: Context
 ) {
+
+
+
+
+
     @SuppressLint("Range")
     fun getMultipart(key: String, uri: Uri): MultipartBody.Part? {
         return context.contentResolver.query(uri, null, null, null, null)?.let {

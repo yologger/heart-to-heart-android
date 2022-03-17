@@ -28,7 +28,8 @@ class RegisterPostViewModel @Inject constructor(
         CLIENT_ERROR,
         NETWORK_ERROR,
         FILE_UPLOAD_ERROR,
-        NO_SESSION
+        NO_SESSION,
+        FILE_SIZE_LIMIT_EXCEEDED
     }
 
     private val _liveEvent = SingleLiveEvent<Event>()
@@ -76,6 +77,8 @@ class RegisterPostViewModel @Inject constructor(
                             RegisterPostResultError.INVALID_PARAMS -> _liveEvent.value = Event.FAILURE(Error.CLIENT_ERROR)
                             RegisterPostResultError.FILE_UPLOAD_ERROR -> _liveEvent.value = Event.FAILURE(Error.FILE_UPLOAD_ERROR)
                             RegisterPostResultError.NO_SESSION -> _liveEvent.value = Event.FAILURE(Error.NO_SESSION)
+                            RegisterPostResultError.FILE_SIZE_LIMIT_EXCEEDED -> _liveEvent.value = Event.FAILURE(Error.FILE_SIZE_LIMIT_EXCEEDED)
+                            RegisterPostResultError.NETWORK_ERROR -> _liveEvent.value = Event.FAILURE(Error.NETWORK_ERROR)
                         }
                     }
                 }

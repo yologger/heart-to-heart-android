@@ -29,6 +29,7 @@ class PostRepositoryImpl @Inject constructor(
 ) : PostRepository {
 
     override fun registerPost(content: String, imageUris: List<Uri>) : RegisterPostResult {
+
         sessionStore.getSession()?.let {
             val imagesBody = imageUris.map { uri: Uri -> fileUtil.getMultipart("files", uri)!! }
             val memberIdBody = RequestBody.create(MediaType.parse("multipart/form-data"), it.memberId.toString())
@@ -61,12 +62,16 @@ class PostRepositoryImpl @Inject constructor(
                         RegisterPostFailureCode.FILE_UPLOAD_ERROR -> {
                             RegisterPostResult.FAILURE(RegisterPostResultError.FILE_UPLOAD_ERROR)
                         }
+                        RegisterPostFailureCode.FILE_SIZE_LIMIT_EXCEEDED -> {
+                            RegisterPostResult.FAILURE(RegisterPostResultError.FILE_SIZE_LIMIT_EXCEEDED)
+                        }
                         else -> {
                             RegisterPostResult.FAILURE(RegisterPostResultError.CLIENT_ERROR)
                         }
                     }
                 }
             } catch (e: Exception) {
+                e.printStackTrace()
                 return RegisterPostResult.FAILURE(RegisterPostResultError.NETWORK_ERROR)
             }
         } ?: run {

@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
+import android.webkit.MimeTypeMap
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.yologger.presentation.R
 import com.yologger.presentation.component.LoadingDialog
 import com.yologger.presentation.databinding.ActivityRegisterPostBinding
@@ -113,6 +115,13 @@ class RegisterPostActivity : AppCompatActivity() {
                         RegisterPostViewModel.Error.NO_SESSION -> {
                             navigateToLogin()
                         }
+                        RegisterPostViewModel.Error.NETWORK_ERROR -> {
+                            navigateToLogin()
+                        }
+                        RegisterPostViewModel.Error.FILE_SIZE_LIMIT_EXCEEDED -> {
+                            showToast("10MB 이하의 사진만 업로드할 수 있습니다.")
+                            navigateToLogin()
+                        }
                     }
                 }
             }
@@ -120,7 +129,26 @@ class RegisterPostActivity : AppCompatActivity() {
     }
 
     fun onOpenGalleryButtonClicked(view: View) {
-        if (isCameraPermissionGranted()) openGallery()
+        TedImagePicker.with(this@RegisterPostActivity)
+            .image()
+            .startMultiImage { imageUris ->
+                // 파일 타입 검증
+                val mimeTypeMap = MimeTypeMap.getSingleton()
+                val extensions = listOf("png", "jpg")
+                val mimeTypeList = extensions.map { extension ->
+                    mimeTypeMap.getMimeTypeFromExtension(extension)
+                }
+                val validImageUris = imageUris.filter {
+                    mimeTypeList.contains(contentResolver.getType(it))
+                }
+                if (imageUris.size != validImageUris.size) {
+                    val snackbar = Snackbar.make(binding.rootView, "지원하지 않는 사진 포맷입니다. PNG, JPG 이미지를 사용해주세요.", Snackbar.LENGTH_SHORT)
+                    snackbar.show()
+                    viewModel.addImageUris(validImageUris)
+                } else {
+                    viewModel.addImageUris(imageUris)
+                }
+            }
     }
 
     private fun isCameraPermissionGranted(): Boolean {

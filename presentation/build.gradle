@@ -22,8 +22,8 @@ dependencies {
     implementation Dependencies.MATERIAL
     implementation Dependencies.ACTIVITY_KTX
     implementation Dependencies.FRAGMENT_KTX
-    implementation Dependencies.TED_IMAGE_PICKER
     implementation Dependencies.GLIDE
     kapt Dependencies.GLIDE_COMPILER
     implementation Dependencies.SLIDER_GLIDE
+    implementation Dependencies.TED_IMAGE_PICKER
 }
