@@ -3,7 +3,6 @@ package com.yologger.data.repository.post
 import android.net.Uri
 import com.google.gson.Gson
 import com.orhanobut.logger.Logger
-import com.yologger.data.datasource.api.auth.model.verify_access_token.VerifyAccessTokenFailureResponse
 import com.yologger.data.datasource.api.post.PostService
 import com.yologger.data.datasource.api.post.model.get_posts.GetPostsFailureCode
 import com.yologger.data.datasource.api.post.model.get_posts.GetPostsFailureResponse
@@ -38,7 +37,17 @@ class PostRepositoryImpl @Inject constructor(
                 val response = postService.registerPost(memberId = memberIdBody, content = contentBody, images = imagesBody).execute()
                 if (response.isSuccessful) {
                     val successResponse = response.body()!!
-                    val data = RegisterPostResultData(writerId = successResponse.writerId, postId = successResponse.postId, content = successResponse.content, imageUrls = successResponse.imageUrls)
+                    val data = RegisterPostResultData(
+                        postId = successResponse.postId,
+                        writerId = successResponse.writerId,
+                        writerEmail = successResponse.writerEmail,
+                        writerNickname = successResponse.writerNickname,
+                        avatarUrl = successResponse.avatarUrl,
+                        content = successResponse.content,
+                        imageUrls = successResponse.imageUrls,
+                        createdAt = successResponse.createdAt,
+                        updatedAt = successResponse.updatedAt
+                    )
                     return RegisterPostResult.SUCCESS(data)
                 } else {
                     val failureResponse = gson.fromJson(response.errorBody()!!.string(), RegisterPostFailureResponse::class.java)

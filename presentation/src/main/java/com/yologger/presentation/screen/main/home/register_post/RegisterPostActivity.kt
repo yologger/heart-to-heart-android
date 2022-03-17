@@ -1,6 +1,7 @@
 package com.yologger.presentation.screen.main.home.register_post
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -89,6 +90,10 @@ class RegisterPostActivity : AppCompatActivity() {
         viewModel.liveEvent.observe(this) {
             when(it) {
                 is RegisterPostViewModel.Event.SUCCESS -> {
+                    val createdPost = it.post
+                    val intent = Intent()
+                    intent.putExtra("created_post", createdPost)
+                    setResult(Activity.RESULT_OK, intent)
                     finish()
                 }
                 is RegisterPostViewModel.Event.FAILURE -> {

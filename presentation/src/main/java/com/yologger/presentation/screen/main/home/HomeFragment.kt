@@ -1,15 +1,18 @@
 package com.yologger.presentation.screen.main.home
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.orhanobut.logger.Logger
+import com.yologger.domain.usecase.post.get_posts.PostData
 import com.yologger.presentation.R
 import com.yologger.presentation.databinding.FragmentHomeBinding
 import com.yologger.presentation.screen.main.home.register_post.RegisterPostActivity
@@ -52,10 +55,18 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private val startRegisterPostActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            (it.data?.extras?.getSerializable("created_post") as PostData).let {
+                viewModel.addPost(it)
+            }
+        }
+    }
+
     private fun initUI() {
         binding.floatingActionButton.setOnClickListener {
             val intent = Intent(requireContext(), RegisterPostActivity::class.java)
-            startActivity(intent)
+            startRegisterPostActivity.launch(intent)
         }
 
         binding.toolbar.inflateMenu(R.menu.fragment_home_toolbar)

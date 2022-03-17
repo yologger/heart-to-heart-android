@@ -3,12 +3,11 @@ package com.yologger.presentation.screen.main.home.register_post
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.orhanobut.logger.Logger
+import com.yologger.domain.usecase.post.get_posts.PostData
 import com.yologger.domain.usecase.post.register_post.RegisterPostResult
 import com.yologger.domain.usecase.post.register_post.RegisterPostResultError
 import com.yologger.domain.usecase.post.register_post.RegisterPostUseCase
 import com.yologger.presentation.screen.base.BaseViewModel
-import com.yologger.presentation.screen.main.more.MoreViewModel
 import com.yologger.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.kotlin.addTo
@@ -21,7 +20,7 @@ class RegisterPostViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     sealed class Event {
-        object SUCCESS: Event()
+        data class SUCCESS(val post: PostData): Event()
         data class FAILURE(val error: Error): Event()
     }
 
@@ -57,7 +56,19 @@ class RegisterPostViewModel @Inject constructor(
                 _liveIsLoading.value = false
                 when(it) {
                     is RegisterPostResult.SUCCESS -> {
-                        _liveEvent.value = Event.SUCCESS
+                        val createdData = it.data
+                        val createdPost = PostData(
+                            id = createdData.postId,
+                            writerId = createdData.writerId,
+                            writerEmail = createdData.writerEmail,
+                            writerNickname = createdData.writerNickname,
+                            avatarUrl = createdData.avatarUrl,
+                            content = createdData.content,
+                            imageUrls = createdData.imageUrls,
+                            createdAt = createdData.createdAt,
+                            updatedAt = createdData.updatedAt
+                        )
+                        _liveEvent.value = Event.SUCCESS(post = createdPost)
                     }
                     is RegisterPostResult.FAILURE -> {
                         when (it.error) {

@@ -12,7 +12,6 @@ import com.ouattararomuald.slider.SliderAdapter
 import com.ouattararomuald.slider.loaders.glide.GlideImageLoaderFactory
 import com.yologger.domain.usecase.post.get_posts.PostData
 import com.yologger.presentation.R
-import java.lang.RuntimeException
 
 class PostsRVAdapter constructor(
     private val context: Context,
