@@ -5,15 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.orhanobut.logger.Logger
 import com.yologger.presentation.R
 import com.yologger.presentation.databinding.FragmentMoreBinding
 import com.yologger.presentation.screen.auth.login.LoginActivity
+import com.yologger.presentation.screen.main.more.settings.SettingsActivity
 import com.yologger.presentation.util.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,7 +19,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class MoreFragment : Fragment() {
 
     private val viewModel: MoreViewModel by viewModels<MoreViewModel>()
-    private lateinit var buttonLogout: Button
     private lateinit var binding: FragmentMoreBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -33,6 +30,24 @@ class MoreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initUI()
+        observeViewModel()
+    }
+
+    private fun initUI() {
+        binding.toolbar.inflateMenu(R.menu.fragment_more_toolbar)
+        binding.toolbar.setOnMenuItemClickListener {
+            when(it.itemId) {
+                R.id.fragment_more_menu_toolbar_action_settings -> {
+                    val intent = Intent(requireContext(), SettingsActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+            false
+        }
+    }
+
+    private fun observeViewModel() {
         viewModel.liveState.observe(viewLifecycleOwner) {
             when (it) {
                 is MoreViewModel.State.SUCCESS -> {
