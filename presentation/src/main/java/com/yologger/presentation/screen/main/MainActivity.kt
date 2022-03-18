@@ -66,7 +66,11 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     override fun onNavigationItemReselected(item: MenuItem) { 
         when(item.itemId) {
             R.id.activity_main_menu_bottom_navigation_view_item_home -> homeFragment.moveToTop()
-            else -> {
+            R.id.activity_main_menu_bottom_navigation_view_item_follow -> {
+
+            }
+            R.id.activity_main_menu_bottom_navigation_view_item_settings -> {
+
             }
         }
     }

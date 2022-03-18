@@ -4,6 +4,9 @@
 
     <application android:theme="@style/AppTheme">
         <activity
+            android:name=".screen.main.more.settings.SettingsActivity"
+            android:exported="false" />
+        <activity
             android:name=".screen.main.home.register_post.RegisterPostActivity"
             android:exported="false" />
         <activity

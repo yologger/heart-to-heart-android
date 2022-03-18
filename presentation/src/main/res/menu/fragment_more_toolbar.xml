@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:title="완료"
+        android:id="@+id/fragment_more_menu_toolbar_action_settings"
+        android:icon="@drawable/icon_settings_outlined_black_24"
+        app:showAsAction="always" />
+</menu>

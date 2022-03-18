@@ -12,5 +12,11 @@
     <dimen name="margin_lg">24dp</dimen>
     <dimen name="margin_xl">28dp</dimen>
 
+    <dimen name="radius_xs">4dp</dimen>
+    <dimen name="radius_sm">8dp</dimen>
+    <dimen name="radius_md">16dp</dimen>
+    <dimen name="radius_lg">24dp</dimen>
+    <dimen name="radius_xl">32dp</dimen>
+
     <dimen name="elevation">4dp</dimen>
 </resources>
