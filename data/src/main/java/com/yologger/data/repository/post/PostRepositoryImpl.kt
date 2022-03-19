@@ -11,6 +11,7 @@ import com.yologger.data.datasource.api.post.model.register_post.RegisterPostFai
 import com.yologger.data.datasource.pref.SessionStore
 import com.yologger.data.util.FileUtil
 import com.yologger.domain.repository.PostRepository
+import com.yologger.domain.usecase.member.fetch_member_info.FetchMemberInfoResult
 import com.yologger.domain.usecase.post.get_posts.GetPostsResult
 import com.yologger.domain.usecase.post.get_posts.GetPostsResultData
 import com.yologger.domain.usecase.post.get_posts.GetPostsResultError
@@ -108,6 +109,18 @@ class PostRepositoryImpl @Inject constructor(
             return GetPostsResult.Failure(error = GetPostsResultError.JSON_PARSE_ERROR)
         } catch (e: Exception) {
             return GetPostsResult.Failure(error = GetPostsResultError.NETWORK_ERROR)
+        }
+    }
+
+    override fun fetchMemberInfo(): FetchMemberInfoResult {
+        sessionStore.getSession()?.let { session ->
+            return FetchMemberInfoResult.Success(
+                email = session.email,
+                nickname = session.nickname,
+                avatarUrl = session.avatarUrl
+            )
+        } ?: run {
+            return FetchMemberInfoResult.Failure
         }
     }
 }

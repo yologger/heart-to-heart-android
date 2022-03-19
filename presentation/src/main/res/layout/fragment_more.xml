@@ -57,14 +57,12 @@
                     android:id="@+id/textViewNickname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/TextAppearance.MaterialComponents.Subtitle1"
-                    android:text="yologger"/>
+                    style="@style/TextAppearance.MaterialComponents.Subtitle1"/>
                 <TextView
                     android:id="@+id/textViewEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/TextAppearance.MaterialComponents.Subtitle2"
-                    android:text="yologger1013@gmail.com"/>
+                    style="@style/TextAppearance.MaterialComponents.Subtitle2"/>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
@@ -73,6 +71,7 @@
             android:orientation="horizontal"
             android:padding="16dp">
             <LinearLayout
+                android:id="@+id/buttonPost"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -92,6 +91,7 @@
                     android:text="게시물"/>
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/buttonFollower"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -111,6 +111,7 @@
                     android:text="팔로워"/>
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/buttonFollowing"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -127,7 +128,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="팔로우"/>
+                    android:text="팔로잉"/>
             </LinearLayout>
 
         </LinearLayout>

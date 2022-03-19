@@ -5,10 +5,6 @@
         android:icon="@drawable/selector_icon_home_black_24"
         android:title="Home" />
     <item
-        android:id="@+id/activity_main_menu_bottom_navigation_view_item_follow"
-        android:icon="@drawable/selector_icon_people_black_24"
-        android:title="Follow" />
-    <item
         android:id="@+id/activity_main_menu_bottom_navigation_view_item_settings"
         android:icon="@drawable/selector_icon_more_black_24"
         android:title="More" />

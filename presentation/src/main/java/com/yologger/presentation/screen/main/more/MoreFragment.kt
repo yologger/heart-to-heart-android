@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.yologger.presentation.R
 import com.yologger.presentation.databinding.FragmentMoreBinding
 import com.yologger.presentation.screen.auth.login.LoginActivity
+import com.yologger.presentation.screen.main.more.follow.FollowActivity
 import com.yologger.presentation.screen.main.more.settings.SettingsActivity
 import com.yologger.presentation.util.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -75,18 +76,44 @@ class MoreFragment : Fragment() {
                     }
                 }
         }
+
+        binding.buttonPost.setOnClickListener {
+            // show my posts
+        }
+        binding.buttonFollower.setOnClickListener {
+            val intent = Intent(requireContext(), FollowActivity::class.java)
+            startActivity(intent)
+        }
+        binding.buttonFollowing.setOnClickListener {
+            val intent = Intent(requireContext(), FollowActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun observeViewModel() {
         viewModel.liveState.observe(viewLifecycleOwner) {
             when (it) {
-                is MoreViewModel.State.SUCCESS -> {
+                is MoreViewModel.State.FetchMemberInfoSuccess -> {
+                    binding.textViewEmail.text = it.email
+                    binding.textViewNickname.text = it.nickname
+                    Glide.with(this)
+                        .load(it.avatarUrl)
+                        .centerCrop()
+                        .into(binding.imageViewAvatar)
+                }
+                is MoreViewModel.State.FetchMemberInfoFailure -> {
+                    val intent = Intent(requireContext(), LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                }
+                is MoreViewModel.State.UpdateAvatarSuccess -> {
                     Glide.with(this)
                         .load(it.imageUrl)
                         .centerCrop()
                         .into(binding.imageViewAvatar)
+
                 }
-                is MoreViewModel.State.FAILURE -> {
+                is MoreViewModel.State.UpdateAvatarFailure -> {
                     when(it.error) {
                         MoreViewModel.Error.NETWORK_ERROR -> showToast("Network Error")
                         MoreViewModel.Error.CLIENT_ERROR, MoreViewModel.Error.INVALID_PARAMS, MoreViewModel.Error.JSON_PARSE_ERROR, MoreViewModel.Error.JSON_PARSE_ERROR -> showToast("Client Error")

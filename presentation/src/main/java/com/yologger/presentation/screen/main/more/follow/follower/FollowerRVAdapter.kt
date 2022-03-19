@@ -1,4 +1,4 @@
-package com.yologger.presentation.screen.main.follow.follower
+package com.yologger.presentation.screen.main.more.follow.follower
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

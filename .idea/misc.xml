@@ -17,6 +17,7 @@
         <entry key="presentation/src/main/res/drawable/selector_icon_settings_black_24.xml" value="0.366" />
         <entry key="presentation/src/main/res/drawable/splash_screen.xml" value="0.331" />
         <entry key="presentation/src/main/res/layout/activity_find_password.xml" value="0.39692307692307693" />
+        <entry key="presentation/src/main/res/layout/activity_follow.xml" value="0.3645833333333333" />
         <entry key="presentation/src/main/res/layout/activity_join.xml" value="0.25" />
         <entry key="presentation/src/main/res/layout/activity_login.xml" value="0.2740740740740741" />
         <entry key="presentation/src/main/res/layout/activity_main.xml" value="0.31851851851851853" />
