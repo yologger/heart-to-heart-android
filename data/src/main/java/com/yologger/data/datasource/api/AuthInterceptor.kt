@@ -21,11 +21,11 @@ class AuthInterceptor constructor(
                 val originalResponse = chain.proceed(requestWithAccessToken(chain.request(), accessToken))
 
                 if (originalResponse.isSuccessful) {
-                    // Original request succeeds.
+                    // Valid Access Token. Original request succeeds.
                     return originalResponse
                 } else {
+                    // Invalid Access Token. Original request fails.
                     originalResponse.close()
-                    // Original request fails.
 
                     // Prepare for reissuing token
                     val memberId = sessionStore.getSession()!!.memberId
@@ -42,7 +42,7 @@ class AuthInterceptor constructor(
 
                     if (reissueTokenResponse.isSuccessful) {
                         // Reissuing token succeeds.
-                        reissueTokenResponse.close()
+                        // reissueTokenResponse.close()
                         val reissueTokenSuccessResponse = gson.fromJson<ReissueTokenSuccessResponse>(reissueTokenResponse?.body()?.string()!!, ReissueTokenSuccessResponse::class.java)
                         val session = Session(
                             memberId = reissueTokenSuccessResponse.memberId,
@@ -68,7 +68,7 @@ class AuthInterceptor constructor(
                 }
             } ?: run {
                 // When there's no access token in local cache.
-                val jsonString = "{\"code\":\"LOCAL001\",\"message\":\"Empty Access Token\",\"status\":\"400\"}"
+                val jsonString = "{\"code\":\"LOCAL_001\",\"message\":\"No Access Token\",\"status\":\"400\"}"
                 val responseBody = ResponseBody.create(MediaType.parse("application/json; charset=utf-8"), jsonString)
 
                 return Response.Builder()

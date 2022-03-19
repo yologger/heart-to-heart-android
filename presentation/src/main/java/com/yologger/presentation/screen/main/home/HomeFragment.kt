@@ -10,12 +10,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.orhanobut.logger.Logger
 import com.yologger.domain.usecase.post.get_posts.PostData
 import com.yologger.presentation.R
 import com.yologger.presentation.databinding.FragmentHomeBinding
+import com.yologger.presentation.screen.auth.login.LoginActivity
 import com.yologger.presentation.screen.main.home.register_post.RegisterPostActivity
+import com.yologger.presentation.util.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,7 +41,22 @@ class HomeFragment : Fragment() {
     
     private fun observeViewModel() {
         viewModel.liveState.observe(viewLifecycleOwner) {
-            Logger.w("state: ${it}")
+            when(it) {
+                is HomeViewModel.State.Success -> {}
+                is HomeViewModel.State.Failure -> {
+                    when(it.error) {
+                        HomeViewModel.Error.CLIENT_ERROR -> showToast("Client Error")
+                        HomeViewModel.Error.NETWORK_ERROR -> showToast("Network Error")
+                        HomeViewModel.Error.JSON_PARSE_ERROR -> showToast("Json Parsing Error")
+                        HomeViewModel.Error.NO_SESSION -> {
+                            val intent = Intent(requireContext(), LoginActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(intent)
+                        }
+                        HomeViewModel.Error.NO_POST_EXIST -> recyclerViewAdapter.updatePosts(mutableListOf())
+                    }
+                }
+            }
         }
 
         viewModel.livePosts.observe(viewLifecycleOwner) {
@@ -86,6 +103,9 @@ class HomeFragment : Fragment() {
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.addOnScrollListener(InfiniteScrollListener(layoutManager, viewModel))
+
+        val decoration = DividerItemDecoration(requireContext(), layoutManager.orientation)
+        binding.recyclerView.addItemDecoration(decoration)
     }
 
     fun moveToTop() = binding.recyclerView.smoothScrollToPosition(0)

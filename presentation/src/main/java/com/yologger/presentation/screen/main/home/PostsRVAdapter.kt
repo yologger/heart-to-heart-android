@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ouattararomuald.slider.ImageSlider
 import com.ouattararomuald.slider.SliderAdapter
 import com.ouattararomuald.slider.loaders.glide.GlideImageLoaderFactory
@@ -31,6 +32,12 @@ class PostsRVAdapter constructor(
         private val textViewContent: TextView = itemView.findViewById(R.id.fragment_home_holder_textView_content)
 
         fun bind(post: PostData) {
+            post.avatarUrl?.let { url ->
+                Glide.with(context)
+                    .load(url)
+                    .centerCrop()
+                    .into(imageAvatar)
+            }
             textViewEmail.text = post.writerEmail
             textViewNickname.text = post.writerNickname
             textViewContent.text = post.content

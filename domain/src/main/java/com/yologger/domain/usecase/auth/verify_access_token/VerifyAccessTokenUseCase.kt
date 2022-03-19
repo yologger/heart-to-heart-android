@@ -20,21 +20,23 @@ class VerifyAccessTokenUseCase @Inject constructor(
                 is VerifyAccessTokenResponse.FAILURE -> when(verifyAccessTokenResponse.error) {
                     VerifyAccessTokenResponseError.NETWORK_ERROR -> emitter.onNext(VerifyAccessTokenResult.FAILURE(VerifyAccessTokenResultError.NETWORK_ERROR))
                     VerifyAccessTokenResponseError.CLIENT_ERROR -> emitter.onNext(VerifyAccessTokenResult.FAILURE(VerifyAccessTokenResultError.CLIENT_ERROR))
-                    VerifyAccessTokenResponseError.ACCESS_TOKEN_EMPTY -> emitter.onNext(VerifyAccessTokenResult.SUCCESS(VerifyAccessTokenResultData.NOT_LOGGED_IN))
-                    VerifyAccessTokenResponseError.INVALID_ACCESS_TOKEN -> emitter.onNext(VerifyAccessTokenResult.SUCCESS(VerifyAccessTokenResultData.NOT_LOGGED_IN))
+                    VerifyAccessTokenResponseError.ACCESS_TOKEN_EMPTY -> {
+                        authRepository.clearSession()
+                        emitter.onNext(VerifyAccessTokenResult.SUCCESS(VerifyAccessTokenResultData.NOT_LOGGED_IN))
+                    }
+                    VerifyAccessTokenResponseError.INVALID_ACCESS_TOKEN -> {
+                        authRepository.clearSession()
+                        emitter.onNext(VerifyAccessTokenResult.SUCCESS(VerifyAccessTokenResultData.NOT_LOGGED_IN))
+                    }
                     VerifyAccessTokenResponseError.EXPIRED_ACCESS_TOKEN -> {
                         // Refresh token
                         val reissueTokenResponse = authRepository.reissueToken()
                         when(reissueTokenResponse) {
-                            is ReissueTokenResponse.SUCCESS -> {
-                                emitter.onNext(VerifyAccessTokenResult.SUCCESS(VerifyAccessTokenResultData.LOGGED_IN))
-                            }
+                            is ReissueTokenResponse.SUCCESS -> emitter.onNext(VerifyAccessTokenResult.SUCCESS(VerifyAccessTokenResultData.LOGGED_IN))
                             is ReissueTokenResponse.FAILURE -> when(reissueTokenResponse.error) {
                                 ReissueTokenResponseError.CLIENT_ERROR -> emitter.onNext(VerifyAccessTokenResult.FAILURE(VerifyAccessTokenResultError.CLIENT_ERROR))
                                 ReissueTokenResponseError.NETWORK_ERROR -> emitter.onNext(VerifyAccessTokenResult.FAILURE(VerifyAccessTokenResultError.NETWORK_ERROR))
-                                else -> {
-                                    emitter.onNext(VerifyAccessTokenResult.SUCCESS(VerifyAccessTokenResultData.NOT_LOGGED_IN))
-                                }
+                                else -> emitter.onNext(VerifyAccessTokenResult.SUCCESS(VerifyAccessTokenResultData.NOT_LOGGED_IN))
                             }
                         }
                     }

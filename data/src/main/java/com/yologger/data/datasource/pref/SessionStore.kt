@@ -31,4 +31,12 @@ class SessionStore @Inject constructor(
     fun deleteSession() {
         pref.edit().remove(keyPrefSession).apply()
     }
+
+    fun updateAvatarUrl(avatarUrl: String) {
+        val session = getSession()
+        session?.let {
+            it.avatarUrl = avatarUrl
+            putSession(it)
+        }
+    }
 }

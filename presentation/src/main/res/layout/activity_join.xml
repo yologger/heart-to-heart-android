@@ -20,13 +20,14 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
+            android:background="@color/toolbarColor"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme">
             <TextView
+                style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:textColor="@color/toolbarTextColor"
                 android:text="회원가입"/>
         </androidx.appcompat.widget.Toolbar>
 

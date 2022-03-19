@@ -2,8 +2,8 @@ package com.yologger.presentation.screen.auth.join
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.yologger.domain.usecase.auth.join.JoinResultError
 import com.yologger.domain.usecase.auth.join.JoinResult
+import com.yologger.domain.usecase.auth.join.JoinResultError
 import com.yologger.domain.usecase.auth.join.JoinUseCase
 import com.yologger.presentation.screen.base.BaseViewModel
 import com.yologger.presentation.util.SingleLiveEvent
@@ -27,7 +27,8 @@ class JoinViewModel @Inject constructor(
         NETWORK_ERROR,
         CLIENT_ERROR,
         MEMBER_ALREADY_EXIST,
-        INVALID_PARAMS
+        INVALID_PARAMS,
+        JSON_PARSE_ERROR
     }
 
     private val _liveState = SingleLiveEvent<State>()
@@ -121,6 +122,7 @@ class JoinViewModel @Inject constructor(
                             JoinResultError.NETWORK_ERROR -> _liveState.value = State.FAILURE(Error.NETWORK_ERROR)
                             JoinResultError.INVALID_PARAMS -> _liveState.value = State.FAILURE(Error.INVALID_PARAMS)
                             JoinResultError.CLIENT_ERROR -> _liveState.value = State.FAILURE(Error.CLIENT_ERROR)
+                            JoinResultError.JSON_PARSE_ERROR -> _liveState.value = State.FAILURE(Error.JSON_PARSE_ERROR)
                         }
                     }
                 }

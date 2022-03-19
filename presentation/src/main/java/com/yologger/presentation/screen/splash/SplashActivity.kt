@@ -1,10 +1,9 @@
 package com.yologger.presentation.screen.splash
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import com.orhanobut.logger.Logger
+import androidx.appcompat.app.AppCompatActivity
 import com.yologger.presentation.screen.auth.login.LoginActivity
 import com.yologger.presentation.screen.main.MainActivity
 import com.yologger.presentation.util.showToast
@@ -19,19 +18,19 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         viewModel.liveState.observe(this) {
             when(it) {
-                is SplashViewModel.State.SUCCESS -> {
+                is SplashViewModel.State.Success -> {
                     when(it.result) {
-                        SplashViewModel.RESULT.NOT_LOGGED_IN -> navigateToLoginScreen()
-                        SplashViewModel.RESULT.LOGGED_IN -> navigateToMainScreen()
+                        SplashViewModel.Result.NOT_LOGGED_IN -> navigateToLoginScreen()
+                        SplashViewModel.Result.LOGGED_IN -> navigateToMainScreen()
                     }
                 }
-                is SplashViewModel.State.FAILURE -> {
+                is SplashViewModel.State.Failure -> {
                     when(it.error) {
-                        SplashViewModel.ERROR.CLIENT_ERROR -> {
+                        SplashViewModel.Error.CLIENT_ERROR -> {
                             showToast("Client Error")
                             finish()
                         }
-                        SplashViewModel.ERROR.NETWORK_ERROR -> {
+                        SplashViewModel.Error.NETWORK_ERROR -> {
                             showToast("Network Error")
                             finish()
                         }

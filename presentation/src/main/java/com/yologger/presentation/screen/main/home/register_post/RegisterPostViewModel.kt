@@ -20,8 +20,8 @@ class RegisterPostViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     sealed class Event {
-        data class SUCCESS(val post: PostData): Event()
-        data class FAILURE(val error: Error): Event()
+        data class Success(val post: PostData): Event()
+        data class Failure(val error: Error): Event()
     }
 
     enum class Error {
@@ -29,7 +29,8 @@ class RegisterPostViewModel @Inject constructor(
         NETWORK_ERROR,
         FILE_UPLOAD_ERROR,
         NO_SESSION,
-        FILE_SIZE_LIMIT_EXCEEDED
+        FILE_SIZE_LIMIT_EXCEEDED,
+        JSON_PARSE_ERROR,
     }
 
     private val _liveEvent = SingleLiveEvent<Event>()
@@ -71,16 +72,17 @@ class RegisterPostViewModel @Inject constructor(
                             createdAt = createdData.createdAt,
                             updatedAt = createdData.updatedAt
                         )
-                        _liveEvent.value = Event.SUCCESS(post = createdPost)
+                        _liveEvent.value = Event.Success(post = createdPost)
                     }
                     is RegisterPostResult.FAILURE -> {
                         when (it.error) {
-                            RegisterPostResultError.CLIENT_ERROR -> _liveEvent.value = Event.FAILURE(Error.CLIENT_ERROR)
-                            RegisterPostResultError.INVALID_PARAMS -> _liveEvent.value = Event.FAILURE(Error.CLIENT_ERROR)
-                            RegisterPostResultError.FILE_UPLOAD_ERROR -> _liveEvent.value = Event.FAILURE(Error.FILE_UPLOAD_ERROR)
-                            RegisterPostResultError.NO_SESSION -> _liveEvent.value = Event.FAILURE(Error.NO_SESSION)
-                            RegisterPostResultError.FILE_SIZE_LIMIT_EXCEEDED -> _liveEvent.value = Event.FAILURE(Error.FILE_SIZE_LIMIT_EXCEEDED)
-                            RegisterPostResultError.NETWORK_ERROR -> _liveEvent.value = Event.FAILURE(Error.NETWORK_ERROR)
+                            RegisterPostResultError.CLIENT_ERROR -> _liveEvent.value = Event.Failure(Error.CLIENT_ERROR)
+                            RegisterPostResultError.INVALID_PARAMS -> _liveEvent.value = Event.Failure(Error.CLIENT_ERROR)
+                            RegisterPostResultError.FILE_UPLOAD_ERROR -> _liveEvent.value = Event.Failure(Error.FILE_UPLOAD_ERROR)
+                            RegisterPostResultError.NO_SESSION -> _liveEvent.value = Event.Failure(Error.NO_SESSION)
+                            RegisterPostResultError.FILE_SIZE_LIMIT_EXCEEDED -> _liveEvent.value = Event.Failure(Error.FILE_SIZE_LIMIT_EXCEEDED)
+                            RegisterPostResultError.NETWORK_ERROR -> _liveEvent.value = Event.Failure(Error.NETWORK_ERROR)
+                            RegisterPostResultError.JSON_PARSE_ERROR -> _liveEvent.value = Event.Failure(Error.JSON_PARSE_ERROR)
                         }
                     }
                 }

@@ -18,5 +18,8 @@ interface PostService {
     ): Call<RegisterPostSuccessResponse>
 
     @GET("/post/posts")
-    fun getPosts(@Query("page") page: Int, @Query("size") size: Int): Call<GetPostsSuccessResponse>
+    fun getPosts(
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): Call<GetPostsSuccessResponse>
 }

@@ -13,7 +13,8 @@ interface AuthRepository {
     fun confirmVerificationCode(email: String, code: String): ConfirmVerificationCodeResult
     fun join(email: String, name: String, nickname: String, password: String): JoinResult
     fun login(email: String, password: String): LoginResult
-    fun logout(): LogoutResult
-    fun verifyAccessToken(): VerifyAccessTokenResponse
     fun reissueToken(): ReissueTokenResponse
+    fun verifyAccessToken(): VerifyAccessTokenResponse
+    fun clearSession()
+    fun logout(): LogoutResult
 }

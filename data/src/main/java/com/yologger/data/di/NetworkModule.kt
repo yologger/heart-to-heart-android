@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.yologger.common.Constant
 import com.yologger.data.datasource.api.AuthInterceptor
 import com.yologger.data.datasource.api.auth.AuthService
+import com.yologger.data.datasource.api.member.MemberService
 import com.yologger.data.datasource.api.post.PostService
 import com.yologger.data.datasource.pref.SessionStore
 import dagger.Module
@@ -63,5 +64,16 @@ class NetworkModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(PostService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun providesMemberService(@OkHttpClientWithAuthInterceptor okHttpClient: OkHttpClient): MemberService {
+        return Retrofit.Builder()
+            .client(okHttpClient)
+            .baseUrl(Constant.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(MemberService::class.java)
     }
 }

@@ -4,6 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 data class JoinFailureResponse constructor(
     @SerializedName("message") val message: String,
-    @SerializedName("code") val code: JoinFailureCode,
+    @SerializedName("code") val code: JoinFailureResponseCode,
     @SerializedName("status") val status: Int
 )

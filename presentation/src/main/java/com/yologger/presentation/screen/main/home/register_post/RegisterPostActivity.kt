@@ -52,7 +52,7 @@ class RegisterPostActivity : AppCompatActivity() {
     }
 
     private fun initUI() {
-        binding.toolbar.setNavigationIcon(R.drawable.icon_arrow_back_filled_black_24)
+        binding.toolbar.setNavigationIcon(R.drawable.icon_close_outlined_white_24)
         binding.toolbar.setNavigationOnClickListener { finish() }
         binding.toolbar.inflateMenu(R.menu.activity_register_post_toolbar)
         binding.toolbar.setOnMenuItemClickListener {
@@ -92,14 +92,14 @@ class RegisterPostActivity : AppCompatActivity() {
 
         viewModel.liveEvent.observe(this) {
             when(it) {
-                is RegisterPostViewModel.Event.SUCCESS -> {
+                is RegisterPostViewModel.Event.Success -> {
                     val createdPost = it.post
                     val intent = Intent()
                     intent.putExtra("created_post", createdPost)
                     setResult(Activity.RESULT_OK, intent)
                     finish()
                 }
-                is RegisterPostViewModel.Event.FAILURE -> {
+                is RegisterPostViewModel.Event.Failure -> {
                     when(it.error) {
                         RegisterPostViewModel.Error.CLIENT_ERROR -> {
                             showToast("Client Error")

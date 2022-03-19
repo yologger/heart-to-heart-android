@@ -30,4 +30,5 @@ dependencies {
     kapt Dependencies.GLIDE_COMPILER
     implementation Dependencies.SLIDER_GLIDE
     implementation Dependencies.TED_IMAGE_PICKER
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }

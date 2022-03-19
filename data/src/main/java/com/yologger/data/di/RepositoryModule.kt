@@ -1,8 +1,10 @@
 package com.yologger.data.di
 
 import com.yologger.data.repository.auth.AuthRepositoryImpl
+import com.yologger.data.repository.member.MemberRepositoryImpl
 import com.yologger.data.repository.post.PostRepositoryImpl
 import com.yologger.domain.repository.AuthRepository
+import com.yologger.domain.repository.MemberRepository
 import com.yologger.domain.repository.PostRepository
 import dagger.Binds
 import dagger.Module
@@ -18,4 +20,7 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindsPostRepository(postRepositoryImpl: PostRepositoryImpl): PostRepository
+
+    @Binds
+    abstract fun bindsMemberRepository(memberRepositoryImpl: MemberRepositoryImpl): MemberRepository
 }

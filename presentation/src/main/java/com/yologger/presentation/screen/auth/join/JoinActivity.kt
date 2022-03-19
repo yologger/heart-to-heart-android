@@ -78,6 +78,7 @@ class JoinActivity : AppCompatActivity() {
                         JoinViewModel.Error.NETWORK_ERROR -> showToast("Network Error")
                         JoinViewModel.Error.INVALID_PARAMS -> showToast("Invalid Parameters")
                         JoinViewModel.Error.MEMBER_ALREADY_EXIST -> showToast("중복된 이메일입니다.")
+                        JoinViewModel.Error.JSON_PARSE_ERROR -> showToast("Json Parsing Error")
                     }
                 }
             }
