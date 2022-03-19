@@ -10,6 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yologger.domain.usecase.post.get_posts.PostData
 import com.yologger.presentation.R
@@ -102,6 +103,9 @@ class HomeFragment : Fragment() {
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.addOnScrollListener(InfiniteScrollListener(layoutManager, viewModel))
+
+        val decoration = DividerItemDecoration(requireContext(), layoutManager.orientation)
+        binding.recyclerView.addItemDecoration(decoration)
     }
 
     fun moveToTop() = binding.recyclerView.smoothScrollToPosition(0)

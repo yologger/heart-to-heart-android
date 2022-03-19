@@ -5,10 +5,19 @@
       <map>
         <entry key="../../../../../../../layout/custom_preview.xml" value="0.29739583333333336" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.541025641025641" />
+        <entry key="presentation/src/main/res/drawable-night/icon_create_filled_24.xml" value="0.28" />
+        <entry key="presentation/src/main/res/drawable-night/icon_refresh_outlined_24.xml" value="0.28" />
         <entry key="presentation/src/main/res/drawable/background_dialog_loading.xml" value="0.204" />
         <entry key="presentation/src/main/res/drawable/ic_logo_background_white.xml" value="0.3315" />
+        <entry key="presentation/src/main/res/drawable/icon_arrow_back_24_white.xml" value="0.115" />
         <entry key="presentation/src/main/res/drawable/icon_arrow_back_filled_black_24.xml" value="0.1865" />
+        <entry key="presentation/src/main/res/drawable/icon_close_filled_24.xml" value="0.28" />
+        <entry key="presentation/src/main/res/drawable/icon_close_outlined_white_24.xml" value="0.28" />
+        <entry key="presentation/src/main/res/drawable/icon_create_filled_24.xml" value="0.28" />
         <entry key="presentation/src/main/res/drawable/icon_home_filled_black_24.xml" value="0.366" />
+        <entry key="presentation/src/main/res/drawable/icon_refresh_outlined_24.xml" value="0.28" />
+        <entry key="presentation/src/main/res/drawable/icon_settings_filled_black_24.xml" value="0.28" />
+        <entry key="presentation/src/main/res/drawable/icon_settings_outlined_black_24.xml" value="0.28" />
         <entry key="presentation/src/main/res/drawable/logo_background_white.xml" value="0.3415" />
         <entry key="presentation/src/main/res/drawable/radius_md.xml" value="0.1" />
         <entry key="presentation/src/main/res/drawable/selector_icon_home_black_24.xml" value="0.366" />
@@ -23,7 +32,7 @@
         <entry key="presentation/src/main/res/layout/activity_main.xml" value="0.31851851851851853" />
         <entry key="presentation/src/main/res/layout/activity_register_post.xml" value="0.18518518518518517" />
         <entry key="presentation/src/main/res/layout/activity_register_post_holder_selected_image.xml" value="0.403125" />
-        <entry key="presentation/src/main/res/layout/activity_settings.xml" value="0.11388888888888889" />
+        <entry key="presentation/src/main/res/layout/activity_settings.xml" value="0.2796296296296296" />
         <entry key="presentation/src/main/res/layout/activity_settings_item.xml" value="0.2916666666666667" />
         <entry key="presentation/src/main/res/layout/activity_splash.xml" value="0.32864583333333336" />
         <entry key="presentation/src/main/res/layout/activity_theme.xml" value="0.3453125" />
@@ -39,6 +48,7 @@
         <entry key="presentation/src/main/res/layout/fragment_get_user_info.xml" value="0.39351851851851855" />
         <entry key="presentation/src/main/res/layout/fragment_home.xml" value="0.240625" />
         <entry key="presentation/src/main/res/layout/fragment_home_holder_post.xml" value="0.5760416666666667" />
+        <entry key="presentation/src/main/res/layout/fragment_home_holder_post_include_header.xml" value="0.5760416666666667" />
         <entry key="presentation/src/main/res/layout/fragment_home_holder_post_include_images.xml" value="0.5760416666666667" />
         <entry key="presentation/src/main/res/layout/fragment_more.xml" value="0.29635416666666664" />
         <entry key="presentation/src/main/res/layout/fragment_settings.xml" value="0.3651041666666667" />
@@ -46,7 +56,7 @@
         <entry key="presentation/src/main/res/layout/fragment_verify_email.xml" value="0.39351851851851855" />
         <entry key="presentation/src/main/res/menu/activity_join_menu_toolbar.xml" value="0.5484375" />
         <entry key="presentation/src/main/res/menu/activity_main_menu_bottom_navigation_view.xml" value="0.3651041666666667" />
-        <entry key="presentation/src/main/res/menu/activity_register_post_toolbar.xml" value="0.5009259259259259" />
+        <entry key="presentation/src/main/res/menu/activity_register_post_toolbar.xml" value="0.2796296296296296" />
         <entry key="presentation/src/main/res/menu/activity_verify_email_menu_toolbar.xml" value="0.403125" />
         <entry key="presentation/src/main/res/menu/fragment_home_toolbar.xml" value="0.35625" />
         <entry key="presentation/src/main/res/menu/fragment_more_toolbar.xml" value="0.29259259259259257" />

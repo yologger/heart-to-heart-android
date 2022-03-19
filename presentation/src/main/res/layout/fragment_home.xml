@@ -15,13 +15,15 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:elevation="@dimen/elevation"
                 android:layout_height="?attr/actionBarSize"
+                android:elevation="@dimen/elevation"
+                android:background="@color/toolbarColor"
                 app:layout_scrollFlags="scroll|enterAlways">
                 <TextView
                     style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/white"
                     android:text="Home"/>
             </androidx.appcompat.widget.Toolbar>
 
@@ -39,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/margin_md"
-            android:src="@drawable/icon_add_outlined_black_24" />
+            android:src="@drawable/icon_create_filled_white_24" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

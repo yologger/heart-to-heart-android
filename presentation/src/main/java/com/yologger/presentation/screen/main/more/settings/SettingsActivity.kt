@@ -35,9 +35,8 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun initUI() {
-        binding.toolbar.setNavigationIcon(R.drawable.icon_arrow_back_filled_black_24)
+        binding.toolbar.setNavigationIcon(R.drawable.icon_arrow_back_24_white)
         binding.toolbar.setNavigationOnClickListener { finish() }
-
         recyclerViewAdapter = SettingsRVAdapter { position ->
             when(position) {
                 1 -> {

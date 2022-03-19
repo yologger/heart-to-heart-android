@@ -38,7 +38,7 @@ class FollowActivity : AppCompatActivity() {
             tab.text = tabTextList[position]
         }.attach()
 
-        binding.toolbar.setNavigationIcon(R.drawable.icon_arrow_back_filled_black_24)
+        binding.toolbar.setNavigationIcon(R.drawable.icon_arrow_back_24_white)
         binding.toolbar.setNavigationOnClickListener { finish() }
     }
 

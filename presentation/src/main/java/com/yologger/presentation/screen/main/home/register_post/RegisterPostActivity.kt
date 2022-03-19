@@ -52,7 +52,7 @@ class RegisterPostActivity : AppCompatActivity() {
     }
 
     private fun initUI() {
-        binding.toolbar.setNavigationIcon(R.drawable.icon_arrow_back_filled_black_24)
+        binding.toolbar.setNavigationIcon(R.drawable.icon_close_outlined_white_24)
         binding.toolbar.setNavigationOnClickListener { finish() }
         binding.toolbar.inflateMenu(R.menu.activity_register_post_toolbar)
         binding.toolbar.setOnMenuItemClickListener {

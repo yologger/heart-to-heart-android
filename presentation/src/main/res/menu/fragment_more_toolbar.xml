@@ -5,6 +5,7 @@
     <item
         android:title="완료"
         android:id="@+id/fragment_more_menu_toolbar_action_settings"
-        android:icon="@drawable/icon_settings_outlined_black_24"
+        android:icon="@drawable/icon_settings_outlined_white_24"
+        android:iconTint="@color/toolbarIconColor"
         app:showAsAction="always" />
 </menu>

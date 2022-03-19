@@ -11,7 +11,7 @@ class SettingsRVAdapter constructor(
     val onItemClicked: (Int) -> Unit
 ) : RecyclerView.Adapter<SettingsRVAdapter.SettingsItem>() {
     val menu = listOf(
-        "Theme",
+//        "Theme",
         "Logout"
     )
 

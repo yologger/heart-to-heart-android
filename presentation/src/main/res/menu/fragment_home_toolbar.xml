@@ -5,6 +5,7 @@
     <item
         android:title="완료"
         android:id="@+id/fragment_home_menu_toolbar_action_refresh"
-        android:icon="@drawable/icon_refresh_outlined_black_24"
+        android:iconTint="@color/toolbarIconColor"
+        android:icon="@drawable/icon_refresh_filled_white_24"
         app:showAsAction="always" />
 </menu>

@@ -16,17 +16,23 @@
         android:id="@+id/rootView"
         tools:context=".screen.main.home.register_post.RegisterPostActivity">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:elevation="@dimen/elevation"
-            android:layout_height="?attr/actionBarSize">
-            <TextView
-                style="@style/TextAppearance.MaterialComponents.Headline6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Write" />
-        </androidx.appcompat.widget.Toolbar>
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:elevation="@dimen/elevation"
+                android:background="@color/toolbarColor"
+                android:layout_height="?attr/actionBarSize">
+                <TextView
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/toolbarTextColor"
+                    android:text="글쓰기" />
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -62,6 +68,7 @@
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
             android:ems="10"
+            android:padding="16dp"
             android:gravity="start|top"
             android:text="@={viewModel.liveContent}"
             android:hint="What's one your mind?"
