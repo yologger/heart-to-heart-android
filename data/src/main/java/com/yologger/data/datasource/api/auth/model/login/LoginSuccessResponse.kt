@@ -2,7 +2,7 @@ package com.yologger.data.datasource.api.auth.model.login
 
 import com.google.gson.annotations.SerializedName
 
-data class LoginResponse constructor(
+data class LoginSuccessResponse constructor(
     @SerializedName("member_id") val memberId: Long,
     @SerializedName("access_token") val accessToken: String,
     @SerializedName("refresh_token") val refreshToken: String,

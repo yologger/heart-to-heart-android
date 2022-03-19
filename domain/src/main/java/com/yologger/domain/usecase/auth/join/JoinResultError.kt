@@ -4,5 +4,6 @@ enum class JoinResultError {
     NETWORK_ERROR,
     CLIENT_ERROR,
     MEMBER_ALREADY_EXIST,
-    INVALID_PARAMS
+    INVALID_PARAMS,
+    JSON_PARSE_ERROR
 }

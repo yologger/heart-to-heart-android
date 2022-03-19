@@ -51,7 +51,7 @@ class VerifyEmailActivity : AppCompatActivity() {
     private fun observeViewModel() {
         viewModel.liveState.observe(this) {
             when (it) {
-                is VerifyEmailViewModel.State.EMAIL_VERIFICATION_CODE_SUCCESS -> {
+                is VerifyEmailViewModel.State.EmailVerificationCodeSuccess -> {
                     val builder = AlertDialog.Builder(this@VerifyEmailActivity)
                     val alertDialog = builder
                         .setTitle("이메일로 인증코드가 발송되었습니다.")
@@ -60,28 +60,30 @@ class VerifyEmailActivity : AppCompatActivity() {
                         .create()
                     alertDialog.show()
                 }
-                is VerifyEmailViewModel.State.EMAIL_VERIFICATION_CODE_FAILURE -> {
+                is VerifyEmailViewModel.State.EmailVerificationCodeFailure -> {
                     when(it.error) {
-                        VerifyEmailViewModel.EMAIL_VERIFICATION_CODE_ERROR.NETWORK_ERROR -> showToast("Network Error")
-                        VerifyEmailViewModel.EMAIL_VERIFICATION_CODE_ERROR.MAIL_ERROR -> showToast("Mail Server Error")
-                        VerifyEmailViewModel.EMAIL_VERIFICATION_CODE_ERROR.CLIENT_ERROR -> showToast("Client Request Error")
-                        VerifyEmailViewModel.EMAIL_VERIFICATION_CODE_ERROR.MEMBER_ALREADY_EXIST -> showToast("Member Already Exists")
-                        VerifyEmailViewModel.EMAIL_VERIFICATION_CODE_ERROR.INVALID_PARAMS -> showToast("Invalid Parameters")
+                        VerifyEmailViewModel.EmailVerificationCodeError.NETWORK_ERROR -> showToast("Network Error")
+                        VerifyEmailViewModel.EmailVerificationCodeError.MAIL_ERROR -> showToast("Mail Server Error")
+                        VerifyEmailViewModel.EmailVerificationCodeError.CLIENT_ERROR -> showToast("Client Request Error")
+                        VerifyEmailViewModel.EmailVerificationCodeError.MEMBER_ALREADY_EXIST -> showToast("Member Already Exists")
+                        VerifyEmailViewModel.EmailVerificationCodeError.INVALID_PARAMS -> showToast("Invalid Parameters")
+                        VerifyEmailViewModel.EmailVerificationCodeError.JSON_PARSE_ERROR -> showToast("Json Parsing Error")
                     }
                 }
-                is VerifyEmailViewModel.State.CONFIRM_VERIFICATION_CODE_SUCCESS -> {
+                is VerifyEmailViewModel.State.ConfirmVerificationCodeSuccess -> {
                     val intent = Intent(this, JoinActivity::class.java)
                     intent.putExtra("email", it.email)
                     startActivity(intent)
                 }
 
-                is VerifyEmailViewModel.State.CONFIRM_VERIFICATION_CODE_FAILURE -> {
+                is VerifyEmailViewModel.State.ConfirmVerificationCodeFailure -> {
                     when(it.error) {
-                        VerifyEmailViewModel.CONFIRM_VERIFICATION_CODE_ERROR.CLIENT_ERROR -> showToast("Client Request Error")
-                        VerifyEmailViewModel.CONFIRM_VERIFICATION_CODE_ERROR.NETWORK_ERROR -> showToast("Network Error")
-                        VerifyEmailViewModel.CONFIRM_VERIFICATION_CODE_ERROR.INVALID_EMAIL -> showToast("Invalid Email")
-                        VerifyEmailViewModel.CONFIRM_VERIFICATION_CODE_ERROR.EXPIRED_VERIFICATION_CODE -> showToast("Expired Verification Code")
-                        VerifyEmailViewModel.CONFIRM_VERIFICATION_CODE_ERROR.INVALID_VERIFICATION_CODE -> showToast("Invalid Verification Code")
+                        VerifyEmailViewModel.ConfirmVerificationCodeError.CLIENT_ERROR -> showToast("Client Request Error")
+                        VerifyEmailViewModel.ConfirmVerificationCodeError.NETWORK_ERROR -> showToast("Network Error")
+                        VerifyEmailViewModel.ConfirmVerificationCodeError.INVALID_EMAIL -> showToast("Invalid Email")
+                        VerifyEmailViewModel.ConfirmVerificationCodeError.EXPIRED_VERIFICATION_CODE -> showToast("Expired Verification Code")
+                        VerifyEmailViewModel.ConfirmVerificationCodeError.INVALID_VERIFICATION_CODE -> showToast("Invalid Verification Code")
+                        VerifyEmailViewModel.ConfirmVerificationCodeError.JSON_PARSE_ERROR -> showToast("Json Parsing Error")
                     }
                 }
             }

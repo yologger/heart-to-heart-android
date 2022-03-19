@@ -35,7 +35,7 @@
             android:padding="@dimen/padding_md">
 
             <ImageView
-                android:id="@+id/fragment_settings_imageView_avatar"
+                android:id="@+id/imageViewAvatar"
                 android:src="@drawable/image_avatar_default"
                 android:scaleType="centerCrop"
                 android:layout_width="80dp"
@@ -48,19 +48,19 @@
                 app:layout_constraintBottom_toBottomOf="parent" />
 
             <LinearLayout
-                app:layout_constraintStart_toEndOf="@+id/fragment_settings_imageView"
+                app:layout_constraintStart_toEndOf="@+id/imageViewAvatar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/fragment_settings_textView_nickname"
+                    android:id="@+id/textViewNickname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:text="yologger"/>
                 <TextView
-                    android:id="@+id/fragment_settings_textView_email"
+                    android:id="@+id/textViewEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TextAppearance.MaterialComponents.Subtitle2"

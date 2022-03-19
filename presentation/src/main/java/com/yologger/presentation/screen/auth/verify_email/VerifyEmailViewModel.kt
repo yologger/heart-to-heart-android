@@ -3,11 +3,11 @@ package com.yologger.presentation.screen.auth.verify_email
 import android.text.TextUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.yologger.domain.usecase.auth.confirm_verification_code.ConfirmVerificationCodeResultError
 import com.yologger.domain.usecase.auth.confirm_verification_code.ConfirmVerificationCodeResult
+import com.yologger.domain.usecase.auth.confirm_verification_code.ConfirmVerificationCodeResultError
 import com.yologger.domain.usecase.auth.confirm_verification_code.ConfirmVerificationCodeUseCase
-import com.yologger.domain.usecase.auth.email_verification_code.EmailVerificationCodeResultError
 import com.yologger.domain.usecase.auth.email_verification_code.EmailVerificationCodeResult
+import com.yologger.domain.usecase.auth.email_verification_code.EmailVerificationCodeResultError
 import com.yologger.domain.usecase.auth.email_verification_code.EmailVerificationCodeUseCase
 import com.yologger.presentation.screen.base.BaseViewModel
 import com.yologger.presentation.util.SingleLiveEvent
@@ -23,26 +23,28 @@ class VerifyEmailViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     sealed class State {
-        object EMAIL_VERIFICATION_CODE_SUCCESS: State()
-        data class EMAIL_VERIFICATION_CODE_FAILURE(val error: EMAIL_VERIFICATION_CODE_ERROR): State()
-        data class CONFIRM_VERIFICATION_CODE_SUCCESS(val email: String): State()
-        data class CONFIRM_VERIFICATION_CODE_FAILURE(val error: CONFIRM_VERIFICATION_CODE_ERROR): State()
+        object EmailVerificationCodeSuccess: State()
+        data class EmailVerificationCodeFailure(val error: EmailVerificationCodeError): State()
+        data class ConfirmVerificationCodeSuccess(val email: String): State()
+        data class ConfirmVerificationCodeFailure(val error: ConfirmVerificationCodeError): State()
     }
 
-    enum class EMAIL_VERIFICATION_CODE_ERROR {
+    enum class EmailVerificationCodeError {
         NETWORK_ERROR,
         MAIL_ERROR,
         CLIENT_ERROR,
         MEMBER_ALREADY_EXIST,
-        INVALID_PARAMS
+        INVALID_PARAMS,
+        JSON_PARSE_ERROR
     }
 
-    enum class CONFIRM_VERIFICATION_CODE_ERROR {
+    enum class ConfirmVerificationCodeError {
         NETWORK_ERROR,
         CLIENT_ERROR,
         INVALID_EMAIL,
         EXPIRED_VERIFICATION_CODE,
         INVALID_VERIFICATION_CODE,
+        JSON_PARSE_ERROR
     }
 
     private val _liveState = SingleLiveEvent<State>()
@@ -62,28 +64,25 @@ class VerifyEmailViewModel @Inject constructor(
         val params = EmailVerificationCodeUseCase.Params(email = liveEmail.value!!.trim())
         _liveIsLoading.value = true
         emailVerificationCodeUseCase.execute(params)
-            .subscribeBy(
-                onNext = { result ->
-                    _liveIsLoading.value = false
-                    when(result) {
-                        is EmailVerificationCodeResult.SUCCESS -> {
-                            liveHasVerificationAlreadyRequested.value = true
-                            _liveState.value = State.EMAIL_VERIFICATION_CODE_SUCCESS
+            .subscribeBy { result ->
+                _liveIsLoading.value = false
+                when(result) {
+                    is EmailVerificationCodeResult.SUCCESS -> {
+                        liveHasVerificationAlreadyRequested.value = true
+                        _liveState.value = State.EmailVerificationCodeSuccess
+                    }
+                    is EmailVerificationCodeResult.FAILURE -> {
+                        when (result.error) {
+                            EmailVerificationCodeResultError.MAIL_ERROR -> _liveState.value = State.EmailVerificationCodeFailure(EmailVerificationCodeError.MAIL_ERROR)
+                            EmailVerificationCodeResultError.CLIENT_ERROR -> _liveState.value = State.EmailVerificationCodeFailure(EmailVerificationCodeError.CLIENT_ERROR)
+                            EmailVerificationCodeResultError.MEMBER_ALREADY_EXIST -> _liveState.value = State.EmailVerificationCodeFailure(EmailVerificationCodeError.MEMBER_ALREADY_EXIST)
+                            EmailVerificationCodeResultError.INVALID_PARAMS -> _liveState.value = State.EmailVerificationCodeFailure(EmailVerificationCodeError.INVALID_PARAMS)
+                            EmailVerificationCodeResultError.NETWORK_ERROR -> _liveState.value = State.EmailVerificationCodeFailure(EmailVerificationCodeError.NETWORK_ERROR)
+                            EmailVerificationCodeResultError.JSON_PARSE_ERROR -> _liveState.value = State.EmailVerificationCodeFailure(EmailVerificationCodeError.JSON_PARSE_ERROR)
                         }
-                        is EmailVerificationCodeResult.FAILURE -> {
-                           when (result.error) {
-                               EmailVerificationCodeResultError.MAIL_ERROR -> _liveState.value = State.EMAIL_VERIFICATION_CODE_FAILURE(EMAIL_VERIFICATION_CODE_ERROR.MAIL_ERROR)
-                               EmailVerificationCodeResultError.CLIENT_ERROR -> _liveState.value = State.EMAIL_VERIFICATION_CODE_FAILURE(EMAIL_VERIFICATION_CODE_ERROR.CLIENT_ERROR)
-                               EmailVerificationCodeResultError.MEMBER_ALREADY_EXIST -> _liveState.value = State.EMAIL_VERIFICATION_CODE_FAILURE(EMAIL_VERIFICATION_CODE_ERROR.MEMBER_ALREADY_EXIST)
-                               EmailVerificationCodeResultError.INVALID_PARAMS -> _liveState.value = State.EMAIL_VERIFICATION_CODE_FAILURE(EMAIL_VERIFICATION_CODE_ERROR.INVALID_PARAMS)
-                               EmailVerificationCodeResultError.NETWORK_ERROR -> _liveState.value = State.EMAIL_VERIFICATION_CODE_FAILURE(EMAIL_VERIFICATION_CODE_ERROR.NETWORK_ERROR)
-                           } 
-                        }
-                    }                         
-                },
-                onError = { _liveIsLoading.value = false },
-                onComplete = { _liveIsLoading.value = false }
-            ).addTo(disposables)
+                    }
+                }
+            }.addTo(disposables)
     }
 
     fun confirmVerificationCode() {
@@ -94,15 +93,16 @@ class VerifyEmailViewModel @Inject constructor(
                 _liveIsLoading.value = false
                 when(result) {
                     is ConfirmVerificationCodeResult.SUCCESS -> {
-                        _liveState.value = State.CONFIRM_VERIFICATION_CODE_SUCCESS(email = liveEmail.value!!.trim())
+                        _liveState.value = State.ConfirmVerificationCodeSuccess(email = liveEmail.value!!.trim())
                     }
                     is ConfirmVerificationCodeResult.FAILURE -> {
                         when (result.error) {
-                            ConfirmVerificationCodeResultError.EXPIRED_VERIFICATION_CODE -> _liveState.value = State.CONFIRM_VERIFICATION_CODE_FAILURE(CONFIRM_VERIFICATION_CODE_ERROR.EXPIRED_VERIFICATION_CODE)
-                            ConfirmVerificationCodeResultError.INVALID_EMAIL -> _liveState.value = State.CONFIRM_VERIFICATION_CODE_FAILURE(CONFIRM_VERIFICATION_CODE_ERROR.INVALID_EMAIL)
-                            ConfirmVerificationCodeResultError.INVALID_VERIFICATION_CODE -> _liveState.value = State.CONFIRM_VERIFICATION_CODE_FAILURE(CONFIRM_VERIFICATION_CODE_ERROR.INVALID_VERIFICATION_CODE)
-                            ConfirmVerificationCodeResultError.NETWORK_ERROR ->  _liveState.value = State.CONFIRM_VERIFICATION_CODE_FAILURE(CONFIRM_VERIFICATION_CODE_ERROR.NETWORK_ERROR)
-                            ConfirmVerificationCodeResultError.CLIENT_ERROR ->  _liveState.value = State.CONFIRM_VERIFICATION_CODE_FAILURE(CONFIRM_VERIFICATION_CODE_ERROR.CLIENT_ERROR)
+                            ConfirmVerificationCodeResultError.EXPIRED_VERIFICATION_CODE -> _liveState.value = State.ConfirmVerificationCodeFailure(ConfirmVerificationCodeError.EXPIRED_VERIFICATION_CODE)
+                            ConfirmVerificationCodeResultError.INVALID_EMAIL -> _liveState.value = State.ConfirmVerificationCodeFailure(ConfirmVerificationCodeError.INVALID_EMAIL)
+                            ConfirmVerificationCodeResultError.INVALID_VERIFICATION_CODE -> _liveState.value = State.ConfirmVerificationCodeFailure(ConfirmVerificationCodeError.INVALID_VERIFICATION_CODE)
+                            ConfirmVerificationCodeResultError.NETWORK_ERROR ->  _liveState.value = State.ConfirmVerificationCodeFailure(ConfirmVerificationCodeError.NETWORK_ERROR)
+                            ConfirmVerificationCodeResultError.CLIENT_ERROR ->  _liveState.value = State.ConfirmVerificationCodeFailure(ConfirmVerificationCodeError.CLIENT_ERROR)
+                            ConfirmVerificationCodeResultError.JSON_PARSE_ERROR ->  _liveState.value = State.ConfirmVerificationCodeFailure(ConfirmVerificationCodeError.JSON_PARSE_ERROR)
                         }
                     }
                 }
@@ -125,10 +125,6 @@ class VerifyEmailViewModel @Inject constructor(
     }
 
     fun onTextFieldCodeChanged(text: CharSequence, start: Int, count: Int, after: Int) {
-        if (text.trim().length < 1) {
-            liveIsCodeValid.value = false
-        } else {
-            liveIsCodeValid.value = true
-        }
+        liveIsCodeValid.value = text.trim().length >= 1
     }
 }

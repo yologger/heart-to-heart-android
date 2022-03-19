@@ -7,7 +7,7 @@ enum class ReissueTokenFailureResponseCode {
     @SerializedName("GLOBAL002") INVALID_INPUT_VALUE,
     @SerializedName("GLOBAL006") ILLEGAL_STATE,
 
-    @SerializedName("AUTH006") MEMBER_NOT_EXIST,
-    @SerializedName("AUTH007") INVALID_REFRESH_TOKEN,
-    @SerializedName("AUTH008") EXPIRED_REFRESH_TOKEN,
+    @SerializedName("AUTH_005") MEMBER_NOT_EXIST,
+    @SerializedName("AUTH_007") INVALID_REFRESH_TOKEN,
+    @SerializedName("AUTH_008") EXPIRED_REFRESH_TOKEN,
 }

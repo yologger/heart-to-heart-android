@@ -3,8 +3,8 @@ package com.yologger.data.repository.auth
 import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
 import com.yologger.data.datasource.api.auth.AuthService
-import com.yologger.data.datasource.api.auth.model.email_verification_code.EmailVerificationCodeResponse
-import com.yologger.data.datasource.api.auth.model.join.JoinResponse
+import com.yologger.data.datasource.api.auth.model.email_verification_code.EmailVerificationCodeSuccessResponse
+import com.yologger.data.datasource.api.auth.model.join.JoinSuccessResponse
 import com.yologger.data.datasource.pref.SessionStore
 import com.yologger.data.util.MockitoHelper.anyObject
 import com.yologger.domain.repository.AuthRepository
@@ -45,7 +45,7 @@ class AuthRepositoryImplTest {
     fun `test emailVerification success`() {
         // Given
         `when`(mockAuthService.emailVerificationCode(anyObject()))
-            .thenReturn(Calls.response(EmailVerificationCodeResponse("sented")))
+            .thenReturn(Calls.response(EmailVerificationCodeSuccessResponse("sented")))
 
         authRepository = AuthRepositoryImpl(mockAuthService, Gson(), sessionStore)
 
@@ -60,7 +60,7 @@ class AuthRepositoryImplTest {
     fun `test join success`() {
         // Given
         `when`(mockAuthService.join(anyObject()))
-            .thenReturn(Calls.response(JoinResponse("1")))
+            .thenReturn(Calls.response(JoinSuccessResponse("1")))
 
         authRepository = AuthRepositoryImpl(mockAuthService, Gson(), sessionStore)
 

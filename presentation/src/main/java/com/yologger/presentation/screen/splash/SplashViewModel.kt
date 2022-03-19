@@ -21,18 +21,19 @@ class SplashViewModel @Inject constructor(
     }
 
     sealed class State {
-        data class SUCCESS(val result: RESULT): State()
-        data class FAILURE(val error: ERROR): State()
+        data class Success(val result: Result): State()
+        data class Failure(val error: Error): State()
     }
 
-    enum class RESULT {
+    enum class Result {
         LOGGED_IN,
         NOT_LOGGED_IN
     }
 
-    enum class ERROR {
+    enum class Error {
         NETWORK_ERROR,
         CLIENT_ERROR,
+        JSON_PARSE_ERROR
     }
 
     private val _liveState = SingleLiveEvent<State>()
@@ -44,14 +45,14 @@ class SplashViewModel @Inject constructor(
                 when(result) {
                     is VerifyAccessTokenResult.SUCCESS -> {
                         when(result.data) {
-                            VerifyAccessTokenResultData.LOGGED_IN -> _liveState.value = State.SUCCESS(RESULT.LOGGED_IN)
-                            VerifyAccessTokenResultData.NOT_LOGGED_IN -> _liveState.value = State.SUCCESS(RESULT.NOT_LOGGED_IN)
+                            VerifyAccessTokenResultData.LOGGED_IN -> _liveState.value = State.Success(Result.LOGGED_IN)
+                            VerifyAccessTokenResultData.NOT_LOGGED_IN -> _liveState.value = State.Success(Result.NOT_LOGGED_IN)
                         }
                     }
                     is VerifyAccessTokenResult.FAILURE -> {
                         when(result.error) {
-                            VerifyAccessTokenResultError.NETWORK_ERROR -> _liveState.value = State.FAILURE(ERROR.NETWORK_ERROR)
-                            VerifyAccessTokenResultError.CLIENT_ERROR -> _liveState.value = State.FAILURE(ERROR.CLIENT_ERROR)
+                            VerifyAccessTokenResultError.NETWORK_ERROR -> _liveState.value = State.Failure(Error.NETWORK_ERROR)
+                            VerifyAccessTokenResultError.CLIENT_ERROR -> _liveState.value = State.Failure(Error.CLIENT_ERROR)
                         }
                     }
                 }

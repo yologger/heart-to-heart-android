@@ -92,14 +92,14 @@ class RegisterPostActivity : AppCompatActivity() {
 
         viewModel.liveEvent.observe(this) {
             when(it) {
-                is RegisterPostViewModel.Event.SUCCESS -> {
+                is RegisterPostViewModel.Event.Success -> {
                     val createdPost = it.post
                     val intent = Intent()
                     intent.putExtra("created_post", createdPost)
                     setResult(Activity.RESULT_OK, intent)
                     finish()
                 }
-                is RegisterPostViewModel.Event.FAILURE -> {
+                is RegisterPostViewModel.Event.Failure -> {
                     when(it.error) {
                         RegisterPostViewModel.Error.CLIENT_ERROR -> {
                             showToast("Client Error")

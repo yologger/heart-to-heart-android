@@ -3,7 +3,7 @@ package com.yologger.data.datasource.api.auth
 import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
 import com.yologger.data.datasource.api.auth.model.confirm_verification_code.ConfirmVerificationCodeRequest
-import com.yologger.data.datasource.api.auth.model.email_verification_code.EmailVerificationCodeFailureCode
+import com.yologger.data.datasource.api.auth.model.email_verification_code.EmailVerificationCodeFailureResponseCode
 import com.yologger.data.datasource.api.auth.model.email_verification_code.EmailVerificationCodeFailureResponse
 import com.yologger.data.datasource.api.auth.model.email_verification_code.EmailVerificationCodeRequest
 import com.yologger.data.datasource.api.auth.model.join.JoinRequest
@@ -98,7 +98,7 @@ class AuthServiceTest {
             val errorResponse =
                 gson.fromJson(it.string(), EmailVerificationCodeFailureResponse::class.java)
             assertThat(errorResponse.message).isEqualTo("Member Already Exists.")
-            assertThat(errorResponse.code).isEqualTo(EmailVerificationCodeFailureCode.MEMBER_ALREADY_EXIST)
+            assertThat(errorResponse.code).isEqualTo(EmailVerificationCodeFailureResponseCode.MEMBER_ALREADY_EXIST)
         } ?: run {
             fail("errorBody() is null")
         }

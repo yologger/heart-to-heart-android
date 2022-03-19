@@ -4,6 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 data class LoginFailureResponse(
     @SerializedName("message") val message: String,
-    @SerializedName("code") val code: LoginFailureCode,
+    @SerializedName("code") val code: LoginFailureResponseCode,
     @SerializedName("status") val status: Int
 )

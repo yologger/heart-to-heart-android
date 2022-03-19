@@ -3,6 +3,7 @@ package com.yologger.presentation.screen.main.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.yologger.domain.usecase.post.get_posts.GetPostsResult
+import com.yologger.domain.usecase.post.get_posts.GetPostsResultError
 import com.yologger.domain.usecase.post.get_posts.GetPostsUseCase
 import com.yologger.domain.usecase.post.get_posts.PostData
 import com.yologger.presentation.screen.base.BaseViewModel
@@ -24,7 +25,10 @@ class HomeViewModel @Inject constructor(
 
     enum class Error {
         NETWORK_ERROR,
-        CLIENT_ERROR
+        CLIENT_ERROR,
+        JSON_PARSE_ERROR,
+        NO_POST_EXIST,
+        NO_SESSION
     }
     
     private var page = 0
@@ -62,7 +66,13 @@ class HomeViewModel @Inject constructor(
                         page += 1
                     }
                     is GetPostsResult.Failure -> {
-                        
+                        when(it.error) {
+                            GetPostsResultError.NETWORK_ERROR -> _liveState.value = State.Failure(Error.NETWORK_ERROR)
+                            GetPostsResultError.CLIENT_ERROR, GetPostsResultError.INVALID_PARAMS -> _liveState.value = State.Failure(Error.CLIENT_ERROR)
+                            GetPostsResultError.JSON_PARSE_ERROR -> _liveState.value = State.Failure(Error.JSON_PARSE_ERROR)
+                            GetPostsResultError.NO_POST_EXIST -> _liveState.value = State.Failure(Error.NO_POST_EXIST)
+                            GetPostsResultError.NO_SESSION -> _liveState.value = State.Failure(Error.NO_SESSION)
+                        }
                     }
                 }
             }.addTo(disposables)
