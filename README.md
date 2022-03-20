@@ -18,7 +18,7 @@
 
 <img src="/imgs/login.gif" width="300">
 
-`무한 스크롤링`, `Refresh`
+`Infinite Scrolling`, `Refresh`
 
 <img src="/imgs/infinite.gif" width="300">
 
@@ -39,9 +39,9 @@
 <img src="/imgs/logout.gif" width="300">
 
 ## 아키텍처
-* `Gradle` 기반 멀티모듈 아키텍처
-* 클린 아키텍처
-* MVVM 아키텍처 패턴
+* `Gradle 멀티모듈` 기반 `Layered Architectrue`
+* `Clean Architecture`
+* `MVVM` 
 
 ## 기술 스택
 ### 공통
@@ -71,7 +71,7 @@
 ## Todo List
 - [x] 이메일 인증 기반 회원가입 구현
 - [x] OAuth2, JWT(Access Token, Refresh Token) 기반 로그인 구현
-- [x] 무한 스크롤 구현
+- [x] `Infinite Scrolling` 구현
 - [ ] 팔로잉, 팔로우 구현
 - [ ] 비밀번호 찾기 구현
 - [ ] 비밀번호 변경하기 구현
