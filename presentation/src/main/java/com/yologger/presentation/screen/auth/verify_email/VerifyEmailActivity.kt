@@ -34,7 +34,7 @@ class VerifyEmailActivity : AppCompatActivity() {
     }
 
     private fun initUI() {
-        binding.toolbar.setNavigationIcon(R.drawable.icon_arrow_back_filled_black_24)
+        binding.toolbar.setNavigationIcon(R.drawable.icon_arrow_back_24_white)
         binding.toolbar.setNavigationOnClickListener { finish() }
         binding.toolbar.inflateMenu(R.menu.activity_verify_email_menu_toolbar)
         binding.toolbar.setOnMenuItemClickListener {

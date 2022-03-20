@@ -39,7 +39,7 @@ class SettingsActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener { finish() }
         recyclerViewAdapter = SettingsRVAdapter { position ->
             when(position) {
-                1 -> {
+                0 -> {
                     val builder = AlertDialog.Builder(this@SettingsActivity)
                     val alertDialog = builder
                         .setMessage("로그아웃 하시겠어요?")

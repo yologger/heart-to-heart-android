@@ -8,29 +8,35 @@
 
 ## Screenshots
 
-`Sign up`
+`이메일 인증`, `회원가입`
 
-<img src="/imgs/sign_up.gif" width="300">
+<img src="/imgs/email_verification_code.gif" width="300">
 
-`Log in`
+<img src="/imgs/join.gif" width="300">
 
-<img src="/imgs/log_in.gif" width="300">
+`로그인`
 
-`Update avatar image`
+<img src="/imgs/login.gif" width="300">
+
+`무한 스크롤링`, `Refresh`
+
+<img src="/imgs/infinite.gif" width="300">
+
+`글 작성`
+
+<img src="/imgs/create_post.gif" width="300">
+
+`아바타 이미지 업데이트`
 
 <img src="/imgs/update_avatar.gif" width="300">
 
-`Create new post`
+`팔로잉`, `팔로우` (UI 구현, 기능 미구현)
 
-<img src="/imgs/create_new_post.gif" width="300">
+<img src="/imgs/follow.gif" width="300">
 
-`Infinite scrolling & refresh`
+`로그아웃`
 
-<img src="/imgs/infinite_scrolling.gif" width="300">
-
-`Change theme`
-
-<img src="/imgs/theme.gif" width="300">
+<img src="/imgs/logout.gif" width="300">
 
 ## 아키텍처
 * `Gradle` 기반 멀티모듈 아키텍처
