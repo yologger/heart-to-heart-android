@@ -75,7 +75,6 @@
 - [ ] 팔로잉, 팔로우 구현
 - [ ] 비밀번호 찾기 구현
 - [ ] 비밀번호 변경하기 구현
-- [ ] 다크 테마 구현
 - [ ] MVI 아키텍처 패턴으로 이전
     - [ ] Coroutine `Flow`, `Channel`을 통한 단방향 데이터 플로우 구현
 - [ ] Google AdMob 추가
@@ -83,3 +82,5 @@
 - [ ] 계측 테스트 환경에서 `Hilt`를 통한 의존성 주입
 - [ ] 테스트 환경 - `GitHub Actions`, `Firebase App Distribution`을 통한 CI/CD pipeline 구축  
 - [ ] 운영 환경 - `GitHub Actions`, `Google Play Console`을 통한 CI/CD pipeline 구축
+- [ ] 다국어 지원
+- [ ] 다크 테마 구현
