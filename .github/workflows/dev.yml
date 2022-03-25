@@ -3,8 +3,6 @@ name: CI
 on:
   push:
     branches: [ develop ]
-#  pull_request:
-#    branches: [ dev ]
 
 jobs:
   build:
@@ -15,6 +13,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+#      - name: Set up node
+#        uses: actions/setup-node@v2
+#        with:
+#          node-version: '14'
+#
+#      - name: Set up firebase
+#        uses: pocket-apps/action-setup-firebase@v2
+#        with:
+#          firebase-token: ${{secrets.DEV_FIREBASE_TOKEN}}
+
       - name: Set up JDK 11
         uses: actions/setup-java@v1
         with:
@@ -23,14 +31,32 @@ jobs:
       - name: Grant execution permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build dev
-        run: ./gradlew bundleDev
+      - name: Create debug.properties
+        run: echo '${{ secrets.DEBUG_PROPERTIES }}' > ./debug.properties
 
-      - name: Sign AAB
+      - name: Create dev.properties
+        run: echo '${{ secrets.DEV_PROPERTIES }}' > ./dev.properties
+
+      - name: Create release.properties
+        run: echo '${{ secrets.RELEASE_PROPERTIES }}' > ./release.properties
+
+      - name: Create google.services.json
+        run: echo '${{ secrets.DEV_GOOGLE_SERVICES_JSON }}' > ./app/google-services.json
+
+#      - name: Build dev
+#        run: ./gradlew bundleDev
+#
+#      - name: Upload to Firebase App Distribution
+#        run: firebase appdistribution:distribute app/build/outputs/bundle/dev/app-dev.aab --token ${{secrets.DEV_FIREBASE_TOKEN}} --app ${{secrets.DEV_FIREBASE_APP_ID}} --groups "heart-to-heart-testers" --release-notes "Test server"
+
+      - name: Build dev
+        run: ./gradlew assembleDev
+
+      - name: Sign APK
         id: sign
         uses: r0adkll/sign-android-release@v1
         with:
-          releaseDirectory: app/build/outputs/bundle/dev
+          releaseDirectory: app/build/outputs/apk/dev
           signingKeyBase64: ${{ secrets.DEV_SIGNING_KEY }}
           alias: ${{ secrets.DEV_ALIAS }}
           keyStorePassword: ${{ secrets.DEV_KEY_STORE_PASSWORD }}
@@ -42,5 +68,13 @@ jobs:
           appId: ${{secrets.DEV_FIREBASE_APP_ID}}
           token: ${{secrets.DEV_FIREBASE_TOKEN}}
           groups: heart-to-heart-testers
-          # file: app/build/outputs/apk/app-dev.aab
-          file: app/build/outputs/bundle/dev/app-dev.aab
+          file: app/build/outputs/apk/dev/app-dev-unsigned.apk
+
+      - name: Send result to slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{job.status}}
+          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+          author_name: Geerio CI
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.DEV_SLACK_WEBHOOK_URL }}
