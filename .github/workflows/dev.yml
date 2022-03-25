@@ -25,3 +25,13 @@ jobs:
 
       - name: Build dev
         run: ./gradlew bundleDev
+
+      - name: Sign AAB
+        id: sign
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: app/build/outputs/bundle/release
+          signingKeyBase64: ${{ secrets.DEV_SIGNING_KEY }}
+          alias: ${{ secrets.DEV_ALIAS }}
+          keyStorePassword: ${{ secrets.DEV_KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.DEV_KEY_PASSWORD }}
