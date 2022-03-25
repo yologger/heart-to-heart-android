@@ -76,4 +76,5 @@ dependencies {
     testImplementation TestDependencies.MOCKITO_INLINE
     androidTestImplementation AndroidTestDependencies.MOCKITO_ANDROID
     implementation Dependencies.GUAVA
+    implementation platform('com.google.firebase:firebase-bom:29.2.1')
 }
