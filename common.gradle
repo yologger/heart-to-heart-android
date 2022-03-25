@@ -4,7 +4,7 @@ android {
         minSdk 23
         targetSdk 31
         versionCode 1
-        versionName "1.0"
+        versionName "0.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -18,12 +18,12 @@ android {
             buildConfigField("String", "SERVER_URL", configProperties['SERVER_URL'])
             versionNameSuffix '-DEBUG'
         }
-        dev {
+        develop {
             def configPropertiesFile = rootProject.file("dev.properties")
             def configProperties = new Properties()
             configProperties.load(new FileInputStream(configPropertiesFile))
             buildConfigField("String", "SERVER_URL", configProperties['SERVER_URL'])
-            versionNameSuffix '-DEV'
+            versionNameSuffix '-DEVELOP'
         }
         release {
             def configPropertiesFile = rootProject.file("release.properties")
