@@ -16,7 +16,6 @@ android {
             def configProperties = new Properties()
             configProperties.load(new FileInputStream(configPropertiesFile))
             buildConfigField("String", "SERVER_URL", configProperties['SERVER_URL'])
-            applicationIdSuffix '.debug'
             versionNameSuffix '-DEBUG'
         }
         dev {
@@ -24,7 +23,6 @@ android {
             def configProperties = new Properties()
             configProperties.load(new FileInputStream(configPropertiesFile))
             buildConfigField("String", "SERVER_URL", configProperties['SERVER_URL'])
-            applicationIdSuffix '.dev'
             versionNameSuffix '-DEV'
         }
         release {
@@ -32,7 +30,6 @@ android {
             def configProperties = new Properties()
             configProperties.load(new FileInputStream(configPropertiesFile))
             buildConfigField("String", "SERVER_URL", configProperties['SERVER_URL'])
-            applicationIdSuffix '.release'
             versionNameSuffix '-RELEASE'
 
             minifyEnabled false
