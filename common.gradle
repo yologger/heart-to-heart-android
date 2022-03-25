@@ -15,21 +15,21 @@ android {
             def configPropertiesFile = rootProject.file("debug.properties")
             def configProperties = new Properties()
             configProperties.load(new FileInputStream(configPropertiesFile))
-            buildConfigField("String", "SERVER_URL", configProperties['SERVER_URL'])
+            buildConfigField("String", "BASE_URL", configProperties['BASE_URL'])
             versionNameSuffix '-DEBUG'
         }
         dev {
             def configPropertiesFile = rootProject.file("dev.properties")
             def configProperties = new Properties()
             configProperties.load(new FileInputStream(configPropertiesFile))
-            buildConfigField("String", "SERVER_URL", configProperties['SERVER_URL'])
+            buildConfigField("String", "BASE_URL", configProperties['BASE_URL'])
             versionNameSuffix '-DEV'
         }
         release {
             def configPropertiesFile = rootProject.file("release.properties")
             def configProperties = new Properties()
             configProperties.load(new FileInputStream(configPropertiesFile))
-            buildConfigField("String", "SERVER_URL", configProperties['SERVER_URL'])
+            buildConfigField("String", "BASE_URL", configProperties['BASE_URL'])
             versionNameSuffix '-RELEASE'
 
             minifyEnabled false
@@ -76,5 +76,4 @@ dependencies {
     testImplementation TestDependencies.MOCKITO_INLINE
     androidTestImplementation AndroidTestDependencies.MOCKITO_ANDROID
     implementation Dependencies.GUAVA
-    implementation platform('com.google.firebase:firebase-bom:29.2.1')
 }

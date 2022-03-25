@@ -11,7 +11,7 @@ object Constant {
 
         // const val BASE_URL = "http://172.30.1.52:8080"
         // const val BASE_URL = "http://10.0.2.2:8080"
-        const val BASE_URL = BuildConfig.SERVER_URL
+        const val BASE_URL = BuildConfig.BASE_URL
 
         const val CONNECTION_TIMEOUT_DURATION = 5L
         const val READ_TIMEOUT_DURATION = 5L
