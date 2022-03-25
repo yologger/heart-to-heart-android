@@ -1,11 +1,20 @@
 package com.yologger.common
 
-class Constant {
-    companion object {
+object Constant {
+
+    object Preference {
         const val KEY_PREFERENCE = "key_preference"
         const val KEY_THEME = "key_theme"
+    }
 
-        const val BASE_URL = "http://172.30.1.52:8080"
+    object Network {
+
+        // const val BASE_URL = "http://172.30.1.52:8080"
         // const val BASE_URL = "http://10.0.2.2:8080"
+        const val BASE_URL = BuildConfig.SERVER_URL
+
+        const val CONNECTION_TIMEOUT_DURATION = 5L
+        const val READ_TIMEOUT_DURATION = 5L
+        const val WRITE_TIMEOUT_DURATION = 5L
     }
 }

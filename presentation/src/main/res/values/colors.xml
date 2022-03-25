@@ -12,8 +12,13 @@
     <color name="toolbarTextColor">#FFFFFF</color>
     <color name="toolbarIconColor">#FFFFFF</color>
 
+    <color name="buttonBackgroundColor">#000000</color>
+    <color name="buttonTextColor">#FDFDFD</color>
+    <color name="buttonIconColor">#FDFDFD</color>
+
     <color name="fabColor">#000000</color>
     <color name="fabIconColor">#FDFDFD</color>
 
+    <color name="dividerColor">#E4E4E4</color>
 
 </resources>

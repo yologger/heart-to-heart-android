@@ -96,10 +96,12 @@ class MoreFragment : Fragment() {
                 is MoreViewModel.State.FetchMemberInfoSuccess -> {
                     binding.textViewEmail.text = it.email
                     binding.textViewNickname.text = it.nickname
-                    Glide.with(this)
-                        .load(it.avatarUrl)
-                        .centerCrop()
-                        .into(binding.imageViewAvatar)
+                    it.avatarUrl?.let { imageUrl ->
+                        Glide.with(this@MoreFragment)
+                            .load(imageUrl)
+                            .centerCrop()
+                            .into(binding.imageViewAvatar)
+                    }
                 }
                 is MoreViewModel.State.FetchMemberInfoFailure -> {
                     val intent = Intent(requireContext(), LoginActivity::class.java)
@@ -111,7 +113,6 @@ class MoreFragment : Fragment() {
                         .load(it.imageUrl)
                         .centerCrop()
                         .into(binding.imageViewAvatar)
-
                 }
                 is MoreViewModel.State.UpdateAvatarFailure -> {
                     when(it.error) {

@@ -37,7 +37,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_sm">
+            android:layout_marginTop="@dimen/margin_sm"
+            android:layout_marginBottom="@dimen/margin_sm">
 
             <ImageButton
                 android:layout_marginLeft="@dimen/margin_md"
@@ -45,7 +46,8 @@
                 android:layout_width="75dp"
                 android:layout_height="75dp"
                 android:layout_marginStart="@dimen/margin_sm"
-                android:src="@drawable/icon_camera_filled_black_24"
+                android:src="@drawable/icon_camera_filled_white_24"
+                android:backgroundTint="@color/buttonBackgroundColor"
                 android:onClick="onOpenGalleryButtonClicked"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/recyclerViewSelectedImages"
@@ -61,6 +63,13 @@
                 app:layout_constraintStart_toEndOf="@+id/buttonOpenGallery"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="@dimen/margin_sm"
+            android:layout_marginEnd="@dimen/margin_sm"
+            android:background="@color/dividerColor"/>
 
         <EditText
             android:id="@+id/editTextContent"

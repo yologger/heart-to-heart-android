@@ -14,6 +14,7 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -32,6 +33,9 @@ class NetworkModule {
     @Provides
     fun providesOkHttpClientWithAuthFilter(authInterceptor: AuthInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
+            .connectTimeout(Constant.Network.CONNECTION_TIMEOUT_DURATION, TimeUnit.SECONDS)
+            .readTimeout(Constant.Network.READ_TIMEOUT_DURATION, TimeUnit.SECONDS)
+            .writeTimeout(Constant.Network.WRITE_TIMEOUT_DURATION, TimeUnit.SECONDS)
             .addInterceptor(authInterceptor)
             .build()
     }
@@ -41,6 +45,9 @@ class NetworkModule {
     @Provides
     fun providesOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
+            .connectTimeout(Constant.Network.CONNECTION_TIMEOUT_DURATION, TimeUnit.SECONDS)
+            .readTimeout(Constant.Network.READ_TIMEOUT_DURATION, TimeUnit.SECONDS)
+            .writeTimeout(Constant.Network.WRITE_TIMEOUT_DURATION, TimeUnit.SECONDS)
             .build()
     }
 
@@ -49,7 +56,7 @@ class NetworkModule {
     fun providesAuthService(@OkHttpClientWithoutAnyInterceptor okHttpClient: OkHttpClient): AuthService {
         return Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl(Constant.BASE_URL)
+            .baseUrl(Constant.Network.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(AuthService::class.java)
@@ -60,7 +67,8 @@ class NetworkModule {
     fun providesPostService(@OkHttpClientWithAuthInterceptor okHttpClient: OkHttpClient): PostService {
         return Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl(Constant.BASE_URL)
+            // .baseUrl(Constant.BASE_URL)
+            .baseUrl(Constant.Network.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(PostService::class.java)
@@ -71,7 +79,8 @@ class NetworkModule {
     fun providesMemberService(@OkHttpClientWithAuthInterceptor okHttpClient: OkHttpClient): MemberService {
         return Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl(Constant.BASE_URL)
+            // .baseUrl(Constant.BASE_URL)
+            .baseUrl(Constant.Network.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(MemberService::class.java)
