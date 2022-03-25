@@ -42,4 +42,5 @@ jobs:
           appId: ${{secrets.DEV_FIREBASE_APP_ID}}
           token: ${{secrets.DEV_FIREBASE_TOKEN}}
           groups: heart-to-heart-testers
-          file: app/build/outputs/apk/app-dev.aab
+          # file: app/build/outputs/apk/app-dev.aab
+          file: app/build/outputs/bundle/dev/app-dev.aab
