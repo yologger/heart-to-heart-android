@@ -23,8 +23,14 @@ jobs:
       - name: Grant execution permission for gradlew
         run: chmod +x gradlew
 
+      - name: Create debug.properties
+        run: echo '${{ secrets.DEBUG_PROPERTIES }}' > ./debug.properties
+
       - name: Create dev.properties
         run: echo '${{ secrets.DEV_PROPERTIES }}' > ./dev.properties
+
+      - name: Create release.properties
+        run: echo '${{ secrets.RELEASE_PROPERTIES }}' > ./release.properties
 
       - name: Build dev
         run: ./gradlew bundleDev
