@@ -33,17 +33,17 @@ jobs:
         run: echo '${{ secrets.RELEASE_PROPERTIES }}' > ./release.properties
 
       - name: Build dev
-        run: ./gradlew bundleDev
+        run: ./gradlew assembleDev --stacktrace
 
-#      - name: Sign AAB
-#        id: sign
-#        uses: r0adkll/sign-android-release@v1
-#        with:
-#          releaseDirectory: app/build/outputs/bundle/dev
-#          signingKeyBase64: ${{ secrets.DEV_SIGNING_KEY }}
-#          alias: ${{ secrets.DEV_ALIAS }}
-#          keyStorePassword: ${{ secrets.DEV_KEY_STORE_PASSWORD }}
-#          keyPassword: ${{ secrets.DEV_KEY_PASSWORD }}
+      - name: Sign APK
+        id: sign
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: app/build/outputs/apk/dev
+          signingKeyBase64: ${{ secrets.DEV_SIGNING_KEY }}
+          alias: ${{ secrets.DEV_ALIAS }}
+          keyStorePassword: ${{ secrets.DEV_KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.DEV_KEY_PASSWORD }}
 
 #      - name: Upload to Firebase App Distribution
 #        uses: wzieba/Firebase-Distribution-Github-Action@v1
