@@ -24,7 +24,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Create dev.properties
-        run: echo '${{ secrets.DEV_PROPERTIES }}' > dev.properties
+        run: echo '${{ secrets.DEV_PROPERTIES }}' > ./dev.properties
 
       - name: Build dev
         run: ./gradlew bundleDev
