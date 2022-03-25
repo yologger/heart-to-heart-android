@@ -32,6 +32,9 @@ jobs:
       - name: Create release.properties
         run: echo '${{ secrets.RELEASE_PROPERTIES }}' > ./release.properties
 
+      - name: Create google.services.json
+        run: echo '${{ secrets.DEV_GOOGLE_SERVICES_JSON }}' > ./app/google-services.json
+
       - name: Build dev
         run: ./gradlew assembleDev --stacktrace
 
@@ -45,11 +48,11 @@ jobs:
           keyStorePassword: ${{ secrets.DEV_KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.DEV_KEY_PASSWORD }}
 
-#      - name: Upload to Firebase App Distribution
-#        uses: wzieba/Firebase-Distribution-Github-Action@v1
-#        with:
-#          appId: ${{secrets.DEV_FIREBASE_APP_ID}}
-#          token: ${{secrets.DEV_FIREBASE_TOKEN}}
-#          groups: heart-to-heart-testers
-#          # file: app/build/outputs/apk/app-dev.aab
-#          file: app/build/outputs/bundle/dev/app-dev.aab
+      - name: Upload to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{secrets.DEV_FIREBASE_APP_ID}}
+          token: ${{secrets.DEV_FIREBASE_TOKEN}}
+          groups: heart-to-heart-testers
+          # file: app/build/outputs/apk/app-dev.aab
+          file: app/build/outputs/apk/dev/app-dev.apk
