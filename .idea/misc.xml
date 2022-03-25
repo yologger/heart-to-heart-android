@@ -47,9 +47,10 @@
         <entry key="presentation/src/main/res/layout/fragment_following_item.xml" value="0.11388888888888889" />
         <entry key="presentation/src/main/res/layout/fragment_get_user_info.xml" value="0.39351851851851855" />
         <entry key="presentation/src/main/res/layout/fragment_home.xml" value="0.240625" />
-        <entry key="presentation/src/main/res/layout/fragment_home_holder_post.xml" value="0.5760416666666667" />
+        <entry key="presentation/src/main/res/layout/fragment_home_holder_post.xml" value="0.25" />
         <entry key="presentation/src/main/res/layout/fragment_home_holder_post_include_header.xml" value="0.5760416666666667" />
         <entry key="presentation/src/main/res/layout/fragment_home_holder_post_include_images.xml" value="0.5760416666666667" />
+        <entry key="presentation/src/main/res/layout/fragment_home_holder_post_include_trailer.xml" value="0.17135416666666667" />
         <entry key="presentation/src/main/res/layout/fragment_more.xml" value="0.29635416666666664" />
         <entry key="presentation/src/main/res/layout/fragment_settings.xml" value="0.3651041666666667" />
         <entry key="presentation/src/main/res/layout/fragment_settings_item.xml" value="0.3104166666666667" />

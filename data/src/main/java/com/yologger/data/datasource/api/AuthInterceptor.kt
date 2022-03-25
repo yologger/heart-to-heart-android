@@ -34,7 +34,7 @@ class AuthInterceptor constructor(
                     body.put("member_id", memberId.toString())
                     body.put("refresh_token", refreshToken)
                     val requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), body.toString())
-                    val request = Request.Builder().url("${Constant.BASE_URL}/auth/reissueToken").post(requestBody).build()
+                    val request = Request.Builder().url("${Constant.Network.BASE_URL}/auth/reissueToken").post(requestBody).build()
 
                     // Try reissuing token.
                     val okHttpClient = OkHttpClient()

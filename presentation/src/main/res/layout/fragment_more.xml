@@ -40,31 +40,18 @@
             android:orientation="horizontal"
             android:padding="@dimen/padding_md">
 
-<!--            <ImageView-->
-<!--                android:id="@+id/imageViewAvatar"-->
-<!--                android:src="@drawable/image_avatar_default"-->
-<!--                android:scaleType="centerCrop"-->
-<!--                android:layout_width="80dp"-->
-<!--                android:layout_height="80dp"-->
-<!--                android:layout_marginRight="@dimen/margin_md"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:clickable="true"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent" />-->
-
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageViewAvatar"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:src="@drawable/avatar_default"
                 android:scaleType="centerCrop"
                 android:clickable="true"
                 android:layout_marginRight="@dimen/margin_md"
                 android:layout_gravity="center"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:src="@drawable/image_avatar_default"/>
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
             <LinearLayout
                 app:layout_constraintStart_toEndOf="@+id/imageViewAvatar"

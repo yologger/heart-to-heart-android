@@ -24,5 +24,4 @@
         android:layout_height="wrap_content"
         layout="@layout/fragment_home_holder_post_include_trailer"/>
 
-
 </LinearLayout>

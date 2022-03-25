@@ -1,10 +1,11 @@
-package com.yologger.common
+package com.yologger.common.util
 
 import android.content.Context
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
+import com.yologger.common.Constant
 
-object ThemeManager {
+object ThemeUtil {
 
     enum class ThemeMode (val value: Int) {
         DEFAULT(0),
@@ -15,7 +16,7 @@ object ThemeManager {
     fun applyTheme(context: Context, themeMode: ThemeMode) {
 
         var newTheme: ThemeMode
-        val sharedPreferences = context.getSharedPreferences(Constant.KEY_PREFERENCE, Context.MODE_PRIVATE) ?: return
+        val sharedPreferences = context.getSharedPreferences(Constant.Preference.KEY_PREFERENCE, Context.MODE_PRIVATE) ?: return
 
         when (themeMode) {
             ThemeMode.LIGHT -> {
@@ -37,17 +38,23 @@ object ThemeManager {
         }
 
         with(sharedPreferences.edit()) {
-            putInt(Constant.KEY_THEME, newTheme.value)
+            putInt(Constant.Preference.KEY_THEME, newTheme.value)
             commit()
         }
     }
 
     fun getCurrentTheme(context: Context): ThemeMode {
-        val sharedPreferences = context.getSharedPreferences(Constant.KEY_PREFERENCE, Context.MODE_PRIVATE)
-        val currentTheme = when(sharedPreferences.getInt(Constant.KEY_THEME, ThemeMode.DEFAULT.value)) {
-            ThemeMode.LIGHT.value -> { ThemeMode.LIGHT }
-            ThemeMode.DARK.value -> { ThemeMode.DARK }
-            else -> { ThemeMode.DARK }
+        val sharedPreferences = context.getSharedPreferences(Constant.Preference.KEY_PREFERENCE, Context.MODE_PRIVATE)
+        val currentTheme = when(sharedPreferences.getInt(Constant.Preference.KEY_THEME, ThemeMode.DEFAULT.value)) {
+            ThemeMode.LIGHT.value -> {
+                ThemeMode.LIGHT
+            }
+            ThemeMode.DARK.value -> {
+                ThemeMode.DARK
+            }
+            else -> {
+                ThemeMode.DARK
+            }
         }
         return currentTheme
     }

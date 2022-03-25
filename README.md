@@ -82,5 +82,5 @@
 - [ ] 계측 테스트 환경에서 `Hilt`를 통한 의존성 주입
 - [ ] 테스트 환경 - `GitHub Actions`, `Firebase App Distribution`을 통한 CI/CD pipeline 구축  
 - [ ] 운영 환경 - `GitHub Actions`, `Google Play Console`을 통한 CI/CD pipeline 구축
-- [ ] 다국어 지원
+- [ ] 다국어 지원 적용
 - [ ] 다크 테마 구현
