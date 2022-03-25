@@ -23,7 +23,7 @@ jobs:
       - name: Grant execution permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build dev
+      - name: Build release
         run: ./gradlew bundleRelease
 
       - name: Sign AAB

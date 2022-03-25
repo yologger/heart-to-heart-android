@@ -30,7 +30,7 @@ jobs:
         id: sign
         uses: r0adkll/sign-android-release@v1
         with:
-          releaseDirectory: app/build/outputs/bundle/release
+          releaseDirectory: app/build/outputs/bundle/dev
           signingKeyBase64: ${{ secrets.DEV_SIGNING_KEY }}
           alias: ${{ secrets.DEV_ALIAS }}
           keyStorePassword: ${{ secrets.DEV_KEY_STORE_PASSWORD }}

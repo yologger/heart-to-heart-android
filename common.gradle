@@ -16,18 +16,24 @@ android {
             def configProperties = new Properties()
             configProperties.load(new FileInputStream(configPropertiesFile))
             buildConfigField("String", "SERVER_URL", configProperties['SERVER_URL'])
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-DEBUG'
         }
         dev {
             def configPropertiesFile = rootProject.file("dev.properties")
             def configProperties = new Properties()
             configProperties.load(new FileInputStream(configPropertiesFile))
             buildConfigField("String", "SERVER_URL", configProperties['SERVER_URL'])
+            applicationIdSuffix '.dev'
+            versionNameSuffix '-DEV'
         }
         release {
             def configPropertiesFile = rootProject.file("release.properties")
             def configProperties = new Properties()
             configProperties.load(new FileInputStream(configPropertiesFile))
             buildConfigField("String", "SERVER_URL", configProperties['SERVER_URL'])
+            applicationIdSuffix '.release'
+            versionNameSuffix '-RELEASE'
 
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
