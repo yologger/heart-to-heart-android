@@ -1,3 +1,6 @@
+debug.properties
+develop.properties
+release.properties
 /keystore
 *.iml
 .gradle

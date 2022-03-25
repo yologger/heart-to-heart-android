@@ -19,7 +19,7 @@ android {
             versionNameSuffix '-DEBUG'
         }
         develop {
-            def configPropertiesFile = rootProject.file("dev.properties")
+            def configPropertiesFile = rootProject.file("develop.properties")
             def configProperties = new Properties()
             configProperties.load(new FileInputStream(configPropertiesFile))
             buildConfigField("String", "SERVER_URL", configProperties['SERVER_URL'])
