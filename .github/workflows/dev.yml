@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-node@v1 # This is optional on linux and macOS
 
       - name: Set up firebase
-      - uses: pocket-apps/action-setup-firebase@v2
+        uses: pocket-apps/action-setup-firebase@v2
         with:
           firebase-token: ${{secrets.DEV_FIREBASE_TOKEN}}
 
