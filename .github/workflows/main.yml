@@ -23,15 +23,46 @@ jobs:
       - name: Grant execution permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build release
+      - name: Build release aab
+        id: buildRelease
         run: ./gradlew bundleRelease
 
-      - name: Sign AAB
+      - name: Sign aab
         id: sign
         uses: r0adkll/sign-android-release@v1
         with:
-          releaseDirectory: app/build/outputs/bundle/prod
-          signingKeyBase64: ${{ secrets.PROD_SIGNING_KEY }}
-          alias: ${{ secrets.PROD_ALIAS }}
-          keyStorePassword: ${{ secrets.PROD_KEY_STORE_PASSWORD }}
-          keyPassword: ${{ secrets.PROD_KEY_PASSWORD }}
+          releaseDirectory: app/build/outputs/bundle/release
+          signingKeyBase64: ${{ secrets.RELEASE_SIGNING_KEY }}
+          alias: ${{ secrets.RELEASE_ALIAS }}
+          keyStorePassword: ${{ secrets.RELEASE_KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.RELEASE_KEY_PASSWORD }}
+
+      - name: Upload AAB
+        id: uploadArtifact
+        uses: actions/upload-artifact@v2.3.1
+        with:
+          name: app
+          path: app/build/outputs/bundle/release/app-release.aab
+
+      - name: Create service_account.json
+        id: createServiceAccount
+        run: echo '${{ secrets.RELEASE_SERVICE_ACCOUNT_JSON }}' > service_account.json
+
+      - name: Deploy to Play Store
+        id: deploy
+        uses: r0adkll/upload-google-play@v1.0.15
+        with:
+          serviceAccountJson: service_account.json
+          # track: internal, alpha, beta, production(default)
+          track: internal
+          packageName: com.yologger.heart_to_heart
+          releaseFiles: app/build/outputs/bundle/release/app-release.aab
+
+      - name: Send result to slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{job.status}}
+          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+          author_name: Geerio CI
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.RELEASE_SLACK_WEBHOOK_URL }}
