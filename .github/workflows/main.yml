@@ -58,7 +58,7 @@ jobs:
 
       - name: Create service_account.json
         id: createServiceAccount
-        run: echo '${{ secrets.RELEASE_SERVICE_ACCOUNT_JSON }}' > service_account.json
+        run: echo '${{ secrets.RELEASE_GOOGLE_SERVICES_JSON }}' > service_account.json
 
       - name: Deploy to Play Store
         id: deploy
