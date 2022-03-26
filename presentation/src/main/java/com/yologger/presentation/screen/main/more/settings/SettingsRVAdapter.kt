@@ -11,8 +11,9 @@ class SettingsRVAdapter constructor(
     val onItemClicked: (Int) -> Unit
 ) : RecyclerView.Adapter<SettingsRVAdapter.SettingsItem>() {
     val menu = listOf(
-//        "Theme",
-        "Logout"
+        "테마",
+        "버전 정보",
+        "로그아웃"
     )
 
     inner class SettingsItem(val binding: ActivitySettingsItemBinding): RecyclerView.ViewHolder(binding.root) {

@@ -4,6 +4,9 @@
 
     <application android:theme="@style/AppTheme">
         <activity
+            android:name=".screen.main.more.settings.show_version.ShowVersionActivity"
+            android:exported="false" />
+        <activity
             android:name=".screen.main.more.follow.FollowActivity"
             android:exported="false" />
         <activity

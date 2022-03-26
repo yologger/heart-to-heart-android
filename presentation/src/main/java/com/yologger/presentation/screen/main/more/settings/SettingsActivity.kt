@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.yologger.presentation.R
 import com.yologger.presentation.databinding.ActivitySettingsBinding
 import com.yologger.presentation.screen.auth.login.LoginActivity
+import com.yologger.presentation.screen.main.more.settings.show_version.ShowVersionActivity
 import com.yologger.presentation.util.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,7 +40,11 @@ class SettingsActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener { finish() }
         recyclerViewAdapter = SettingsRVAdapter { position ->
             when(position) {
-                0 -> {
+                1 -> {
+                    val intent = Intent(this@SettingsActivity, ShowVersionActivity::class.java)
+                    startActivity(intent)
+                }
+                2 -> {
                     val builder = AlertDialog.Builder(this@SettingsActivity)
                     val alertDialog = builder
                         .setMessage("로그아웃 하시겠어요?")

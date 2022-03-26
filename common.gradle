@@ -5,9 +5,8 @@ android {
         targetSdk 31
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
-
-        versionCode 3
-        versionName "0.0.3"
+        versionCode 5
+        versionName "0.0.5"
     }
 
     buildTypes {
