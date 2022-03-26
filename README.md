@@ -41,7 +41,14 @@
 ## 아키텍처
 * `Gradle 멀티모듈` 기반 `Layered Architectrue`
 * `Clean Architecture`
-* `MVVM` 
+* `MVVM`
+
+## DevOps
+### 테스트 환경
+<img src="/imgs/1.png">
+
+### 운영 환경
+<img src="/imgs/2.png">
 
 ## 기술 스택
 ### 공통
