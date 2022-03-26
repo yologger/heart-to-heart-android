@@ -21,8 +21,50 @@ jobs:
       - name: Grant execution permission for gradlew
         run: chmod +x gradlew
 
+#      - name: Create debug.properties
+#        run: echo '${{ secrets.DEBUG_PROPERTIES }}' > ./debug.properties
+#
+#      - name: Create dev.properties
+#        run: echo '${{ secrets.DEV_PROPERTIES }}' > ./dev.properties
+#
+#      - name: Create release.properties
+#        run: echo '${{ secrets.RELEASE_PROPERTIES }}' > ./release.properties
+#
+#      - name: Create google.services.json
+#        run: echo '${{ secrets.DEV_GOOGLE_SERVICES_JSON }}' > ./app/google-services.json
+#
+#      - name: Build dev APK
+#        run: ./gradlew assembleDev
+#
+#      - name: Sign APK
+#        id: sign
+#        uses: r0adkll/sign-android-release@v1
+#        with:
+#          releaseDirectory: app/build/outputs/apk/dev
+#          signingKeyBase64: ${{ secrets.DEV_SIGNING_KEY }}
+#          alias: ${{ secrets.DEV_ALIAS }}
+#          keyStorePassword: ${{ secrets.DEV_KEY_STORE_PASSWORD }}
+#          keyPassword: ${{ secrets.DEV_KEY_PASSWORD }}
+#
+#      - name: Upload to Firebase App Distribution
+#        uses: wzieba/Firebase-Distribution-Github-Action@v1
+#        with:
+#          appId: ${{secrets.DEV_FIREBASE_APP_ID}}
+#          token: ${{secrets.DEV_FIREBASE_TOKEN}}
+#          groups: heart-to-heart-testers
+#          file: app/build/outputs/apk/dev/app-dev-unsigned.apk
+#
+#      - name: Send result to slack
+#        uses: 8398a7/action-slack@v3
+#        with:
+#          status: ${{job.status}}
+#          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+#          author_name: Geerio CI
+#        env:
+#          SLACK_WEBHOOK_URL: ${{ secrets.DEV_SLACK_WEBHOOK_URL }}
+
       - name: Create debug.properties
-        run: echo '${{ secrets.DEBUG_PROPERTIES }}' > ./debug.properties
+        run: echo '${{ secrets.DEV_PROPERTIES }}' > ./debug.properties
 
       - name: Create dev.properties
         run: echo '${{ secrets.DEV_PROPERTIES }}' > ./dev.properties
@@ -33,18 +75,8 @@ jobs:
       - name: Create google.services.json
         run: echo '${{ secrets.DEV_GOOGLE_SERVICES_JSON }}' > ./app/google-services.json
 
-      - name: Build dev APK
-        run: ./gradlew assembleDev
-
-#      - name: Sign APK
-#        id: sign
-#        uses: r0adkll/sign-android-release@v1
-#        with:
-#          releaseDirectory: app/build/outputs/apk/dev
-#          signingKeyBase64: ${{ secrets.DEV_SIGNING_KEY }}
-#          alias: ${{ secrets.DEV_ALIAS }}
-#          keyStorePassword: ${{ secrets.DEV_KEY_STORE_PASSWORD }}
-#          keyPassword: ${{ secrets.DEV_KEY_PASSWORD }}
+      - name: Build debug APK
+        run: ./gradlew assembleDebug
 
       - name: Upload to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
@@ -52,7 +84,7 @@ jobs:
           appId: ${{secrets.DEV_FIREBASE_APP_ID}}
           token: ${{secrets.DEV_FIREBASE_TOKEN}}
           groups: heart-to-heart-testers
-          file: app/build/outputs/apk/dev/app-dev-unsigned.apk
+          file: app/build/outputs/apk/debug/app-debug-unsigned.apk
 
       - name: Send result to slack
         uses: 8398a7/action-slack@v3
