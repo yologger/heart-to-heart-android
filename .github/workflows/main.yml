@@ -23,8 +23,17 @@ jobs:
       - name: Grant execution permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build with Gradle
-        run: ./gradlew build
+      - name: Create debug.properties
+        run: echo '${{ secrets.DEBUG_PROPERTIES }}' > ./debug.properties
+
+      - name: Create dev.properties
+        run: echo '${{ secrets.DEV_PROPERTIES }}' > ./dev.properties
+
+      - name: Create release.properties
+        run: echo '${{ secrets.RELEASE_PROPERTIES }}' > ./release.properties
+
+#      - name: Build with Gradle
+#        run: ./gradlew build
 
       - name: Build release AAB
         id: buildRelease
