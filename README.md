@@ -41,7 +41,14 @@
 ## 아키텍처
 * `Gradle 멀티모듈` 기반 `Layered Architectrue`
 * `Clean Architecture`
-* `MVVM` 
+* `MVVM`
+
+## DevOps
+### 테스트 환경
+<img src="/imgs/1.png">
+
+### 운영 환경
+<img src="/imgs/2.png">
 
 ## 기술 스택
 ### 공통
@@ -80,7 +87,7 @@
 - [ ] Google AdMob 추가
 - [ ] 다중 클릭 이슈 제거 (RxBinding)
 - [ ] 계측 테스트 환경에서 `Hilt`를 통한 의존성 주입
-- [ ] 테스트 환경 - `GitHub Actions`, `Firebase App Distribution`을 통한 CI/CD pipeline 구축  
-- [ ] 운영 환경 - `GitHub Actions`, `Google Play Console`을 통한 CI/CD pipeline 구축
+- [x] 테스트 환경 - `GitHub Actions`, `Firebase App Distribution`을 통한 CI/CD pipeline 구축  
+- [x] 운영 환경 - `GitHub Actions`, `Google Play Console`을 통한 CI/CD pipeline 구축
 - [ ] 다국어 지원 적용
 - [ ] 다크 테마 구현
