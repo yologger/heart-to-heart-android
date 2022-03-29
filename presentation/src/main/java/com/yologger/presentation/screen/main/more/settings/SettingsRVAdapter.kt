@@ -13,7 +13,8 @@ class SettingsRVAdapter constructor(
     val menu = listOf(
         "테마",
         "버전 정보",
-        "로그아웃"
+        "로그아웃",
+        "탈퇴하기"
     )
 
     inner class SettingsItem(val binding: ActivitySettingsItemBinding): RecyclerView.ViewHolder(binding.root) {

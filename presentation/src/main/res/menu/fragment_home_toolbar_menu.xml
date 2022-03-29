@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:title="Close"
-        android:id="@+id/activity_join_menu_toolbar_action_close"
-        android:icon="@drawable/icon_close_outlined_white_24"
+        android:title="완료"
+        android:id="@+id/fragment_home_toolbar_menu_action_refresh"
+        android:icon="@drawable/icon_refresh_filled_black_24"
         app:showAsAction="always" />
 </menu>

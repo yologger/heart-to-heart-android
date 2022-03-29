@@ -40,10 +40,10 @@ class MoreFragment : Fragment() {
     }
 
     private fun initUI() {
-        binding.toolbar.inflateMenu(R.menu.fragment_more_toolbar)
+        binding.toolbar.inflateMenu(R.menu.fragment_more_toolbar_menu)
         binding.toolbar.setOnMenuItemClickListener {
             when(it.itemId) {
-                R.id.fragment_more_menu_toolbar_action_settings -> {
+                R.id.fragment_more_toolbar_menu_action_settings -> {
                     val intent = Intent(requireContext(), SettingsActivity::class.java)
                     startActivity(intent)
                 }

@@ -9,22 +9,29 @@
         android:orientation="vertical"
         tools:context=".screen.main.more.settings.SettingsActivity">
 
-        <com.google.android.material.appbar.AppBarLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <androidx.appcompat.widget.Toolbar
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/toolbarColor">
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize">
                 <TextView
-                    android:textColor="@color/toolbarTextColor"
-                    style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Settings" />
-            </androidx.appcompat.widget.Toolbar>
-        </com.google.android.material.appbar.AppBarLayout>
+                    style="@style/TextAppearance.MaterialComponents.Headline5"
+                    android:textStyle="bold"
+                    android:text="설정"/>
+            </com.google.android.material.appbar.MaterialToolbar>
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"

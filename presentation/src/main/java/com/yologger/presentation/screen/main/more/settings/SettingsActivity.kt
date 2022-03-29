@@ -36,7 +36,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun initUI() {
-        binding.toolbar.setNavigationIcon(R.drawable.icon_arrow_back_24_white)
+        binding.toolbar.setNavigationIcon(R.drawable.icon_arrow_back_filled_black_24)
         binding.toolbar.setNavigationOnClickListener { finish() }
         recyclerViewAdapter = SettingsRVAdapter { position ->
             when(position) {
@@ -49,6 +49,16 @@ class SettingsActivity : AppCompatActivity() {
                     val alertDialog = builder
                         .setMessage("로그아웃 하시겠어요?")
                         .setPositiveButton("로그아웃") { _, _ -> viewModel.logout() }
+                        .setNegativeButton("취소") { _, _ -> }
+                        .create()
+                    alertDialog.show()
+                }
+                3 -> {
+                    val builder = AlertDialog.Builder(this@SettingsActivity)
+                    val alertDialog = builder
+                        .setTitle("정말 탈퇴하시겠어요?")
+                        .setMessage("계정을 삭제하면 회원정보, 게시글 등 모든 활동 정보가 삭제됩니다.")
+                        .setPositiveButton("탈퇴하기") { _, _ ->  }
                         .setNegativeButton("취소") { _, _ -> }
                         .create()
                     alertDialog.show()

@@ -4,8 +4,7 @@
 
     <item
         android:title="완료"
-        android:id="@+id/fragment_home_menu_toolbar_action_refresh"
-        android:iconTint="@color/toolbarIconColor"
-        android:icon="@drawable/icon_refresh_filled_white_24"
+        android:id="@+id/activity_register_post_toolbar_menu_action_done"
+        android:icon="@drawable/icon_create_filled_black_24"
         app:showAsAction="always" />
 </menu>

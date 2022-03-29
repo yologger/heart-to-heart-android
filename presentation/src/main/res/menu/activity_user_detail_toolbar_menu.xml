@@ -4,10 +4,10 @@
 
     <item
         android:title="신고하기"
-        android:id="@+id/activity_register_post_menu_toolbar_action_report"
+        android:id="@+id/activity_user_detail_toolbar_menu_action_report"
         app:showAsAction="collapseActionView" />
     <item
         android:title="차단하기"
-        android:id="@+id/activity_register_post_menu_toolbar_action_block"
+        android:id="@+id/activity_user_detail_toolbar_menu_action_block"
         app:showAsAction="collapseActionView" />
 </menu>

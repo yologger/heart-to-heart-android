@@ -34,12 +34,12 @@ class JoinActivity : AppCompatActivity() {
     }
 
     private fun initUI() {
-        binding.toolbar.setNavigationIcon(R.drawable.icon_arrow_back_24_white)
+        binding.toolbar.setNavigationIcon(R.drawable.icon_arrow_back_black_24)
         binding.toolbar.setNavigationOnClickListener { finish() }
-        binding.toolbar.inflateMenu(R.menu.activity_join_menu_toolbar)
+        binding.toolbar.inflateMenu(R.menu.activity_join_toolbar_menu)
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.activity_join_menu_toolbar_action_close -> {
+                R.id.activity_join_toolbar_menu_action_close -> {
                     val intent = Intent(this@JoinActivity, LoginActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
