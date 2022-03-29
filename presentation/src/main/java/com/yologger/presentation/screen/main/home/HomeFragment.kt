@@ -17,6 +17,7 @@ import com.yologger.presentation.R
 import com.yologger.presentation.databinding.FragmentHomeBinding
 import com.yologger.presentation.screen.auth.login.LoginActivity
 import com.yologger.presentation.screen.main.home.register_post.RegisterPostActivity
+import com.yologger.presentation.screen.main.home.user_detail.UserDetailActivity
 import com.yologger.presentation.util.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,6 +27,23 @@ class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels<HomeViewModel>()
     private lateinit var binding: FragmentHomeBinding
     private lateinit var recyclerViewAdapter: PostsRVAdapter
+
+    private val startRegisterPostActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            (it.data?.extras?.getSerializable("created_post") as PostData).let {
+                viewModel.addPost(it)
+            }
+        }
+    }
+
+    private val startUserDetailActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+
+    }
+
+    private val onItemClicked = { memberId: Long ->
+        val intent = Intent(requireContext(), UserDetailActivity::class.java)
+        startUserDetailActivity.launch(intent)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
@@ -72,14 +90,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private val startRegisterPostActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            (it.data?.extras?.getSerializable("created_post") as PostData).let {
-                viewModel.addPost(it)
-            }
-        }
-    }
-
     private fun initUI() {
         binding.floatingActionButton.setOnClickListener {
             val intent = Intent(requireContext(), RegisterPostActivity::class.java)
@@ -97,7 +107,7 @@ class HomeFragment : Fragment() {
             false
         }
 
-        recyclerViewAdapter = PostsRVAdapter(requireContext())
+        recyclerViewAdapter = PostsRVAdapter(context = requireContext(), onItemClicked = onItemClicked)
         binding.recyclerView.adapter = recyclerViewAdapter
         val layoutManager = LinearLayoutManager(requireActivity())
         layoutManager.orientation = LinearLayoutManager.VERTICAL

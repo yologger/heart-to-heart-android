@@ -4,19 +4,19 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.ouattararomuald.slider.ImageSlider
 import com.ouattararomuald.slider.SliderAdapter
 import com.ouattararomuald.slider.loaders.glide.GlideImageLoaderFactory
 import com.yologger.domain.usecase.post.get_posts.PostData
 import com.yologger.presentation.R
+import com.yologger.presentation.databinding.FragmentHomeHolderPostBinding
 
 class PostsRVAdapter constructor(
     private val context: Context,
-    private var posts: MutableList<PostData?> = mutableListOf()
+    private var posts: MutableList<PostData?> = mutableListOf(),
+    private val onItemClicked: (memberId: Long) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -24,28 +24,27 @@ class PostsRVAdapter constructor(
         private const val VIEW_TYPE_LOADING = 1
     }
 
-    inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val imageAvatar: ImageView = itemView.findViewById(R.id.fragment_home_imageView_avatar)
-        private val imageSlider: ImageSlider = itemView.findViewById(R.id.fragment_home_imageSlider)
-        private val textViewNickname: TextView = itemView.findViewById(R.id.fragment_home_textView_nickname)
-        private val textViewEmail: TextView = itemView.findViewById(R.id.fragment_home_textView_email)
-        private val textViewContent: TextView = itemView.findViewById(R.id.fragment_home_holder_textView_content)
-
+    inner class Holder(val binding: FragmentHomeHolderPostBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(post: PostData) {
             post.avatarUrl?.let { url ->
                 Glide.with(context)
                     .load(url)
                     .centerCrop()
-                    .into(imageAvatar)
+                    .into(binding.imageViewAvatar)
             }
-            textViewEmail.text = post.writerEmail
-            textViewNickname.text = post.writerNickname
-            textViewContent.text = post.content
+            binding.textViewEmail.text = post.writerEmail
+            binding.textViewNickname.text = post.writerNickname
+            binding.textViewContent.text = post.content
             if (post.imageUrls == null || post.imageUrls!!.size == 0) {
-                imageSlider.visibility = View.GONE
+                binding.imageSlider.visibility = View.GONE
             } else {
-                imageSlider.visibility = View.VISIBLE
-                imageSlider.adapter = SliderAdapter(context = context, GlideImageLoaderFactory(), imageUrls = post.imageUrls!!)
+                binding.imageSlider.visibility = View.VISIBLE
+                binding.imageSlider.adapter = SliderAdapter(context = context, GlideImageLoaderFactory(), imageUrls = post.imageUrls!!)
+            }
+            binding.viewHeader.setOnClickListener {
+                posts[adapterPosition]?.let { postData ->
+                    onItemClicked(postData.id)
+                }
             }
         }
     }
@@ -65,8 +64,8 @@ class PostsRVAdapter constructor(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType) {
             VIEW_TYPE_ITEM -> {
-                val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_home_holder_post, parent, false)
-                Holder(view)
+                val binding: FragmentHomeHolderPostBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.fragment_home_holder_post, parent, false)
+                Holder(binding)
             }
             VIEW_TYPE_LOADING -> {
                 val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_home_holder_post_loading, parent, false)

@@ -38,6 +38,7 @@
         <entry key="presentation/src/main/res/layout/activity_splash.xml" value="0.18703703703703703" />
         <entry key="presentation/src/main/res/layout/activity_theme.xml" value="0.3453125" />
         <entry key="presentation/src/main/res/layout/activity_theme_item.xml" value="0.3453125" />
+        <entry key="presentation/src/main/res/layout/activity_user_detail.xml" value="0.17777777777777778" />
         <entry key="presentation/src/main/res/layout/activity_verify_email.xml" value="0.24444444444444444" />
         <entry key="presentation/src/main/res/layout/activity_veritfy_email.xml" value="0.534375" />
         <entry key="presentation/src/main/res/layout/dialog_loading.xml" value="0.28229166666666666" />
@@ -49,16 +50,18 @@
         <entry key="presentation/src/main/res/layout/fragment_get_user_info.xml" value="0.39351851851851855" />
         <entry key="presentation/src/main/res/layout/fragment_home.xml" value="0.240625" />
         <entry key="presentation/src/main/res/layout/fragment_home_holder_post.xml" value="0.25" />
-        <entry key="presentation/src/main/res/layout/fragment_home_holder_post_include_header.xml" value="0.5760416666666667" />
-        <entry key="presentation/src/main/res/layout/fragment_home_holder_post_include_images.xml" value="0.5760416666666667" />
+        <entry key="presentation/src/main/res/layout/fragment_home_holder_post_include_content.xml" value="0.3963541666666667" />
+        <entry key="presentation/src/main/res/layout/fragment_home_holder_post_include_header.xml" value="0.32315112540192925" />
+        <entry key="presentation/src/main/res/layout/fragment_home_holder_post_include_images.xml" value="0.32315112540192925" />
         <entry key="presentation/src/main/res/layout/fragment_home_holder_post_include_trailer.xml" value="0.17135416666666667" />
-        <entry key="presentation/src/main/res/layout/fragment_more.xml" value="0.29635416666666664" />
+        <entry key="presentation/src/main/res/layout/fragment_more.xml" value="0.17777777777777778" />
         <entry key="presentation/src/main/res/layout/fragment_settings.xml" value="0.3651041666666667" />
         <entry key="presentation/src/main/res/layout/fragment_settings_item.xml" value="0.3104166666666667" />
         <entry key="presentation/src/main/res/layout/fragment_verify_email.xml" value="0.39351851851851855" />
         <entry key="presentation/src/main/res/menu/activity_join_menu_toolbar.xml" value="0.1" />
         <entry key="presentation/src/main/res/menu/activity_main_menu_bottom_navigation_view.xml" value="0.3651041666666667" />
         <entry key="presentation/src/main/res/menu/activity_register_post_toolbar.xml" value="0.2796296296296296" />
+        <entry key="presentation/src/main/res/menu/activity_user_detail_toolbar.xml" value="0.24444444444444444" />
         <entry key="presentation/src/main/res/menu/activity_verify_email_menu_toolbar.xml" value="0.17314814814814813" />
         <entry key="presentation/src/main/res/menu/fragment_home_toolbar.xml" value="0.35625" />
         <entry key="presentation/src/main/res/menu/fragment_more_toolbar.xml" value="0.29259259259259257" />
