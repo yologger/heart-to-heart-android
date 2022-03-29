@@ -113,16 +113,11 @@ class RegisterPostActivity : AppCompatActivity() {
                             showToast("File Upload Error")
                             navigateToLogin()
                         }
-                        RegisterPostViewModel.Error.NO_SESSION -> {
-                            navigateToLogin()
-                        }
-                        RegisterPostViewModel.Error.NETWORK_ERROR -> {
-                            navigateToLogin()
-                        }
                         RegisterPostViewModel.Error.FILE_SIZE_LIMIT_EXCEEDED -> {
                             showToast("10MB 이하의 사진만 업로드할 수 있습니다.")
                             navigateToLogin()
                         }
+                        else -> navigateToLogin()
                     }
                 }
             }
