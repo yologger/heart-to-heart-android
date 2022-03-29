@@ -3,9 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:title="완료"
-        android:id="@+id/fragment_more_menu_toolbar_action_settings"
-        android:icon="@drawable/icon_settings_outlined_white_24"
-        android:iconTint="@color/toolbarIconColor"
+        android:title="Close"
+        android:id="@+id/activity_verify_email_toolbar_menu_action_close"
+        android:icon="@drawable/icon_close_outlined_black_24"
         app:showAsAction="always" />
 </menu>

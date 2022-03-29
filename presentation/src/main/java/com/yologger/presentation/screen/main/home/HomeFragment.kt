@@ -96,10 +96,10 @@ class HomeFragment : Fragment() {
             startRegisterPostActivity.launch(intent)
         }
 
-        binding.toolbar.inflateMenu(R.menu.fragment_home_toolbar)
+        binding.toolbar.inflateMenu(R.menu.fragment_home_toolbar_menu)
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.fragment_home_menu_toolbar_action_refresh -> {
+                R.id.fragment_home_toolbar_menu_action_refresh -> {
                     viewModel.reloadData()
                     true
                 }

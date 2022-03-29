@@ -25,15 +25,15 @@ class UserDetailActivity : AppCompatActivity() {
     }
 
     private fun initUI() {
-        binding.toolbar.setNavigationIcon(R.drawable.icon_close_outlined_white_24)
+        binding.toolbar.setNavigationIcon(R.drawable.icon_close_outlined_black_24)
         binding.toolbar.setNavigationOnClickListener { finish() }
-        binding.toolbar.inflateMenu(R.menu.activity_user_detail_toolbar)
+        binding.toolbar.inflateMenu(R.menu.activity_user_detail_toolbar_menu)
         binding.toolbar.setOnMenuItemClickListener {
             when(it.itemId) {
-                R.id.activity_register_post_menu_toolbar_action_report -> {
+                R.id.activity_user_detail_toolbar_menu_action_report -> {
                     true
                 }
-                R.id.activity_register_post_menu_toolbar_action_block -> {
+                R.id.activity_user_detail_toolbar_menu_action_block -> {
                     true
                 }
                 else -> {

@@ -52,12 +52,12 @@ class RegisterPostActivity : AppCompatActivity() {
     }
 
     private fun initUI() {
-        binding.toolbar.setNavigationIcon(R.drawable.icon_close_outlined_white_24)
+        binding.toolbar.setNavigationIcon(R.drawable.icon_close_outlined_black_24)
         binding.toolbar.setNavigationOnClickListener { finish() }
-        binding.toolbar.inflateMenu(R.menu.activity_register_post_toolbar)
+        binding.toolbar.inflateMenu(R.menu.activity_register_post_toolbar_menu)
         binding.toolbar.setOnMenuItemClickListener {
             when(it.itemId) {
-                R.id.activity_register_post_menu_toolbar_action_done -> {
+                R.id.activity_register_post_toolbar_menu_action_done -> {
                     viewModel.post()
                     true
                 }
@@ -124,7 +124,7 @@ class RegisterPostActivity : AppCompatActivity() {
         }
 
         viewModel.liveContent.observe(this) {
-            val button = binding.toolbar.menu.findItem(R.id.activity_register_post_menu_toolbar_action_done)
+            val button = binding.toolbar.menu.findItem(R.id.activity_register_post_toolbar_menu_action_done)
             button.isEnabled = !it.isNullOrBlank()
         }
     }

@@ -38,11 +38,11 @@ class FollowActivity : AppCompatActivity() {
             tab.text = tabTextList[position]
         }.attach()
 
-        binding.toolbar.setNavigationIcon(R.drawable.icon_arrow_back_24_white)
+        binding.toolbar.setNavigationIcon(R.drawable.icon_arrow_back_filled_black_24)
         binding.toolbar.setNavigationOnClickListener { finish() }
     }
 
-    private val tabTextList = arrayListOf("FOLLOWING", "FOLLOWER")
+    private val tabTextList = arrayListOf("팔로잉", "팔로워")
 
     inner class ViewPagerAdapter constructor(fragmentManager: FragmentManager, lifecycle: Lifecycle) : FragmentStateAdapter(fragmentManager, lifecycle) {
         override fun getItemCount(): Int = tabTextList.size
