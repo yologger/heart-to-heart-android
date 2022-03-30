@@ -41,13 +41,20 @@ class PostsRVAdapter constructor(
                 binding.imageSlider.visibility = View.VISIBLE
                 binding.imageSlider.adapter = SliderAdapter(context = context, GlideImageLoaderFactory(), imageUrls = post.imageUrls!!)
             }
-            binding.viewHeader.setOnClickListener {
+            binding.viewUserInfo.setOnClickListener {
                 posts[adapterPosition]?.let { postData ->
                     onItemClicked(postData.id)
                 }
             }
+//            binding.buttonMore.setOnClickListener {
+//                val popupMenu = PopupMenu(context, binding.buttonMore)
+//                popupMenu.menuInflater.inflate(R.menu.fragment_home_popup_menu, popupMenu.menu)
+//                popupMenu.show()
+//                Logger.w("clicked at ${adapterPosition}")
+//            }
         }
     }
+
 
     inner class LoadingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind() {}

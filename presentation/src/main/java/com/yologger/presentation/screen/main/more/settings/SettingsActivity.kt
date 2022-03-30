@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.yologger.presentation.R
 import com.yologger.presentation.databinding.ActivitySettingsBinding
 import com.yologger.presentation.screen.auth.login.LoginActivity
+import com.yologger.presentation.screen.main.more.settings.handle_blocked_users.HandleBlockedUsersActivity
 import com.yologger.presentation.screen.main.more.settings.show_version.ShowVersionActivity
 import com.yologger.presentation.util.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,6 +46,10 @@ class SettingsActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
                 2 -> {
+                    val intent = Intent(this@SettingsActivity, HandleBlockedUsersActivity::class.java)
+                    startActivity(intent)
+                }
+                3 -> {
                     val builder = AlertDialog.Builder(this@SettingsActivity)
                     val alertDialog = builder
                         .setMessage("로그아웃 하시겠어요?")
@@ -53,7 +58,7 @@ class SettingsActivity : AppCompatActivity() {
                         .create()
                     alertDialog.show()
                 }
-                3 -> {
+                4 -> {
                     val builder = AlertDialog.Builder(this@SettingsActivity)
                     val alertDialog = builder
                         .setTitle("정말 탈퇴하시겠어요?")

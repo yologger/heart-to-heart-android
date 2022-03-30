@@ -75,7 +75,7 @@
             android:layout_height="1dp"
             android:layout_marginStart="@dimen/margin_sm"
             android:layout_marginEnd="@dimen/margin_sm"
-            android:background="@color/dividerColor"/>
+            android:background="?android:attr/listDivider" />
 
         <EditText
             android:id="@+id/editTextContent"
