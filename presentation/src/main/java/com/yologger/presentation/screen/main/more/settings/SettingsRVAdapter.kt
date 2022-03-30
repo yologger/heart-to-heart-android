@@ -13,6 +13,7 @@ class SettingsRVAdapter constructor(
     val menu = listOf(
         "테마",
         "버전 정보",
+        "차단 사용자 관리",
         "로그아웃",
         "탈퇴하기"
     )

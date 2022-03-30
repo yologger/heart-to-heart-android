@@ -4,6 +4,18 @@
 
     <application android:theme="@style/AppTheme">
         <activity
+            android:name=".screen.main.home.user_detail.report_user.ReportUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".screen.main.home.user_detail.block_user.BlockUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".screen.main.more.settings.handle_blocked_users.HandleBlockedUsersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".screen.main.more.settings.handle_blocked_users.HandleBlockedUsers"
+            android:exported="false" />
+        <activity
             android:name=".screen.main.home.user_detail.UserDetailActivity"
             android:exported="false" />
         <activity
