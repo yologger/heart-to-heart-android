@@ -11,7 +11,6 @@ import com.yologger.data.datasource.api.post.model.register_post.RegisterPostFai
 import com.yologger.data.datasource.pref.SessionStore
 import com.yologger.data.util.FileUtil
 import com.yologger.domain.repository.PostRepository
-import com.yologger.domain.usecase.member.fetch_member_info.FetchMemberInfoResult
 import com.yologger.domain.usecase.post.get_posts.GetPostsResult
 import com.yologger.domain.usecase.post.get_posts.GetPostsResultData
 import com.yologger.domain.usecase.post.get_posts.GetPostsResultError
@@ -87,40 +86,32 @@ class PostRepositoryImpl @Inject constructor(
     }
 
     override fun getPosts(page: Int, size: Int): GetPostsResult {
-        try {
-            val response = postService.getPosts(page, size).execute()
-            if (response.isSuccessful) {
-                val successResponse = response.body()!!
-                val postDataList = successResponse.posts.map { it.toData() }
-                val data = GetPostsResultData(size = successResponse.size, posts = postDataList)
-                return GetPostsResult.Success(data = data)
-            } else {
-                val failureResponse = gson.fromJson(response.errorBody()!!.string(), GetPostsFailureResponse::class.java)
-                return when (failureResponse.code) {
-                    GetPostsFailureResponseCode.NO_POST_EXIST -> GetPostsResult.Failure(GetPostsResultError.NO_POST_EXIST)
-                    GetPostsFailureResponseCode.NO_ACCESS_TOKEN_IN_LOCAL, GetPostsFailureResponseCode.INVALID_REFRESH_TOKEN, GetPostsFailureResponseCode.EXPIRED_REFRESH_TOKEN -> {
-                        sessionStore.deleteSession()
-                        GetPostsResult.Failure(GetPostsResultError.NO_SESSION)
-                    }
-                    else -> GetPostsResult.Failure(GetPostsResultError.CLIENT_ERROR)
-                }
-            }
-        } catch (e: JsonParseException) {
-            return GetPostsResult.Failure(error = GetPostsResultError.JSON_PARSE_ERROR)
-        } catch (e: Exception) {
-            return GetPostsResult.Failure(error = GetPostsResultError.NETWORK_ERROR)
-        }
-    }
-
-    override fun fetchMemberInfo(): FetchMemberInfoResult {
         sessionStore.getSession()?.let { session ->
-            return FetchMemberInfoResult.Success(
-                email = session.email,
-                nickname = session.nickname,
-                avatarUrl = session.avatarUrl
-            )
+            try {
+                val response = postService.getPosts(session.memberId, page, size).execute()
+                if (response.isSuccessful) {
+                    val successResponse = response.body()!!
+                    val postDataList = successResponse.posts.map { it.toData() }
+                    val data = GetPostsResultData(size = successResponse.size, posts = postDataList)
+                    return GetPostsResult.Success(data = data)
+                } else {
+                    val failureResponse = gson.fromJson(response.errorBody()!!.string(), GetPostsFailureResponse::class.java)
+                    return when (failureResponse.code) {
+                        GetPostsFailureResponseCode.NO_POST_EXIST -> GetPostsResult.Failure(GetPostsResultError.NO_POST_EXIST)
+                        GetPostsFailureResponseCode.NO_ACCESS_TOKEN_IN_LOCAL, GetPostsFailureResponseCode.INVALID_REFRESH_TOKEN, GetPostsFailureResponseCode.EXPIRED_REFRESH_TOKEN -> {
+                            sessionStore.deleteSession()
+                            GetPostsResult.Failure(GetPostsResultError.NO_SESSION)
+                        }
+                        else -> GetPostsResult.Failure(GetPostsResultError.CLIENT_ERROR)
+                    }
+                }
+            } catch (e: JsonParseException) {
+                return GetPostsResult.Failure(error = GetPostsResultError.JSON_PARSE_ERROR)
+            } catch (e: Exception) {
+                return GetPostsResult.Failure(error = GetPostsResultError.NETWORK_ERROR)
+            }
         } ?: run {
-            return FetchMemberInfoResult.Failure
+            return GetPostsResult.Failure(GetPostsResultError.NO_SESSION)
         }
     }
 }

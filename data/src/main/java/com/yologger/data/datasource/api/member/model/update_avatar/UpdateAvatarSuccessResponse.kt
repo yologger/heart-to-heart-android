@@ -1,4 +1,4 @@
-package com.yologger.data.datasource.api.member.update_avatar
+package com.yologger.data.datasource.api.member.model.update_avatar
 
 import com.google.gson.annotations.SerializedName
 
