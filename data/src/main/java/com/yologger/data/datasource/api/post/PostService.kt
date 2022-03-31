@@ -19,6 +19,7 @@ interface PostService {
 
     @GET("/post/posts")
     fun getPosts(
+        @Query("member_id") memberId: Long,
         @Query("page") page: Int,
         @Query("size") size: Int
     ): Call<GetPostsSuccessResponse>

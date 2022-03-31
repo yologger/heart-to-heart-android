@@ -1,8 +1,8 @@
-package com.yologger.data.datasource.api.member.update_avatar
+package com.yologger.data.datasource.api.member.model.get_member_profile
 
 import com.google.gson.annotations.SerializedName
 
-enum class UpdateAvatarFailureResponseCode {
+enum class GetMemberProfileFailureResponseCode {
     // Common Error
     @SerializedName("GLOBAL_001") NOT_FOUND,
     @SerializedName("GLOBAL_002") INVALID_INPUT_VALUE,
@@ -12,8 +12,5 @@ enum class UpdateAvatarFailureResponseCode {
     @SerializedName("AUTH_008") EXPIRED_REFRESH_TOKEN,
 
     // Business Error
-    @SerializedName("MEMBER001") MEMBER_NOT_EXIST,
-    @SerializedName("MEMBER002") FILE_UPLOAD_ERROR,
-    @SerializedName("MEMBER003") IO_ERROR,
-    @SerializedName("MEMBER004") INVALID_CONTENT_TYPE,
+    @SerializedName("MEMBER_005") INVALID_MEMBER_ID,
 }

@@ -96,6 +96,9 @@ class MoreFragment : Fragment() {
                 is MoreViewModel.State.FetchMemberInfoSuccess -> {
                     binding.textViewEmail.text = it.email
                     binding.textViewNickname.text = it.nickname
+                    binding.textViewPostValue.text = it.postSize.toString()
+                    binding.textViewFollowerValue.text = it.followerSize.toString()
+                    binding.textViewFollowingValue.text = it.followingSize.toString()
                     it.avatarUrl?.let { imageUrl ->
                         Glide.with(this@MoreFragment)
                             .load(imageUrl)
@@ -104,9 +107,17 @@ class MoreFragment : Fragment() {
                     }
                 }
                 is MoreViewModel.State.FetchMemberInfoFailure -> {
-                    val intent = Intent(requireContext(), LoginActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
+                    when(it.error) {
+                        MoreViewModel.FetchMemberInfoError.JSON_PARSE_ERROR -> showToast("Json Parse Error")
+                        MoreViewModel.FetchMemberInfoError.NETWORK_ERROR -> showToast("Network Error")
+                        MoreViewModel.FetchMemberInfoError.CLIENT_ERROR -> showToast("Client Error")
+                        MoreViewModel.FetchMemberInfoError.NO_SESSION -> {
+                            val intent = Intent(requireContext(), LoginActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(intent)
+                        }
+                        MoreViewModel.FetchMemberInfoError.INVALID_PARAMS -> showToast("Invalid Parameter")
+                    }
                 }
                 is MoreViewModel.State.UpdateAvatarSuccess -> {
                     Glide.with(this)
@@ -116,17 +127,17 @@ class MoreFragment : Fragment() {
                 }
                 is MoreViewModel.State.UpdateAvatarFailure -> {
                     when(it.error) {
-                        MoreViewModel.Error.NETWORK_ERROR -> showToast("Network Error")
-                        MoreViewModel.Error.CLIENT_ERROR, MoreViewModel.Error.INVALID_PARAMS, MoreViewModel.Error.JSON_PARSE_ERROR, MoreViewModel.Error.JSON_PARSE_ERROR -> showToast("Client Error")
-                        MoreViewModel.Error.NO_SESSION -> {
+                        MoreViewModel.UpdateAvatarError.NETWORK_ERROR -> showToast("Network Error")
+                        MoreViewModel.UpdateAvatarError.CLIENT_ERROR, MoreViewModel.UpdateAvatarError.INVALID_PARAMS, MoreViewModel.UpdateAvatarError.JSON_PARSE_ERROR, MoreViewModel.UpdateAvatarError.JSON_PARSE_ERROR -> showToast("Client Error")
+                        MoreViewModel.UpdateAvatarError.NO_SESSION -> {
                             val intent = Intent(requireContext(), LoginActivity::class.java)
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(intent)
                         }
-                        MoreViewModel.Error.FILE_UPLOAD_ERROR -> showToast("구글 메일 시스템 에러")
-                        MoreViewModel.Error.IO_ERROR-> showToast("입출력 에러")
-                        MoreViewModel.Error.INVALID_CONTENT_TYPE -> showToast("JPG, PNG 이미지만 업로드 가능합니다.")
-                        MoreViewModel.Error.MEMBER_NOT_EXIST -> showToast("Member Not Exist Error.")
+                        MoreViewModel.UpdateAvatarError.FILE_UPLOAD_ERROR -> showToast("구글 메일 시스템 에러")
+                        MoreViewModel.UpdateAvatarError.IO_ERROR-> showToast("입출력 에러")
+                        MoreViewModel.UpdateAvatarError.INVALID_CONTENT_TYPE -> showToast("JPG, PNG 이미지만 업로드 가능합니다.")
+                        MoreViewModel.UpdateAvatarError.MEMBER_NOT_EXIST -> showToast("Member Not Exist Error.")
                     }
                 }
             }

@@ -91,6 +91,7 @@
                 android:orientation="vertical">
                 <TextView
                     style="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:id="@+id/textViewPostValue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -109,6 +110,7 @@
                 android:orientation="vertical">
                 <TextView
                     style="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:id="@+id/textViewFollowerValue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -127,6 +129,7 @@
                 android:orientation="vertical">
                 <TextView
                     style="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:id="@+id/textViewFollowingValue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"

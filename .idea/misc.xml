@@ -34,6 +34,7 @@
         <entry key="presentation/src/main/res/layout/activity_find_password.xml" value="0.39692307692307693" />
         <entry key="presentation/src/main/res/layout/activity_follow.xml" value="0.3645833333333333" />
         <entry key="presentation/src/main/res/layout/activity_handle_blocked_users.xml" value="0.30185185185185187" />
+        <entry key="presentation/src/main/res/layout/activity_handle_blocked_users_item.xml" value="0.1675925925925926" />
         <entry key="presentation/src/main/res/layout/activity_join.xml" value="0.25" />
         <entry key="presentation/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="presentation/src/main/res/layout/activity_main.xml" value="0.31851851851851853" />
@@ -54,7 +55,7 @@
         <entry key="presentation/src/main/res/layout/fragment_follower.xml" value="0.31297709923664124" />
         <entry key="presentation/src/main/res/layout/fragment_follower_item.xml" value="0.25925925925925924" />
         <entry key="presentation/src/main/res/layout/fragment_following.xml" value="0.3253968253968254" />
-        <entry key="presentation/src/main/res/layout/fragment_following_item.xml" value="0.3609375" />
+        <entry key="presentation/src/main/res/layout/fragment_following_item.xml" value="0.1675925925925926" />
         <entry key="presentation/src/main/res/layout/fragment_get_user_info.xml" value="0.39351851851851855" />
         <entry key="presentation/src/main/res/layout/fragment_home.xml" value="0.240625" />
         <entry key="presentation/src/main/res/layout/fragment_home_holder_post.xml" value="0.3609375" />
@@ -62,7 +63,7 @@
         <entry key="presentation/src/main/res/layout/fragment_home_holder_post_include_header.xml" value="0.32315112540192925" />
         <entry key="presentation/src/main/res/layout/fragment_home_holder_post_include_images.xml" value="0.32315112540192925" />
         <entry key="presentation/src/main/res/layout/fragment_home_holder_post_include_trailer.xml" value="0.17135416666666667" />
-        <entry key="presentation/src/main/res/layout/fragment_more.xml" value="0.17777777777777778" />
+        <entry key="presentation/src/main/res/layout/fragment_more.xml" value="0.33055555555555555" />
         <entry key="presentation/src/main/res/layout/fragment_settings.xml" value="0.3651041666666667" />
         <entry key="presentation/src/main/res/layout/fragment_settings_item.xml" value="0.3104166666666667" />
         <entry key="presentation/src/main/res/layout/fragment_verify_email.xml" value="0.39351851851851855" />
