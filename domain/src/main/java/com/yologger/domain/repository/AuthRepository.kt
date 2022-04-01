@@ -1,12 +1,12 @@
 package com.yologger.domain.repository
 
-import com.yologger.domain.usecase.auth.confirm_verification_code.ConfirmVerificationCodeResult
-import com.yologger.domain.usecase.auth.email_verification_code.EmailVerificationCodeResult
+import com.yologger.domain.usecase.auth.confirmVerificationCode.ConfirmVerificationCodeResult
+import com.yologger.domain.usecase.auth.emailVerificationCode.EmailVerificationCodeResult
 import com.yologger.domain.usecase.auth.join.JoinResult
 import com.yologger.domain.usecase.auth.login.LoginResult
 import com.yologger.domain.usecase.auth.logout.LogoutResult
-import com.yologger.domain.usecase.auth.verify_access_token.ReissueTokenResponse
-import com.yologger.domain.usecase.auth.verify_access_token.VerifyAccessTokenResponse
+import com.yologger.domain.usecase.auth.verifyAccessToken.ReissueTokenResponse
+import com.yologger.domain.usecase.auth.verifyAccessToken.VerifyAccessTokenResponse
 
 interface AuthRepository {
     fun emailVerificationCode(email: String): EmailVerificationCodeResult

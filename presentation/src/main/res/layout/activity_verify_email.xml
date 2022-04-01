@@ -7,14 +7,14 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.yologger.presentation.screen.auth.verify_email.VerifyEmailViewModel" />
+            type="com.yologger.presentation.screen.auth.verifyEmail.VerifyEmailViewModel" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".screen.auth.verify_email.VerifyEmailActivity">
+        tools:context=".screen.auth.verifyEmail.VerifyEmailActivity">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -79,7 +79,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@={viewModel.liveEmail}"
-                        android:onTextChanged="@{viewModel.onTextFieldEmailChanged}"
+                        android:onTextChanged="@{viewModel::onTextFieldEmailChanged}"
                         android:inputType="textEmailAddress" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -105,7 +105,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@={viewModel.liveCode}"
-                    android:onTextChanged="@{viewModel.onTextFieldCodeChanged}"
+                    android:onTextChanged="@{viewModel::onTextFieldCodeChanged}"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 

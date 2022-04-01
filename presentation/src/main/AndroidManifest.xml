@@ -4,22 +4,22 @@
 
     <application android:theme="@style/AppTheme">
         <activity
-            android:name=".screen.main.home.user_detail.report_user.ReportUserActivity"
+            android:name=".screen.main.home.userDetail.reportUser.ReportUserActivity"
             android:exported="false" />
         <activity
-            android:name=".screen.main.home.user_detail.block_user.BlockUserActivity"
+            android:name=".screen.main.home.userDetail.blockUser.BlockUserActivity"
             android:exported="false" />
         <activity
-            android:name=".screen.main.more.settings.handle_blocked_users.HandleBlockedUsersActivity"
+            android:name=".screen.main.more.settings.handleBlockedUsers.HandleBlockedUsersActivity"
             android:exported="false" />
         <activity
-            android:name=".screen.main.more.settings.handle_blocked_users.HandleBlockedUsers"
+            android:name=".screen.main.more.settings.handleBlockedUsers.HandleBlockedUsers"
             android:exported="false" />
         <activity
-            android:name=".screen.main.home.user_detail.UserDetailActivity"
+            android:name=".screen.main.home.userDetail.UserDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".screen.main.more.settings.show_version.ShowVersionActivity"
+            android:name=".screen.main.more.settings.showVersion.ShowVersionActivity"
             android:exported="false" />
         <activity
             android:name=".screen.main.more.follow.FollowActivity"
@@ -28,19 +28,19 @@
             android:name=".screen.main.more.settings.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".screen.main.home.register_post.RegisterPostActivity"
+            android:name=".screen.main.home.registerPost.RegisterPostActivity"
             android:exported="false" />
         <activity
             android:name=".screen.main.settings.theme.ThemeActivity"
             android:exported="false" />
         <activity
-            android:name=".screen.auth.verify_email.VerifyEmailActivity"
+            android:name=".screen.auth.verifyEmail.VerifyEmailActivity"
             android:exported="false" />
         <activity
             android:name=".screen.main.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".screen.auth.find_password.FindPasswordActivity"
+            android:name=".screen.auth.findPassword.FindPasswordActivity"
             android:exported="false" />
         <activity
             android:name=".screen.auth.join.JoinActivity"

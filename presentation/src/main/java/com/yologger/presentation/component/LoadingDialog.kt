@@ -18,7 +18,7 @@ class LoadingDialog(private val context: Context) {
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
             // Setup layout
-            dialog.setContentView(R.layout.dialog_loading)
+            dialog.setContentView(R.layout.layout_dialog_loading)
 
             // Disable dismissing with back button
             dialog.setCancelable(false)

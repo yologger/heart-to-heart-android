@@ -19,6 +19,6 @@
             android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:menu="@menu/activity_main_menu_bottom_navigation_view"/>
+            app:menu="@menu/menu_activity_main_bottom_navigation_view"/>
     </LinearLayout>
 </layout>

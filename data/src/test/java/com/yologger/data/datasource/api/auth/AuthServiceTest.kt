@@ -2,13 +2,13 @@ package com.yologger.data.datasource.api.auth
 
 import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
-import com.yologger.data.datasource.api.auth.model.confirm_verification_code.ConfirmVerificationCodeRequest
-import com.yologger.data.datasource.api.auth.model.email_verification_code.EmailVerificationCodeFailureResponseCode
-import com.yologger.data.datasource.api.auth.model.email_verification_code.EmailVerificationCodeFailureResponse
-import com.yologger.data.datasource.api.auth.model.email_verification_code.EmailVerificationCodeRequest
+import com.yologger.data.datasource.api.auth.model.confirmVerificationCode.ConfirmVerificationCodeRequest
+import com.yologger.data.datasource.api.auth.model.emailVerificationCode.EmailVerificationCodeFailureResponseCode
+import com.yologger.data.datasource.api.auth.model.emailVerificationCode.EmailVerificationCodeFailureResponse
+import com.yologger.data.datasource.api.auth.model.emailVerificationCode.EmailVerificationCodeRequest
 import com.yologger.data.datasource.api.auth.model.join.JoinRequest
 import com.yologger.data.datasource.api.auth.model.login.LoginRequest
-import com.yologger.data.datasource.api.auth.model.reissue_token.ReissueTokenRequest
+import com.yologger.data.datasource.api.auth.model.reissueToken.ReissueTokenRequest
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse

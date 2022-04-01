@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.yologger.presentation.R
 import com.yologger.presentation.databinding.ActivitySettingsBinding
 import com.yologger.presentation.screen.auth.login.LoginActivity
-import com.yologger.presentation.screen.main.more.settings.handle_blocked_users.HandleBlockedUsersActivity
-import com.yologger.presentation.screen.main.more.settings.show_version.ShowVersionActivity
+import com.yologger.presentation.screen.main.more.settings.handleBlockedUsers.HandleBlockedUsersActivity
+import com.yologger.presentation.screen.main.more.settings.showVersion.ShowVersionActivity
 import com.yologger.presentation.util.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,6 +41,16 @@ class SettingsActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener { finish() }
         recyclerViewAdapter = SettingsRVAdapter { position ->
             when(position) {
+                0 -> {
+                    val builder = AlertDialog.Builder(this@SettingsActivity)
+                    val alertDialog = builder
+                        .setMessage("다크 테마가 곧 지원됩니다.")
+                        .setPositiveButton("확인") { _, _ ->
+
+                        }
+                        .create()
+                    alertDialog.show()
+                }
                 1 -> {
                     val intent = Intent(this@SettingsActivity, ShowVersionActivity::class.java)
                     startActivity(intent)

@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.yologger.domain.usecase.auth.join.JoinResult
 import com.yologger.domain.usecase.auth.join.JoinResultError
 import com.yologger.domain.usecase.auth.join.JoinUseCase
-import com.yologger.presentation.screen.base.BaseViewModel
+import com.yologger.presentation.base.BaseViewModel
 import com.yologger.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.kotlin.addTo

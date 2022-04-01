@@ -62,7 +62,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@={viewModel.liveEmail}"
-                    android:onTextChanged="@{viewModel.onTextFieldEmailChanged}"
+                    android:onTextChanged="@{viewModel::onTextFieldEmailChanged}"
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -81,7 +81,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@={viewModel.livePassword}"
-                    android:onTextChanged="@{viewModel.onTextFieldPasswordChanged}"
+                    android:onTextChanged="@{viewModel::onTextFieldPasswordChanged}"
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 

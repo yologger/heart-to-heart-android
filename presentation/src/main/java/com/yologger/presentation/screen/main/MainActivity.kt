@@ -47,12 +47,12 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.activity_main_menu_bottom_navigation_view_item_home -> {
+            R.id.menu_activity_main_bottom_navigation_view_action_home -> {
                 supportFragmentManager.beginTransaction().hide(activeFragment).show(homeFragment).commit()
                 activeFragment = homeFragment
                 return true
             }
-            R.id.activity_main_menu_bottom_navigation_view_item_settings -> {
+            R.id.menu_activity_main_bottom_navigation_view_action_more -> {
                 supportFragmentManager.beginTransaction().hide(activeFragment).show(moreFragment).commit()
                 activeFragment = moreFragment
                 return true
@@ -63,8 +63,8 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     override fun onNavigationItemReselected(item: MenuItem) { 
         when(item.itemId) {
-            R.id.activity_main_menu_bottom_navigation_view_item_home -> homeFragment.moveToTop()
-            R.id.activity_main_menu_bottom_navigation_view_item_settings -> { }
+            R.id.menu_activity_main_bottom_navigation_view_action_home -> homeFragment.moveToTop()
+            R.id.menu_activity_main_bottom_navigation_view_action_more -> { }
         }
     }
 }

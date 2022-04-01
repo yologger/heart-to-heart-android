@@ -1,6 +1,7 @@
 package com.yologger.presentation.screen.main.more.follow
 
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -24,6 +25,17 @@ class FollowActivity : AppCompatActivity() {
         setContentView(R.layout.activity_follow)
         initBinding()
         initUI()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val builder = AlertDialog.Builder(this@FollowActivity)
+        val alertDialog = builder
+            .setMessage("팔로우, 팔로잉 기능이 곧 추가됩니다.")
+            .setPositiveButton("확인") { _, _ ->
+            }
+            .create()
+        alertDialog.show()
     }
 
     private fun initBinding() {

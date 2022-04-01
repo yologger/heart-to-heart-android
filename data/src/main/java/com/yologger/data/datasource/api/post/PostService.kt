@@ -1,7 +1,7 @@
 package com.yologger.data.datasource.api.post
 
-import com.yologger.data.datasource.api.post.model.get_posts.GetPostsSuccessResponse
-import com.yologger.data.datasource.api.post.model.register_post.RegisterPostSuccessResponse
+import com.yologger.data.datasource.api.post.model.getPosts.GetPostsSuccessResponse
+import com.yologger.data.datasource.api.post.model.registerPost.RegisterPostSuccessResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
