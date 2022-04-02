@@ -54,7 +54,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_margin="@dimen/margin_md"
-            android:src="@drawable/icon_create_filled_white_24" />
+            android:src="@drawable/icon_white_24_filled_create" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

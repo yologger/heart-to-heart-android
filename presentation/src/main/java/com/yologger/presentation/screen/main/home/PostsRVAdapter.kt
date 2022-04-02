@@ -35,6 +35,11 @@ class PostsRVAdapter constructor(
                     .load(url)
                     .centerCrop()
                     .into(binding.imageViewAvatar)
+            } ?: let {
+                Glide.with(context)
+                    .load(R.drawable.image_avatar_default)
+                    .centerCrop()
+                    .into(binding.imageViewAvatar)
             }
             binding.textViewEmail.text = post.writerEmail
             binding.textViewNickname.text = post.writerNickname

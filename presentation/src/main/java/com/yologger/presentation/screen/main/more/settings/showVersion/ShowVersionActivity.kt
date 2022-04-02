@@ -23,7 +23,7 @@ class ShowVersionActivity : AppCompatActivity() {
     }
 
     private fun initUI() {
-        binding.toolbar.setNavigationIcon(R.drawable.icon_arrow_back_filled_black_24)
+        binding.toolbar.setNavigationIcon(R.drawable.icon_black_24_filled_arrow_back)
         binding.toolbar.setNavigationOnClickListener { finish() }
         binding.textViewVersion.text = "현재 버전 ${packageManager.getPackageInfo(packageName, 0).versionName}"
         Glide.with(this@ShowVersionActivity)

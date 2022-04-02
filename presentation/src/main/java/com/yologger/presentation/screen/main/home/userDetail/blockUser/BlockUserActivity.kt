@@ -25,7 +25,7 @@ class BlockUserActivity : AppCompatActivity() {
     }
 
     private fun initUI() {
-        binding.toolbar.setNavigationIcon(R.drawable.icon_arrow_back_filled_black_24)
+        binding.toolbar.setNavigationIcon(R.drawable.icon_black_24_filled_arrow_back)
         binding.toolbar.setNavigationOnClickListener { finish() }
     }
 }

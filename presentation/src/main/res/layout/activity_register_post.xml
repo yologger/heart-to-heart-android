@@ -52,7 +52,7 @@
                 android:layout_width="75dp"
                 android:layout_height="75dp"
                 android:layout_marginStart="@dimen/margin_sm"
-                android:src="@drawable/icon_camera_filled_white_24"
+                android:src="@drawable/icon_white_24_filled_camera"
                 android:backgroundTint="@color/blue_500"
                 android:onClick="onOpenGalleryButtonClicked"
                 app:layout_constraintBottom_toBottomOf="parent"

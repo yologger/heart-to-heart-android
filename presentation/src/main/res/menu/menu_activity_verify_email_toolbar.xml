@@ -5,6 +5,6 @@
     <item
         android:title="Close"
         android:id="@+id/menu_activity_verify_email_toolbar_action_close"
-        android:icon="@drawable/icon_close_outlined_black_24"
+        android:icon="@drawable/icon_black_24_outlined_close"
         app:showAsAction="always" />
 </menu>
