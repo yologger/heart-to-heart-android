@@ -97,7 +97,7 @@ class HomeFragment : Fragment() {
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(intent)
                         }
-                        HomeViewModel.GetPostsError.NO_POST_EXIST -> recyclerViewAdapter.updatePosts(mutableListOf())
+                        HomeViewModel.GetPostsError.NO_POSTS_EXIST -> recyclerViewAdapter.updatePosts(mutableListOf())
                     }
                 }
                 is HomeViewModel.State.BlockMemberSuccess -> {

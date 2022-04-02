@@ -1,6 +1,6 @@
-package com.yologger.domain.usecase.post.getPosts
+package com.yologger.domain.usecase.member.deleteAccount
 
-enum class GetPostsResultError {
+enum class DeleteAccountResultError {
     // Common Error
     NETWORK_ERROR,
     CLIENT_ERROR,
@@ -9,5 +9,6 @@ enum class GetPostsResultError {
     JSON_PARSE_ERROR,
 
     // Business Error
-    NO_POSTS_EXIST
+    INVALID_MEMBER_ID,
+    AWS_S3_ERROR
 }

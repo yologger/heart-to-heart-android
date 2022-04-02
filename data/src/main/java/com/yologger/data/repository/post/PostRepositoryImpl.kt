@@ -97,7 +97,7 @@ class PostRepositoryImpl @Inject constructor(
                 } else {
                     val failureResponse = gson.fromJson(response.errorBody()!!.string(), GetPostsFailureResponse::class.java)
                     return when (failureResponse.code) {
-                        GetPostsFailureResponseCode.NO_POST_EXIST -> GetPostsResult.Failure(GetPostsResultError.NO_POST_EXIST)
+                        GetPostsFailureResponseCode.NO_POSTS_EXIST -> GetPostsResult.Failure(GetPostsResultError.NO_POSTS_EXIST)
                         GetPostsFailureResponseCode.NO_ACCESS_TOKEN_IN_LOCAL, GetPostsFailureResponseCode.INVALID_REFRESH_TOKEN, GetPostsFailureResponseCode.EXPIRED_REFRESH_TOKEN -> {
                             sessionStore.deleteSession()
                             GetPostsResult.Failure(GetPostsResultError.NO_SESSION)

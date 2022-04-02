@@ -2,6 +2,7 @@ package com.yologger.data.datasource.api.member
 
 import com.yologger.data.datasource.api.member.model.block.BlockMemberRequest
 import com.yologger.data.datasource.api.member.model.block.BlockMemberSuccessResponse
+import com.yologger.data.datasource.api.member.model.deleteAccount.DeleteAccountSuccessResponse
 import com.yologger.data.datasource.api.member.model.getBlockingMembers.GetBlockingMembersSuccessResponse
 import com.yologger.data.datasource.api.member.model.getMemberProfile.GetMemberProfileSuccessResponse
 import com.yologger.data.datasource.api.member.model.report.ReportMemberRequest
@@ -38,4 +39,7 @@ interface MemberService {
 
     @POST("/member/report")
     fun report(@Body request: ReportMemberRequest): Call<ReportMemberSuccessResponse>
+
+    @DELETE("/member/delete/{id}")
+    fun deleteAccount(@Path("id") id: Long): Call<DeleteAccountSuccessResponse>
 }

@@ -33,7 +33,7 @@ class HomeViewModel @Inject constructor(
         NETWORK_ERROR,
         CLIENT_ERROR,
         JSON_PARSE_ERROR,
-        NO_POST_EXIST,
+        NO_POSTS_EXIST,
         NO_SESSION
     }
 
@@ -86,7 +86,7 @@ class HomeViewModel @Inject constructor(
                             GetPostsResultError.NETWORK_ERROR -> _liveState.value = State.GetPostsFailure(GetPostsError.NETWORK_ERROR)
                             GetPostsResultError.CLIENT_ERROR, GetPostsResultError.INVALID_PARAMS -> _liveState.value = State.GetPostsFailure(GetPostsError.CLIENT_ERROR)
                             GetPostsResultError.JSON_PARSE_ERROR -> _liveState.value = State.GetPostsFailure(GetPostsError.JSON_PARSE_ERROR)
-                            GetPostsResultError.NO_POST_EXIST -> _liveState.value = State.GetPostsFailure(GetPostsError.NO_POST_EXIST)
+                            GetPostsResultError.NO_POSTS_EXIST -> _liveState.value = State.GetPostsFailure(GetPostsError.NO_POSTS_EXIST)
                             GetPostsResultError.NO_SESSION -> _liveState.value = State.GetPostsFailure(GetPostsError.NO_SESSION)
                         }
                     }

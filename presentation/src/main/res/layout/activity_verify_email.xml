@@ -88,6 +88,7 @@
                     android:enabled="@{viewModel.liveIsEmailValid}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_md"
                     android:onClick="@{() -> viewModel.emailVerificationCode()}"
                     android:text="인증 요청" />
             </LinearLayout>
@@ -116,6 +117,7 @@
                 android:layout_height="wrap_content"
                 android:visibility="@{viewModel.liveHasVerificationAlreadyRequested ? View.VISIBLE : View.GONE}"
                 android:onClick="@{() -> viewModel.confirmVerificationCode()}"
+                android:padding="@dimen/padding_md"
                 android:text="다음" />
         </LinearLayout>
     </LinearLayout>

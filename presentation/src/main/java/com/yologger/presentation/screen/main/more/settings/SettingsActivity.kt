@@ -73,7 +73,7 @@ class SettingsActivity : AppCompatActivity() {
                     val alertDialog = builder
                         .setTitle("정말 탈퇴하시겠어요?")
                         .setMessage("계정을 삭제하면 회원정보, 게시글 등 모든 활동 정보가 삭제됩니다.")
-                        .setPositiveButton("탈퇴하기") { _, _ ->  }
+                        .setPositiveButton("탈퇴하기") { _, _ -> viewModel.deleteUser() }
                         .setNegativeButton("취소") { _, _ -> }
                         .create()
                     alertDialog.show()
@@ -89,15 +89,40 @@ class SettingsActivity : AppCompatActivity() {
     private fun observeViewModel() {
         viewModel.liveState.observe(this) {
             when (it) {
-                is SettingsViewModel.State.SUCCESS -> {
+                is SettingsViewModel.State.LOGOUT_SUCCESS -> {
                     val intent = Intent(this@SettingsActivity, LoginActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 }
-                is SettingsViewModel.State.FAILURE -> {
+                is SettingsViewModel.State.LOGOUT_FAILURE -> {
                     when(it.error) {
-                        SettingsViewModel.Error.NETWORK_ERROR -> showToast("Network Error")
-                        SettingsViewModel.Error.CLIENT_ERROR -> showToast("Client Error")
+                        SettingsViewModel.LogoutError.NETWORK_ERROR -> showToast("Network Error")
+                        SettingsViewModel.LogoutError.CLIENT_ERROR -> showToast("Client Error")
+                    }
+                }
+                is SettingsViewModel.State.DELETE_ACCOUNT_SUCCESS -> {
+                    val intent = Intent(this@SettingsActivity, LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                }
+                is SettingsViewModel.State.DELETE_ACCOUNT_FAILURE -> {
+                    when(it.error) {
+                        SettingsViewModel.DeleteAccountError.NETWORK_ERROR -> showToast("Network Error")
+                        SettingsViewModel.DeleteAccountError.AWS_S3_ERROR -> {
+                            showToast("Network Error")
+                            val intent = Intent(this@SettingsActivity, LoginActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(intent)
+                        }
+                        SettingsViewModel.DeleteAccountError.CLIENT_ERROR -> showToast("Client Error")
+                        SettingsViewModel.DeleteAccountError.INVALID_MEMBER_ID -> showToast("Client Error")
+                        SettingsViewModel.DeleteAccountError.NO_SESSION -> {
+                            val intent = Intent(this@SettingsActivity, LoginActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(intent)
+                        }
+                        SettingsViewModel.DeleteAccountError.JSON_PARSE_ERROR -> showToast("Client Error")
+                        SettingsViewModel.DeleteAccountError.INVALID_PARAMS -> showToast("Client Error")
                     }
                 }
             }
