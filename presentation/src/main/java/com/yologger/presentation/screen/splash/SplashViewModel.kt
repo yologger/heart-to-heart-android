@@ -1,10 +1,10 @@
 package com.yologger.presentation.screen.splash
 
-import com.yologger.domain.usecase.auth.verify_access_token.VerifyAccessTokenResult
-import com.yologger.domain.usecase.auth.verify_access_token.VerifyAccessTokenResultData
-import com.yologger.domain.usecase.auth.verify_access_token.VerifyAccessTokenResultError
-import com.yologger.domain.usecase.auth.verify_access_token.VerifyAccessTokenUseCase
-import com.yologger.presentation.screen.base.BaseViewModel
+import com.yologger.domain.usecase.auth.verifyAccessToken.VerifyAccessTokenResult
+import com.yologger.domain.usecase.auth.verifyAccessToken.VerifyAccessTokenResultData
+import com.yologger.domain.usecase.auth.verifyAccessToken.VerifyAccessTokenResultError
+import com.yologger.domain.usecase.auth.verifyAccessToken.VerifyAccessTokenUseCase
+import com.yologger.presentation.base.BaseViewModel
 import com.yologger.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.kotlin.addTo

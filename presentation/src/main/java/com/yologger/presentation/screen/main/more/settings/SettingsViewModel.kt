@@ -3,7 +3,7 @@ package com.yologger.presentation.screen.main.more.settings
 import com.yologger.domain.usecase.auth.logout.LogoutResult
 import com.yologger.domain.usecase.auth.logout.LogoutResultError
 import com.yologger.domain.usecase.auth.logout.LogoutUseCase
-import com.yologger.presentation.screen.base.BaseViewModel
+import com.yologger.presentation.base.BaseViewModel
 import com.yologger.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.kotlin.addTo

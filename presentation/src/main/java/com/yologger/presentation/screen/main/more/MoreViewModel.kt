@@ -1,13 +1,13 @@
 package com.yologger.presentation.screen.main.more
 
 import android.net.Uri
-import com.yologger.domain.usecase.member.fetch_member_info.FetchMemberInfoResult
-import com.yologger.domain.usecase.member.fetch_member_info.FetchMemberInfoResultError
-import com.yologger.domain.usecase.member.fetch_member_info.FetchMemberInfoUseCase
-import com.yologger.domain.usecase.member.update_avatar.UpdateAvatarResult
-import com.yologger.domain.usecase.member.update_avatar.UpdateAvatarResultError
-import com.yologger.domain.usecase.member.update_avatar.UpdateAvatarUseCase
-import com.yologger.presentation.screen.base.BaseViewModel
+import com.yologger.domain.usecase.member.fetchMemberInfo.FetchMemberInfoResult
+import com.yologger.domain.usecase.member.fetchMemberInfo.FetchMemberInfoResultError
+import com.yologger.domain.usecase.member.fetchMemberInfo.FetchMemberInfoUseCase
+import com.yologger.domain.usecase.member.updateAvatar.UpdateAvatarResult
+import com.yologger.domain.usecase.member.updateAvatar.UpdateAvatarResultError
+import com.yologger.domain.usecase.member.updateAvatar.UpdateAvatarUseCase
+import com.yologger.presentation.base.BaseViewModel
 import com.yologger.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.kotlin.addTo

@@ -2,7 +2,7 @@ package com.yologger.data.datasource.api
 
 import com.google.gson.Gson
 import com.yologger.common.Constant
-import com.yologger.data.datasource.api.auth.model.reissue_token.ReissueTokenSuccessResponse
+import com.yologger.data.datasource.api.auth.model.reissueToken.ReissueTokenSuccessResponse
 import com.yologger.data.datasource.pref.Session
 import com.yologger.data.datasource.pref.SessionStore
 import okhttp3.*

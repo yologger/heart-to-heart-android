@@ -2,11 +2,14 @@ package com.yologger.presentation.screen.main.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.yologger.domain.usecase.post.get_posts.GetPostsResult
-import com.yologger.domain.usecase.post.get_posts.GetPostsResultError
-import com.yologger.domain.usecase.post.get_posts.GetPostsUseCase
-import com.yologger.domain.usecase.post.get_posts.PostData
-import com.yologger.presentation.screen.base.BaseViewModel
+import com.yologger.domain.usecase.member.blockMember.BlockMemberResult
+import com.yologger.domain.usecase.member.blockMember.BlockMemberResultError
+import com.yologger.domain.usecase.member.blockMember.BlockMemberUseCase
+import com.yologger.domain.usecase.post.getPosts.GetPostsResult
+import com.yologger.domain.usecase.post.getPosts.GetPostsResultError
+import com.yologger.domain.usecase.post.getPosts.GetPostsUseCase
+import com.yologger.domain.usecase.post.getPosts.PostData
+import com.yologger.presentation.base.BaseViewModel
 import com.yologger.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.kotlin.addTo
@@ -15,20 +18,33 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getPostsUseCase: GetPostsUseCase
+    private val getPostsUseCase: GetPostsUseCase,
+    private val blockMemberUseCase: BlockMemberUseCase
 ) : BaseViewModel() {
 
     sealed class State {
-        object Success: State()
-        data class Failure(val error: Error): State()
+        object GetPostsSuccess: State()
+        data class GetPostsFailure(val error: GetPostsError): State()
+        object BlockMemberSuccess: State()
+        data class BlockMemberFailure(val error: BlockMemberError): State()
     }
 
-    enum class Error {
+    enum class GetPostsError {
         NETWORK_ERROR,
         CLIENT_ERROR,
         JSON_PARSE_ERROR,
         NO_POST_EXIST,
         NO_SESSION
+    }
+
+    enum class BlockMemberError {
+        CLIENT_ERROR,
+        NETWORK_ERROR,
+        INVALID_PARAMS,
+        JSON_PARSE_ERROR,
+        NO_SESSION,
+        INVALID_MEMBER_ID,
+        ALREADY_BLOCKING
     }
     
     private var page = 0
@@ -67,11 +83,11 @@ class HomeViewModel @Inject constructor(
                     }
                     is GetPostsResult.Failure -> {
                         when(it.error) {
-                            GetPostsResultError.NETWORK_ERROR -> _liveState.value = State.Failure(Error.NETWORK_ERROR)
-                            GetPostsResultError.CLIENT_ERROR, GetPostsResultError.INVALID_PARAMS -> _liveState.value = State.Failure(Error.CLIENT_ERROR)
-                            GetPostsResultError.JSON_PARSE_ERROR -> _liveState.value = State.Failure(Error.JSON_PARSE_ERROR)
-                            GetPostsResultError.NO_POST_EXIST -> _liveState.value = State.Failure(Error.NO_POST_EXIST)
-                            GetPostsResultError.NO_SESSION -> _liveState.value = State.Failure(Error.NO_SESSION)
+                            GetPostsResultError.NETWORK_ERROR -> _liveState.value = State.GetPostsFailure(GetPostsError.NETWORK_ERROR)
+                            GetPostsResultError.CLIENT_ERROR, GetPostsResultError.INVALID_PARAMS -> _liveState.value = State.GetPostsFailure(GetPostsError.CLIENT_ERROR)
+                            GetPostsResultError.JSON_PARSE_ERROR -> _liveState.value = State.GetPostsFailure(GetPostsError.JSON_PARSE_ERROR)
+                            GetPostsResultError.NO_POST_EXIST -> _liveState.value = State.GetPostsFailure(GetPostsError.NO_POST_EXIST)
+                            GetPostsResultError.NO_SESSION -> _liveState.value = State.GetPostsFailure(GetPostsError.NO_SESSION)
                         }
                     }
                 }
@@ -89,5 +105,26 @@ class HomeViewModel @Inject constructor(
 
     fun addPost(post: PostData) {
         reloadData()
+    }
+
+    fun blockMember(memberId: Long) {
+        val params = BlockMemberUseCase.Params(memberId = memberId)
+        blockMemberUseCase.execute(params)
+            .subscribeBy {
+                when(it) {
+                    is BlockMemberResult.Success -> _liveState.value = State.BlockMemberSuccess
+                    is BlockMemberResult.Failure -> {
+                        when(it.error) {
+                            BlockMemberResultError.NETWORK_ERROR -> _liveState.value = State.BlockMemberFailure(BlockMemberError.NETWORK_ERROR)
+                            BlockMemberResultError.JSON_PARSE_ERROR -> _liveState.value = State.BlockMemberFailure(BlockMemberError.JSON_PARSE_ERROR)
+                            BlockMemberResultError.CLIENT_ERROR -> _liveState.value = State.BlockMemberFailure(BlockMemberError.CLIENT_ERROR)
+                            BlockMemberResultError.NO_SESSION -> _liveState.value = State.BlockMemberFailure(BlockMemberError.NO_SESSION)
+                            BlockMemberResultError.INVALID_PARAMS -> _liveState.value = State.BlockMemberFailure(BlockMemberError.INVALID_PARAMS)
+                            BlockMemberResultError.ALREADY_BLOCKING -> _liveState.value = State.BlockMemberFailure(BlockMemberError.ALREADY_BLOCKING)
+                            BlockMemberResultError.INVALID_MEMBER_ID -> State.BlockMemberFailure(BlockMemberError.INVALID_MEMBER_ID)
+                        }
+                    }
+                }
+            }.addTo(disposables)
     }
 }

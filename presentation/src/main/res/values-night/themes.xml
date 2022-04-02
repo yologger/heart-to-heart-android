@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@drawable/splash_screen_dark</item>
+        <item name="android:windowBackground">@drawable/screen_splash_dark</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/light_black</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>

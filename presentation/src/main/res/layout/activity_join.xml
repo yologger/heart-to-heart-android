@@ -75,7 +75,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@={viewModel.liveName}"
-                    android:onTextChanged="@{viewModel.onTextFieldNameChanged}"
+                    android:onTextChanged="@{viewModel::onTextFieldNameChanged}"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
@@ -92,7 +92,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@={viewModel.liveNickname}"
-                    android:onTextChanged="@{viewModel.onTextFieldNicknameChanged}"
+                    android:onTextChanged="@{viewModel::onTextFieldNicknameChanged}"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
@@ -109,7 +109,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@={viewModel.livePassword}"
-                    android:onTextChanged="@{viewModel.onTextFieldPasswordChanged}"
+                    android:onTextChanged="@{viewModel::onTextFieldPasswordChanged}"
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 

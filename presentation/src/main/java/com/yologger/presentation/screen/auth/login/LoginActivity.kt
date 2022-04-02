@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import com.yologger.presentation.R
 import com.yologger.presentation.component.LoadingDialog
 import com.yologger.presentation.databinding.ActivityLoginBinding
-import com.yologger.presentation.screen.auth.verify_email.VerifyEmailActivity
+import com.yologger.presentation.screen.auth.verifyEmail.VerifyEmailActivity
 import com.yologger.presentation.screen.main.MainActivity
 import com.yologger.presentation.util.showToast
 import dagger.hilt.android.AndroidEntryPoint

@@ -1,17 +1,17 @@
 package com.yologger.data.datasource.api.auth
 
-import com.yologger.data.datasource.api.auth.model.confirm_verification_code.ConfirmVerificationCodeRequest
-import com.yologger.data.datasource.api.auth.model.confirm_verification_code.ConfirmVerificationCodeSuccessResponse
-import com.yologger.data.datasource.api.auth.model.email_verification_code.EmailVerificationCodeRequest
-import com.yologger.data.datasource.api.auth.model.email_verification_code.EmailVerificationCodeSuccessResponse
+import com.yologger.data.datasource.api.auth.model.confirmVerificationCode.ConfirmVerificationCodeRequest
+import com.yologger.data.datasource.api.auth.model.confirmVerificationCode.ConfirmVerificationCodeSuccessResponse
+import com.yologger.data.datasource.api.auth.model.emailVerificationCode.EmailVerificationCodeRequest
+import com.yologger.data.datasource.api.auth.model.emailVerificationCode.EmailVerificationCodeSuccessResponse
 import com.yologger.data.datasource.api.auth.model.join.JoinRequest
 import com.yologger.data.datasource.api.auth.model.join.JoinSuccessResponse
 import com.yologger.data.datasource.api.auth.model.login.LoginRequest
 import com.yologger.data.datasource.api.auth.model.login.LoginSuccessResponse
 import com.yologger.data.datasource.api.auth.model.logout.LogoutResponse
-import com.yologger.data.datasource.api.auth.model.reissue_token.ReissueTokenRequest
-import com.yologger.data.datasource.api.auth.model.reissue_token.ReissueTokenSuccessResponse
-import com.yologger.data.datasource.api.auth.model.verify_access_token.VerifyAccessTokenSuccessResponse
+import com.yologger.data.datasource.api.auth.model.reissueToken.ReissueTokenRequest
+import com.yologger.data.datasource.api.auth.model.reissueToken.ReissueTokenSuccessResponse
+import com.yologger.data.datasource.api.auth.model.verifyAccessToken.VerifyAccessTokenSuccessResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
