@@ -6,6 +6,12 @@
 ## Prerequisite
 `Heart to Heart`은 서버 환경 구성이 필요합니다. 서버 어플리케이션은 [이 곳](https://github.com/yologger/heart-to-heart-api)에서 확인할 수 있습니다.
 
+## Download
+`Heart to Heart`를 구글 플레이스토어에서 다운받을 수 있습니다.
+
+<br />
+<a href='https://play.google.com/store/apps/details?id=com.yologger.heart_to_heart'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width="280"/></a>
+
 ## Screenshots
 
 `이메일 인증`, `회원가입`
@@ -90,4 +96,4 @@
 - [x] 테스트 환경 - `GitHub Actions`, `Firebase App Distribution`을 통한 CI/CD pipeline 구축  
 - [x] 운영 환경 - `GitHub Actions`, `Google Play Console`을 통한 CI/CD pipeline 구축
 - [ ] 다국어 지원 적용
-- [ ] 다크 테마 구현
+- [ ] 다크 테마 지원
