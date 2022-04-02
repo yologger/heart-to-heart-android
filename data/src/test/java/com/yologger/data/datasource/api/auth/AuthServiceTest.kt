@@ -3,8 +3,8 @@ package com.yologger.data.datasource.api.auth
 import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
 import com.yologger.data.datasource.api.auth.model.confirmVerificationCode.ConfirmVerificationCodeRequest
-import com.yologger.data.datasource.api.auth.model.emailVerificationCode.EmailVerificationCodeFailureResponseCode
 import com.yologger.data.datasource.api.auth.model.emailVerificationCode.EmailVerificationCodeFailureResponse
+import com.yologger.data.datasource.api.auth.model.emailVerificationCode.EmailVerificationCodeFailureResponseCode
 import com.yologger.data.datasource.api.auth.model.emailVerificationCode.EmailVerificationCodeRequest
 import com.yologger.data.datasource.api.auth.model.join.JoinRequest
 import com.yologger.data.datasource.api.auth.model.login.LoginRequest
@@ -217,6 +217,7 @@ class AuthServiceTest {
     }
 
     @Test
+    @Ignore
     fun `reissueToken`() {
         // Given
         val okHttpClient = OkHttpClient.Builder()

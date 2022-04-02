@@ -2,6 +2,7 @@ package com.yologger.data.datasource.api.member
 
 import com.google.common.truth.Truth.assertThat
 import okhttp3.OkHttpClient
+import org.junit.Ignore
 import org.junit.Test
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -11,6 +12,7 @@ class MemberServiceTest {
     private lateinit var memberService: MemberService
 
     @Test
+    @Ignore
     fun `test getMemberInfo success response`() {
         val okHttpClient = OkHttpClient.Builder()
             .build()
