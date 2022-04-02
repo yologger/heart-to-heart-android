@@ -37,6 +37,7 @@
         <entry key="presentation/src/main/res/drawable/icon_settings_filled_black_24.xml" value="0.28" />
         <entry key="presentation/src/main/res/drawable/icon_settings_outlined_black_24.xml" value="0.28" />
         <entry key="presentation/src/main/res/drawable/icon_settings_outlined_white_24.xml" value="0.18" />
+        <entry key="presentation/src/main/res/drawable/icon_toggle_24_filled_close.xml" value="0.1455" />
         <entry key="presentation/src/main/res/drawable/icon_toggle_24_filled_more_vertical.xml" value="0.1455" />
         <entry key="presentation/src/main/res/drawable/logo_background_dark.xml" value="0.174" />
         <entry key="presentation/src/main/res/drawable/logo_background_light.xml" value="0.174" />
@@ -50,9 +51,9 @@
         <entry key="presentation/src/main/res/drawable/splash_screen_dark.xml" value="0.174" />
         <entry key="presentation/src/main/res/drawable/splash_screen_light.xml" value="0.174" />
         <entry key="presentation/src/main/res/layout/activity_block_user.xml" value="0.30185185185185187" />
-        <entry key="presentation/src/main/res/layout/activity_find_password.xml" value="0.39692307692307693" />
+        <entry key="presentation/src/main/res/layout/activity_find_password.xml" value="0.22870370370370371" />
         <entry key="presentation/src/main/res/layout/activity_follow.xml" value="0.3645833333333333" />
-        <entry key="presentation/src/main/res/layout/activity_handle_blocked_users.xml" value="0.30185185185185187" />
+        <entry key="presentation/src/main/res/layout/activity_handle_blocked_users.xml" value="0.22870370370370371" />
         <entry key="presentation/src/main/res/layout/activity_handle_blocked_users_item.xml" value="0.1675925925925926" />
         <entry key="presentation/src/main/res/layout/activity_join.xml" value="0.25" />
         <entry key="presentation/src/main/res/layout/activity_login.xml" value="0.25" />
@@ -62,6 +63,7 @@
         <entry key="presentation/src/main/res/layout/activity_report_user.xml" value="0.30185185185185187" />
         <entry key="presentation/src/main/res/layout/activity_settings.xml" value="0.2796296296296296" />
         <entry key="presentation/src/main/res/layout/activity_settings_item.xml" value="0.2916666666666667" />
+        <entry key="presentation/src/main/res/layout/activity_show_my_post.xml" value="0.2935185185185185" />
         <entry key="presentation/src/main/res/layout/activity_show_version.xml" value="0.4296875" />
         <entry key="presentation/src/main/res/layout/activity_splash.xml" value="0.18703703703703703" />
         <entry key="presentation/src/main/res/layout/activity_theme.xml" value="0.3453125" />
@@ -87,6 +89,11 @@
         <entry key="presentation/src/main/res/layout/fragment_settings_item.xml" value="0.3104166666666667" />
         <entry key="presentation/src/main/res/layout/fragment_verify_email.xml" value="0.39351851851851855" />
         <entry key="presentation/src/main/res/layout/item_activity_handle_blocked_users_user.xml" value="0.2564814814814815" />
+        <entry key="presentation/src/main/res/layout/item_activity_register_post_selected_image.xml" value="0.3109375" />
+        <entry key="presentation/src/main/res/layout/item_activity_settings.xml" value="0.3109375" />
+        <entry key="presentation/src/main/res/layout/item_activity_show_my_posts_loading.xml" value="0.2935185185185185" />
+        <entry key="presentation/src/main/res/layout/item_activity_show_my_posts_post.xml" value="0.2935185185185185" />
+        <entry key="presentation/src/main/res/layout/item_activity_theme.xml" value="0.3109375" />
         <entry key="presentation/src/main/res/layout/item_fragment_follower.xml" value="0.28177083333333336" />
         <entry key="presentation/src/main/res/layout/item_fragment_following.xml" value="0.28177083333333336" />
         <entry key="presentation/src/main/res/layout/item_fragment_home_post.xml" value="0.28177083333333336" />

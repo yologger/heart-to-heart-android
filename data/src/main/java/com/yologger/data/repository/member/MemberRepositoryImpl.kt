@@ -8,6 +8,8 @@ import com.yologger.data.datasource.api.member.MemberService
 import com.yologger.data.datasource.api.member.model.block.BlockMemberFailureResponse
 import com.yologger.data.datasource.api.member.model.block.BlockMemberFailureResponseCode
 import com.yologger.data.datasource.api.member.model.block.BlockMemberRequest
+import com.yologger.data.datasource.api.member.model.deleteAccount.DeleteAccountFailureResponse
+import com.yologger.data.datasource.api.member.model.deleteAccount.DeleteAccountFailureResponseCode
 import com.yologger.data.datasource.api.member.model.getBlockingMembers.GetBlockingMembersFailureResponse
 import com.yologger.data.datasource.api.member.model.getBlockingMembers.GetBlockingMembersFailureResponseCode
 import com.yologger.data.datasource.api.member.model.getMemberProfile.GetMemberProfileFailureResponse
@@ -25,6 +27,8 @@ import com.yologger.data.util.FileUtil
 import com.yologger.domain.repository.MemberRepository
 import com.yologger.domain.usecase.member.blockMember.BlockMemberResult
 import com.yologger.domain.usecase.member.blockMember.BlockMemberResultError
+import com.yologger.domain.usecase.member.deleteAccount.DeleteAccountResult
+import com.yologger.domain.usecase.member.deleteAccount.DeleteAccountResultError
 import com.yologger.domain.usecase.member.fetchMemberInfo.FetchMemberInfoResult
 import com.yologger.domain.usecase.member.fetchMemberInfo.FetchMemberInfoResultError
 import com.yologger.domain.usecase.member.getBlockingMembers.GetBlockingMembersResult
@@ -285,6 +289,39 @@ class MemberRepositoryImpl @Inject constructor(
             }
         } ?: run {
             return UnblockMemberResult.Failure(UnblockMemberResultError.NO_SESSION)
+        }
+    }
+
+    override fun deleteAccount(): DeleteAccountResult {
+        sessionStore.getSession()?.let { session ->
+            try {
+                val response = memberService.deleteAccount(session.memberId).execute()
+                return if (response.isSuccessful) {
+                    sessionStore.deleteSession()
+                    DeleteAccountResult.Success
+                } else {
+                    val failureResponse = gson.fromJson(response.errorBody()!!.string(), DeleteAccountFailureResponse::class.java)
+                    when(failureResponse.code) {
+                        DeleteAccountFailureResponseCode.AWS_S3_ERROR -> {
+                            sessionStore.deleteSession()
+                            DeleteAccountResult.Failure(DeleteAccountResultError.AWS_S3_ERROR)
+                        }
+                        DeleteAccountFailureResponseCode.NO_ACCESS_TOKEN_IN_LOCAL, DeleteAccountFailureResponseCode.INVALID_REFRESH_TOKEN, DeleteAccountFailureResponseCode.EXPIRED_REFRESH_TOKEN -> {
+                            sessionStore.deleteSession()
+                            DeleteAccountResult.Failure(DeleteAccountResultError.NO_SESSION)
+                        }
+                        else -> DeleteAccountResult.Failure(DeleteAccountResultError.NETWORK_ERROR)
+                    }
+                }
+            } catch (e: JsonParseException) {
+                e.printStackTrace()
+                return DeleteAccountResult.Failure(DeleteAccountResultError.JSON_PARSE_ERROR)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                return DeleteAccountResult.Failure(DeleteAccountResultError.NETWORK_ERROR)
+            }
+        } ?: run {
+            return DeleteAccountResult.Failure(DeleteAccountResultError.NO_SESSION)
         }
     }
 }

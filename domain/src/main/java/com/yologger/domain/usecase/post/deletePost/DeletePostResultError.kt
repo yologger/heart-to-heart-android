@@ -1,6 +1,6 @@
-package com.yologger.domain.usecase.post.getPosts
+package com.yologger.domain.usecase.post.deletePost
 
-enum class GetPostsResultError {
+enum class DeletePostResultError {
     // Common Error
     NETWORK_ERROR,
     CLIENT_ERROR,
@@ -9,5 +9,6 @@ enum class GetPostsResultError {
     JSON_PARSE_ERROR,
 
     // Business Error
-    NO_POSTS_EXIST
+    NO_POST_EXIST,
+    FILE_UPLOAD_ERROR
 }

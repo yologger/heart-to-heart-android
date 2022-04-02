@@ -8,12 +8,16 @@ import javax.inject.Inject
 class GetPostsUseCase @Inject constructor(
     private val postRepository: PostRepository
 ) : ObservableUseCase<GetPostsUseCase.Params, GetPostsResult>() {
-    data class Params(val page: Int, val size: Int)
+    data class Params(val postId: Long?, val page: Int, val size: Int)
 
     override fun call(params: Params?): Observable<GetPostsResult> {
-        return params?.let {
+        return params?.let { _params ->
             Observable.create { emitter ->
-                emitter.onNext(postRepository.getPosts(size = it.size, page = it.page))
+                _params.postId?.let { _postId ->
+                    emitter.onNext(postRepository.getPosts(id = _postId, size = _params.size, page = _params.page))
+                } ?: run {
+                    emitter.onNext(postRepository.getPosts(id = null, size = _params.size, page = _params.page))
+                }
             }
         } ?: run {
             Observable.just(GetPostsResult.Failure(GetPostsResultError.CLIENT_ERROR))

@@ -85,6 +85,8 @@
 - [x] 이메일 인증 기반 회원가입 구현
 - [x] OAuth2, JWT(Access Token, Refresh Token) 기반 로그인 구현
 - [x] `Infinite Scrolling` 구현
+- [x] 내 글 보기 구현
+- [x] 글 삭제 구현  
 - [ ] 팔로잉, 팔로우 구현
 - [ ] 비밀번호 찾기 구현
 - [ ] 비밀번호 변경하기 구현

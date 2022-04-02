@@ -16,6 +16,7 @@ import com.yologger.presentation.databinding.FragmentMoreBinding
 import com.yologger.presentation.screen.auth.login.LoginActivity
 import com.yologger.presentation.screen.main.more.follow.FollowActivity
 import com.yologger.presentation.screen.main.more.settings.SettingsActivity
+import com.yologger.presentation.screen.main.more.showMyPosts.ShowMyPostsActivity
 import com.yologger.presentation.util.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import gun0912.tedimagepicker.builder.TedImagePicker
@@ -78,7 +79,8 @@ class MoreFragment : Fragment() {
         }
 
         binding.buttonPost.setOnClickListener {
-            // show my posts
+            val intent = Intent(requireContext(), ShowMyPostsActivity::class.java)
+            startActivity(intent)
         }
         binding.buttonFollower.setOnClickListener {
             val intent = Intent(requireContext(), FollowActivity::class.java)

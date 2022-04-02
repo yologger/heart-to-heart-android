@@ -1,13 +1,13 @@
-package com.yologger.presentation.screen.main.home
+package com.yologger.presentation.screen.main.more.showMyPosts
 
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
-class InfiniteScrollListener(
+class MyPostsInfiniteScrollListener(
     private val layoutManager: RecyclerView.LayoutManager,
-    private val viewModel: HomeViewModel
+    private val viewModel: ShowMyPostsViewModel
 ): RecyclerView.OnScrollListener() {
 
     private var totalItemCount: Int = 0

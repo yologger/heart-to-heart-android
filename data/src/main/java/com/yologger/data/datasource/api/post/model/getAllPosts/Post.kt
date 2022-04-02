@@ -1,7 +1,7 @@
-package com.yologger.data.datasource.api.post.model.getPosts
+package com.yologger.data.datasource.api.post.model.getAllPosts
 
 import com.google.gson.annotations.SerializedName
-import com.yologger.domain.usecase.post.getPosts.PostData
+import com.yologger.domain.usecase.post.getAllPosts.PostData
 
 data class Post constructor(
     @SerializedName("id") val id: Long,

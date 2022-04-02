@@ -4,6 +4,9 @@
 
     <application android:theme="@style/AppTheme">
         <activity
+            android:name=".screen.main.more.showMyPosts.ShowMyPostsActivity"
+            android:exported="false" />
+        <activity
             android:name=".screen.main.home.userDetail.reportUser.ReportUserActivity"
             android:exported="false" />
         <activity
@@ -11,9 +14,6 @@
             android:exported="false" />
         <activity
             android:name=".screen.main.more.settings.handleBlockedUsers.HandleBlockedUsersActivity"
-            android:exported="false" />
-        <activity
-            android:name=".screen.main.more.settings.handleBlockedUsers.HandleBlockedUsers"
             android:exported="false" />
         <activity
             android:name=".screen.main.home.userDetail.UserDetailActivity"
@@ -29,9 +29,6 @@
             android:exported="false" />
         <activity
             android:name=".screen.main.home.registerPost.RegisterPostActivity"
-            android:exported="false" />
-        <activity
-            android:name=".screen.main.settings.theme.ThemeActivity"
             android:exported="false" />
         <activity
             android:name=".screen.auth.verifyEmail.VerifyEmailActivity"

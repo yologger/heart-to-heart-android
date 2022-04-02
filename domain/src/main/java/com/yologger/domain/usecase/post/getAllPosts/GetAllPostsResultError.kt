@@ -1,6 +1,6 @@
-package com.yologger.domain.usecase.post.getPosts
+package com.yologger.domain.usecase.post.getAllPosts
 
-enum class GetPostsResultError {
+enum class GetAllPostsResultError {
     // Common Error
     NETWORK_ERROR,
     CLIENT_ERROR,

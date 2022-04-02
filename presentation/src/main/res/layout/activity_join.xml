@@ -118,6 +118,7 @@
                 android:id="@+id/buttonJoin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="@dimen/padding_md"
                 android:onClick="@{() -> viewModel.join()}"
                 android:text="회원가입" />
 

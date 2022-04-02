@@ -3,7 +3,7 @@ package com.yologger.presentation.screen.main.home.registerPost
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.yologger.domain.usecase.post.getPosts.PostData
+import com.yologger.domain.usecase.post.getAllPosts.PostData
 import com.yologger.domain.usecase.post.registerPost.RegisterPostResult
 import com.yologger.domain.usecase.post.registerPost.RegisterPostResultError
 import com.yologger.domain.usecase.post.registerPost.RegisterPostUseCase

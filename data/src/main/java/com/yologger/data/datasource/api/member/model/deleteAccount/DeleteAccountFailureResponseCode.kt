@@ -1,8 +1,8 @@
-package com.yologger.data.datasource.api.post.model.getPosts
+package com.yologger.data.datasource.api.member.model.deleteAccount
 
 import com.google.gson.annotations.SerializedName
 
-enum class GetPostsFailureResponseCode {
+enum class DeleteAccountFailureResponseCode {
     // Common Error
     @SerializedName("GLOBAL_001") NOT_FOUND,
     @SerializedName("GLOBAL_002") INVALID_INPUT_VALUE,
@@ -12,5 +12,6 @@ enum class GetPostsFailureResponseCode {
     @SerializedName("AUTH_008") EXPIRED_REFRESH_TOKEN,
 
     // Business Error
-    @SerializedName("POST_003") NO_POSTS_EXIST,
+    @SerializedName("MEMBER_005") INVALID_MEMBER_ID,
+    @SerializedName("MEMBER_007") AWS_S3_ERROR,
 }

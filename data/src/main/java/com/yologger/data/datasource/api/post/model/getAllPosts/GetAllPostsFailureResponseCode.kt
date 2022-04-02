@@ -1,8 +1,8 @@
-package com.yologger.data.datasource.api.post.model.getPosts
+package com.yologger.data.datasource.api.post.model.getAllPosts
 
 import com.google.gson.annotations.SerializedName
 
-enum class GetPostsFailureResponseCode {
+enum class GetAllPostsFailureResponseCode {
     // Common Error
     @SerializedName("GLOBAL_001") NOT_FOUND,
     @SerializedName("GLOBAL_002") INVALID_INPUT_VALUE,
