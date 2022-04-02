@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ouattararomuald.slider.SliderAdapter
 import com.ouattararomuald.slider.loaders.glide.GlideImageLoaderFactory
-import com.yologger.domain.usecase.post.getPosts.PostData
+import com.yologger.domain.usecase.post.getAllPosts.PostData
 import com.yologger.presentation.R
 import com.yologger.presentation.databinding.ItemFragmentHomePostBinding
 

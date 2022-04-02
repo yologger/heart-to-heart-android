@@ -1,4 +1,4 @@
-package com.yologger.domain.usecase.post.getPosts
+package com.yologger.domain.usecase.post.getAllPosts
 
 import java.io.Serializable
 

@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.yologger.domain.usecase.post.getPosts.PostData
+import com.yologger.domain.usecase.post.getAllPosts.PostData
 import com.yologger.presentation.R
 import com.yologger.presentation.databinding.FragmentHomeBinding
 import com.yologger.presentation.screen.auth.login.LoginActivity
@@ -157,7 +157,7 @@ class HomeFragment : Fragment() {
         val layoutManager = LinearLayoutManager(requireActivity())
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.addOnScrollListener(InfiniteScrollListener(layoutManager, viewModel))
+        binding.recyclerView.addOnScrollListener(PostsInfiniteScrollListener(layoutManager, viewModel))
 
         val decoration = DividerItemDecoration(requireContext(), layoutManager.orientation)
         binding.recyclerView.addItemDecoration(decoration)

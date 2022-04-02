@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import com.yologger.domain.usecase.member.blockMember.BlockMemberResult
 import com.yologger.domain.usecase.member.blockMember.BlockMemberResultError
 import com.yologger.domain.usecase.member.blockMember.BlockMemberUseCase
-import com.yologger.domain.usecase.post.getPosts.GetPostsResult
-import com.yologger.domain.usecase.post.getPosts.GetPostsResultError
-import com.yologger.domain.usecase.post.getPosts.GetPostsUseCase
-import com.yologger.domain.usecase.post.getPosts.PostData
+import com.yologger.domain.usecase.post.getAllPosts.GetAllPostsResult
+import com.yologger.domain.usecase.post.getAllPosts.GetAllPostsResultError
+import com.yologger.domain.usecase.post.getAllPosts.GetAllPostsUseCase
+import com.yologger.domain.usecase.post.getAllPosts.PostData
 import com.yologger.presentation.base.BaseViewModel
 import com.yologger.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getPostsUseCase: GetPostsUseCase,
+    private val getAllPostsUseCase: GetAllPostsUseCase,
     private val blockMemberUseCase: BlockMemberUseCase
 ) : BaseViewModel() {
 
@@ -69,25 +69,25 @@ class HomeViewModel @Inject constructor(
         if (!hasMore) { return }
         _liveIsLoading.value = true
         
-        val params = GetPostsUseCase.Params(size = size, page = page)
-        getPostsUseCase.execute(params)
+        val params = GetAllPostsUseCase.Params(size = size, page = page)
+        getAllPostsUseCase.execute(params)
             .take(1)
             .subscribeBy {
                 _liveIsLoading.value = false
                 when (it) {
-                    is GetPostsResult.Success -> {
+                    is GetAllPostsResult.Success -> {
                         posts.addAll(it.data.posts)
                         hasMore = it.data.posts.size == size
                         _livePosts.value = posts
                         page += 1
                     }
-                    is GetPostsResult.Failure -> {
+                    is GetAllPostsResult.Failure -> {
                         when(it.error) {
-                            GetPostsResultError.NETWORK_ERROR -> _liveState.value = State.GetPostsFailure(GetPostsError.NETWORK_ERROR)
-                            GetPostsResultError.CLIENT_ERROR, GetPostsResultError.INVALID_PARAMS -> _liveState.value = State.GetPostsFailure(GetPostsError.CLIENT_ERROR)
-                            GetPostsResultError.JSON_PARSE_ERROR -> _liveState.value = State.GetPostsFailure(GetPostsError.JSON_PARSE_ERROR)
-                            GetPostsResultError.NO_POSTS_EXIST -> _liveState.value = State.GetPostsFailure(GetPostsError.NO_POSTS_EXIST)
-                            GetPostsResultError.NO_SESSION -> _liveState.value = State.GetPostsFailure(GetPostsError.NO_SESSION)
+                            GetAllPostsResultError.NETWORK_ERROR -> _liveState.value = State.GetPostsFailure(GetPostsError.NETWORK_ERROR)
+                            GetAllPostsResultError.CLIENT_ERROR, GetAllPostsResultError.INVALID_PARAMS -> _liveState.value = State.GetPostsFailure(GetPostsError.CLIENT_ERROR)
+                            GetAllPostsResultError.JSON_PARSE_ERROR -> _liveState.value = State.GetPostsFailure(GetPostsError.JSON_PARSE_ERROR)
+                            GetAllPostsResultError.NO_POSTS_EXIST -> _liveState.value = State.GetPostsFailure(GetPostsError.NO_POSTS_EXIST)
+                            GetAllPostsResultError.NO_SESSION -> _liveState.value = State.GetPostsFailure(GetPostsError.NO_SESSION)
                         }
                     }
                 }

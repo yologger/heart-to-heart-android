@@ -1,6 +1,7 @@
 package com.yologger.data.datasource.api.post
 
-import com.yologger.data.datasource.api.post.model.getPosts.GetPostsSuccessResponse
+import com.yologger.data.datasource.api.post.model.deletePost.DeletePostSuccessResponse
+import com.yologger.data.datasource.api.post.model.getAllPosts.GetAllPostsSuccessResponse
 import com.yologger.data.datasource.api.post.model.registerPost.RegisterPostSuccessResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -18,9 +19,19 @@ interface PostService {
     ): Call<RegisterPostSuccessResponse>
 
     @GET("/post/posts")
-    fun getPosts(
+    fun getAllPosts(
         @Query("member_id") memberId: Long,
         @Query("page") page: Int,
         @Query("size") size: Int
-    ): Call<GetPostsSuccessResponse>
+    ): Call<GetAllPostsSuccessResponse>
+
+    @GET("/post/posts/{id}")
+    fun getPosts(
+        @Path("id") id: Long,
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): Call<GetAllPostsSuccessResponse>
+
+    @DELETE("/post/delete/{id}")
+    fun deletePost(@Path("id") id: Long): Call<DeletePostSuccessResponse>
 }
