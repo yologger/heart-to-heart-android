@@ -10,6 +10,7 @@ import com.yologger.presentation.R
 import com.yologger.presentation.component.LoadingDialog
 import com.yologger.presentation.databinding.ActivityVerifyEmailBinding
 import com.yologger.presentation.screen.auth.join.JoinActivity
+import com.yologger.presentation.screen.auth.login.LoginActivity
 import com.yologger.presentation.util.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,7 +41,9 @@ class VerifyEmailActivity : AppCompatActivity() {
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.menu_activity_verify_email_toolbar_action_close -> {
-                    finish()
+                    val intent = Intent(this@VerifyEmailActivity, LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
                     true
                 }
             }

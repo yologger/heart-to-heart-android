@@ -21,6 +21,8 @@ object Versions {
     const val GLIDE = "4.12.0"
     const val SLIDER_GLIDE = "3.0.1"
     const val GUAVA = "27.0.1-android"
+    const val MARKWON = "4.6.2"
+    const val CIRCLE_IMAGE_VIEW = "3.1.0"
 }
 
 object TestVersions {
