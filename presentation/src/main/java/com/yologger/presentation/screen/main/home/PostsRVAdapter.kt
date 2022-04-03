@@ -18,6 +18,7 @@ import com.yologger.presentation.databinding.ItemFragmentHomePostBinding
 class PostsRVAdapter constructor(
     private val context: Context,
     private var posts: MutableList<PostData?> = mutableListOf(),
+    private var meId: Long? = null,
     private val onUserInfoClicked: (memberId: Long) -> Unit,
     private val onReported: (memberId: Long) -> Unit,
     private val onBlocked: (memberId: Long) -> Unit
@@ -50,33 +51,40 @@ class PostsRVAdapter constructor(
                 binding.imageSlider.visibility = View.VISIBLE
                 binding.imageSlider.adapter = SliderAdapter(context = context, GlideImageLoaderFactory(), imageUrls = post.imageUrls!!)
             }
-            binding.viewUserInfo.setOnClickListener {
-                posts[adapterPosition]?.let { postData ->
-                    onUserInfoClicked(postData.writerId)
-                }
-            }
-            binding.buttonMore.setOnClickListener { view ->
-                val popup = PopupMenu(context, view)
-                val inflater: MenuInflater = popup.menuInflater
-                inflater.inflate(R.menu.menu_fragment_home_popup, popup.menu)
-                popup.setOnMenuItemClickListener {
-                    when(it.itemId) {
-                        R.id.menu_fragment_home_popup_action_report -> {
-                            posts[adapterPosition]?.let { postData ->
-                                onReported(postData.writerId)
-                            }
-                            return@setOnMenuItemClickListener true
+            posts[adapterPosition]?.let { postData ->
+                meId?.let { id ->
+                    if (postData.writerId != id) {
+                        binding.viewUserInfo.setOnClickListener {
+                            onUserInfoClicked(postData.writerId)
                         }
-                        R.id.menu_fragment_home_popup_action_block -> {
-                            posts[adapterPosition]?.let { postData ->
-                                onBlocked(postData.writerId)
+                        binding.buttonMore.visibility = View.VISIBLE
+                        binding.buttonMore.setOnClickListener { view ->
+                            val popup = PopupMenu(context, view)
+                            val inflater: MenuInflater = popup.menuInflater
+                            inflater.inflate(R.menu.menu_fragment_home_popup, popup.menu)
+                            popup.setOnMenuItemClickListener {
+                                when(it.itemId) {
+                                    R.id.menu_fragment_home_popup_action_report -> {
+                                        posts[adapterPosition]?.let { postData ->
+                                            onReported(postData.writerId)
+                                        }
+                                        return@setOnMenuItemClickListener true
+                                    }
+                                    R.id.menu_fragment_home_popup_action_block -> {
+                                        posts[adapterPosition]?.let { postData ->
+                                            onBlocked(postData.writerId)
+                                        }
+                                        return@setOnMenuItemClickListener true
+                                    }
+                                    else -> return@setOnMenuItemClickListener false
+                                }
                             }
-                            return@setOnMenuItemClickListener true
+                            popup.show()
                         }
-                        else -> return@setOnMenuItemClickListener false
+                    } else {
+                        binding.buttonMore.visibility = View.GONE
                     }
                 }
-                popup.show()
             }
         }
     }
@@ -133,5 +141,9 @@ class PostsRVAdapter constructor(
             posts.removeAt(posts.size - 1)
             notifyItemRemoved(posts.size)
         }
+    }
+
+    fun setMeId(id: Long) {
+        this.meId = id
     }
 }

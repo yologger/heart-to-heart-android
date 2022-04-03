@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import com.yologger.domain.usecase.member.blockMember.BlockMemberResult
 import com.yologger.domain.usecase.member.blockMember.BlockMemberResultError
 import com.yologger.domain.usecase.member.blockMember.BlockMemberUseCase
+import com.yologger.domain.usecase.member.getMeId.GetMeIdResult
+import com.yologger.domain.usecase.member.getMeId.GetMeIdUseCase
 import com.yologger.domain.usecase.post.getAllPosts.GetAllPostsResult
 import com.yologger.domain.usecase.post.getAllPosts.GetAllPostsResultError
 import com.yologger.domain.usecase.post.getAllPosts.GetAllPostsUseCase
@@ -18,8 +20,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+    private val getMeIdUseCase: GetMeIdUseCase,
     private val getAllPostsUseCase: GetAllPostsUseCase,
-    private val blockMemberUseCase: BlockMemberUseCase
+    private val blockMemberUseCase: BlockMemberUseCase,
 ) : BaseViewModel() {
 
     sealed class State {
@@ -54,6 +57,9 @@ class HomeViewModel @Inject constructor(
     private val _liveState = SingleLiveEvent<State>()
     val liveState = _liveState
 
+    private val _liveMeId: MutableLiveData<Long?> by lazy { MutableLiveData<Long?>().apply { value = null } }
+    val liveMeId: LiveData<Long?> get() = _liveMeId
+
     private val _liveIsLoading: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>().apply { value = false } }
     val liveIsLoading: LiveData<Boolean> get() = _liveIsLoading
 
@@ -62,7 +68,22 @@ class HomeViewModel @Inject constructor(
     val livePosts = _livePosts
 
     init {
+        loadMeId()
         loadData()
+    }
+
+    fun loadMeId() {
+        getMeIdUseCase.execute()
+            .subscribeBy {
+                when(it) {
+                    is GetMeIdResult.Success -> {
+                        _liveMeId.value = it.memberId
+                    }
+                    is GetMeIdResult.Failure -> {
+
+                    }
+                }
+            }.addTo(disposables)
     }
     
     fun loadData() {
