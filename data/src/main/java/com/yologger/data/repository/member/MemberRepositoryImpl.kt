@@ -34,6 +34,8 @@ import com.yologger.domain.usecase.member.fetchMemberInfo.FetchMemberInfoResultE
 import com.yologger.domain.usecase.member.getBlockingMembers.GetBlockingMembersResult
 import com.yologger.domain.usecase.member.getBlockingMembers.GetBlockingMembersResultData
 import com.yologger.domain.usecase.member.getBlockingMembers.GetBlockingMembersResultError
+import com.yologger.domain.usecase.member.getMeId.GetMeIdResult
+import com.yologger.domain.usecase.member.getMeId.GetMeIdResultError
 import com.yologger.domain.usecase.member.reportMember.ReportMemberResult
 import com.yologger.domain.usecase.member.reportMember.ReportMemberResultError
 import com.yologger.domain.usecase.member.unblockMember.UnblockMemberResult
@@ -322,6 +324,14 @@ class MemberRepositoryImpl @Inject constructor(
             }
         } ?: run {
             return DeleteAccountResult.Failure(DeleteAccountResultError.NO_SESSION)
+        }
+    }
+
+    override fun getMeId(): GetMeIdResult {
+        sessionStore.getSession()?.let { session ->
+            return GetMeIdResult.Success(memberId = session.memberId)
+        } ?: run {
+            return GetMeIdResult.Failure(GetMeIdResultError.NO_SESSION)
         }
     }
 }

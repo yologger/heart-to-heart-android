@@ -84,6 +84,12 @@ class HomeFragment : Fragment() {
     }
     
     private fun observeViewModel() {
+        viewModel.liveMeId.observe(viewLifecycleOwner) { meId ->
+            meId?.let { id ->
+                recyclerViewAdapter.setMeId(id)
+            }
+        }
+
         viewModel.liveState.observe(viewLifecycleOwner) {
             when(it) {
                 is HomeViewModel.State.GetPostsSuccess -> {}
