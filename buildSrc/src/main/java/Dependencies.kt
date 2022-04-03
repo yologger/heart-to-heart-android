@@ -21,6 +21,8 @@ object Dependencies {
     const val GLIDE_COMPILER = "com.github.bumptech.glide:compiler:${Versions.GLIDE}"
     const val SLIDER_GLIDE = "com.ouattararomuald:slider-glide:${Versions.SLIDER_GLIDE}"
     const val GUAVA = "com.google.guava:guava:${Versions.GUAVA}"
+    const val MARKWON = "io.noties.markwon:core:${Versions.MARKWON}"
+    const val CIRCLE_IMAGE_VIEW = "de.hdodenhof:circleimageview:${Versions.CIRCLE_IMAGE_VIEW}"
 }
 
 object TestDependencies {

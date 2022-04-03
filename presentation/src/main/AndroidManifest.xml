@@ -4,6 +4,15 @@
 
     <application android:theme="@style/AppTheme">
         <activity
+            android:name=".screen.auth.agreePolicy.showTerms.ShowTermsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".screen.auth.agreePolicy.showPolicy.ShowInformationPolicyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".screen.auth.agreePolicy.AgreePolicyActivity"
+            android:exported="false" />
+        <activity
             android:name=".screen.main.more.showMyPosts.ShowMyPostsActivity"
             android:exported="false" />
         <activity
