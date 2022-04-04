@@ -51,41 +51,71 @@ class PostsRVAdapter constructor(
                 binding.imageSlider.visibility = View.VISIBLE
                 binding.imageSlider.adapter = SliderAdapter(context = context, GlideImageLoaderFactory(), imageUrls = post.imageUrls!!)
             }
-            posts[adapterPosition]?.let { postData ->
-                meId?.let { id ->
-                    if (postData.writerId != id) {
-                        binding.viewUserInfo.setOnClickListener {
-                            onUserInfoClicked(postData.writerId)
-                        }
-                        binding.buttonMore.visibility = View.VISIBLE
-                        binding.buttonMore.setOnClickListener { view ->
-                            val popup = PopupMenu(context, view)
-                            val inflater: MenuInflater = popup.menuInflater
-                            inflater.inflate(R.menu.menu_fragment_home_popup, popup.menu)
-                            popup.setOnMenuItemClickListener {
-                                when(it.itemId) {
-                                    R.id.menu_fragment_home_popup_action_report -> {
-                                        posts[adapterPosition]?.let { postData ->
-                                            onReported(postData.writerId)
-                                        }
-                                        return@setOnMenuItemClickListener true
-                                    }
-                                    R.id.menu_fragment_home_popup_action_block -> {
-                                        posts[adapterPosition]?.let { postData ->
-                                            onBlocked(postData.writerId)
-                                        }
-                                        return@setOnMenuItemClickListener true
-                                    }
-                                    else -> return@setOnMenuItemClickListener false
-                                }
-                            }
-                            popup.show()
-                        }
-                    } else {
-                        binding.buttonMore.visibility = View.GONE
-                    }
+            binding.viewUserInfo.setOnClickListener {
+                posts[adapterPosition]?.let { postData ->
+                    onUserInfoClicked(postData.writerId)
                 }
             }
+
+            binding.buttonMore.setOnClickListener { view ->
+                val popup = PopupMenu(context, view)
+                val inflater: MenuInflater = popup.menuInflater
+                inflater.inflate(R.menu.menu_fragment_home_popup, popup.menu)
+                popup.setOnMenuItemClickListener {
+                    when(it.itemId) {
+                        R.id.menu_fragment_home_popup_action_report -> {
+                            posts[adapterPosition]?.let { postData ->
+                                onReported(postData.writerId)
+                            }
+                            return@setOnMenuItemClickListener true
+                        }
+                        R.id.menu_fragment_home_popup_action_block -> {
+                            posts[adapterPosition]?.let { postData ->
+                                onBlocked(postData.writerId)
+                            }
+                            return@setOnMenuItemClickListener true
+                        }
+                        else -> return@setOnMenuItemClickListener false
+                    }
+                }
+                popup.show()
+            }
+
+//            posts[adapterPosition]?.let { postData ->
+//                meId?.let { id ->
+//                    if (postData.writerId != id) {
+//                        binding.viewUserInfo.setOnClickListener {
+//                            onUserInfoClicked(postData.writerId)
+//                        }
+//                        binding.buttonMore.visibility = View.VISIBLE
+//                        binding.buttonMore.setOnClickListener { view ->
+//                            val popup = PopupMenu(context, view)
+//                            val inflater: MenuInflater = popup.menuInflater
+//                            inflater.inflate(R.menu.menu_fragment_home_popup, popup.menu)
+//                            popup.setOnMenuItemClickListener {
+//                                when(it.itemId) {
+//                                    R.id.menu_fragment_home_popup_action_report -> {
+//                                        posts[adapterPosition]?.let { postData ->
+//                                            onReported(postData.writerId)
+//                                        }
+//                                        return@setOnMenuItemClickListener true
+//                                    }
+//                                    R.id.menu_fragment_home_popup_action_block -> {
+//                                        posts[adapterPosition]?.let { postData ->
+//                                            onBlocked(postData.writerId)
+//                                        }
+//                                        return@setOnMenuItemClickListener true
+//                                    }
+//                                    else -> return@setOnMenuItemClickListener false
+//                                }
+//                            }
+//                            popup.show()
+//                        }
+//                    } else {
+//                        binding.buttonMore.visibility = View.GONE
+//                    }
+//                }
+//            }
         }
     }
 
