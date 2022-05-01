@@ -19,22 +19,22 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface AuthService {
-    @POST("/auth/emailVerificationCode")
+    @POST("auth/emailVerificationCode")
     fun emailVerificationCode(@Body request: EmailVerificationCodeRequest): Call<EmailVerificationCodeSuccessResponse>
 
-    @POST("/auth/confirmVerificationCode")
+    @POST("auth/confirmVerificationCode")
     fun confirmVerificationCode(@Body request: ConfirmVerificationCodeRequest): Call<ConfirmVerificationCodeSuccessResponse>
 
-    @POST("/auth/join")
+    @POST("auth/join")
     fun join(@Body request: JoinRequest): Call<JoinSuccessResponse>
 
-    @POST("/auth/login")
+    @POST("auth/login")
     fun login(@Body request: LoginRequest): Call<LoginSuccessResponse>
 
-    @GET("/auth/verifyAccessToken")
+    @GET("auth/verifyAccessToken")
     fun verifyAccessToken(@Header("Authorization") accessToken: String): Call<VerifyAccessTokenSuccessResponse>
 
-    @POST("/auth/reissueToken")
+    @POST("auth/reissueToken")
     fun reissueToken(@Body request: ReissueTokenRequest): Call<ReissueTokenSuccessResponse>
 
     @POST("/auth/logout")
