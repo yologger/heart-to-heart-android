@@ -17,29 +17,29 @@ import retrofit2.http.*
 
 interface MemberService {
     @Multipart
-    @POST("/member/uploadAvatar")
+    @POST("member/uploadAvatar")
     fun updateAvatar(
         @Part("member_id") memberId: RequestBody,
         @Part image: MultipartBody.Part
     ): Call<UpdateAvatarSuccessResponse>
 
-    @GET("/member/profile")
+    @GET("member/profile")
     fun getMemberProfile(
         @Query("member_id") memberId: Long
     ): Call<GetMemberProfileSuccessResponse>
 
-    @POST("/member/block")
+    @POST("member/block")
     fun blockMember(@Body request: BlockMemberRequest): Call<BlockMemberSuccessResponse>
 
-    @GET("/member/getBlockingMembers")
+    @GET("member/getBlockingMembers")
     fun getBlockingMembers(@Query("member_id") memberId: Long): Call<GetBlockingMembersSuccessResponse>
 
-    @POST("/member/unblock")
+    @POST("member/unblock")
     fun unblockMember(@Body request: UnblockMemberRequest): Call<UnblockMemberSuccessResponse>
 
-    @POST("/member/report")
+    @POST("member/report")
     fun report(@Body request: ReportMemberRequest): Call<ReportMemberSuccessResponse>
 
-    @DELETE("/member/delete/{id}")
+    @DELETE("member/delete/{id}")
     fun deleteAccount(@Path("id") id: Long): Call<DeleteAccountSuccessResponse>
 }

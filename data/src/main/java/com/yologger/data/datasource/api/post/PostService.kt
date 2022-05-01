@@ -11,27 +11,27 @@ import retrofit2.http.*
 interface PostService {
 
     @Multipart
-    @POST("/post/registerPost")
+    @POST("post/registerPost")
     fun registerPost(
         @Part("member_id") memberId: RequestBody,
         @Part("content") content: RequestBody,
         @Part images: List<MultipartBody.Part>?
     ): Call<RegisterPostSuccessResponse>
 
-    @GET("/post/posts")
+    @GET("post/posts")
     fun getAllPosts(
         @Query("member_id") memberId: Long,
         @Query("page") page: Int,
         @Query("size") size: Int
     ): Call<GetAllPostsSuccessResponse>
 
-    @GET("/post/posts/{id}")
+    @GET("post/posts/{id}")
     fun getPosts(
         @Path("id") id: Long,
         @Query("page") page: Int,
         @Query("size") size: Int
     ): Call<GetAllPostsSuccessResponse>
 
-    @DELETE("/post/delete/{id}")
+    @DELETE("post/delete/{id}")
     fun deletePost(@Path("id") id: Long): Call<DeletePostSuccessResponse>
 }
