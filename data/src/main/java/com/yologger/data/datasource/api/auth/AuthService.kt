@@ -37,6 +37,6 @@ interface AuthService {
     @POST("auth/reissueToken")
     fun reissueToken(@Body request: ReissueTokenRequest): Call<ReissueTokenSuccessResponse>
 
-    @POST("/auth/logout")
+    @POST("auth/logout")
     fun logout(@Header("Authorization") accessToken: String): Call<LogoutResponse>
 }
