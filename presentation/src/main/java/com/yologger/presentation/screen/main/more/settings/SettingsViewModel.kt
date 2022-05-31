@@ -51,6 +51,7 @@ class SettingsViewModel @Inject constructor(
                     is LogoutResult.SUCCESS -> _liveState.value = State.LOGOUT_SUCCESS
                     is LogoutResult.FAILURE -> {
                         when(it.error) {
+                            LogoutResultError.INVALID_ACCESS_TOKEN -> _liveState.value = State.LOGOUT_SUCCESS
                             LogoutResultError.NETWORK_ERROR -> _liveState.value = State.LOGOUT_FAILURE(LogoutError.NETWORK_ERROR)
                             LogoutResultError.CLIENT_ERROR -> _liveState.value = State.LOGOUT_FAILURE(LogoutError.CLIENT_ERROR)
                             else -> _liveState.value = State.LOGOUT_SUCCESS
