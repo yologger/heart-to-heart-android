@@ -1,10 +1,7 @@
 # Heart to Heart (Android)
 
 ## Introduction
-`Heart to Heart`는 Facebook, Instagram과 유사한 SNS 어플리케이션입니다.
-
-## Prerequisite
-`Heart to Heart`은 서버 환경 구성이 필요합니다. 서버 어플리케이션은 [이 곳](https://github.com/yologger/heart-to-heart-api)에서 확인할 수 있습니다.
+`Heart to Heart`는 Facebook, Instagram과 유사한 SNS 어플리케이션입니다. 이 앱은 서버 환경 구성이 필요하며, [이 곳](https://github.com/yologger/heart-to-heart-api)에서 다운받을 수 있습니다.
 
 ## Download
 `Heart to Heart`를 구글 플레이스토어에서 다운받을 수 있습니다.
@@ -29,9 +26,14 @@
 * Glide
 * Slider Glide
 * TedImagePicker
+* Truth
+* JUnit 4
+* Androidx Test
+* Mockito
+* MockWebServer
 
 ## 아키텍처
-* `Gradle 멀티모듈` 기반 `Layered Architectrue`
+* `Gradle 멀티 모듈` 기반 `Layered Architectrue`
 * `Clean Architecture`
 * `MVVM`
 
@@ -41,13 +43,6 @@
 
 ### 운영 환경
 <img src="/imgs/2.png">
-
-### 테스트 환경
-- Truth
-- JUnit 4
-- Androidx Test
-- Mockito
-- MockWebServer
 
 ## Todo
 - [x] 이메일 인증 기반 회원가입 구현
