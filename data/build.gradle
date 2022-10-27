@@ -22,5 +22,4 @@ dependencies {
     implementation Dependencies.RETROFIT_RXJAVA3_ADAPTER
 
     testImplementation 'com.squareup.retrofit2:retrofit-mock:2.9.0'
-    testImplementation TestDependencies.MOCK_WEB_SERVER
 }

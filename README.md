@@ -31,11 +31,11 @@
 - [x] 글 삭제 구현
 - [x] MVVM, Clean Architecture 적용
 - [x] `Gradle` 멀티 모듈을 통한 Layered Architecture 적용
-- [x] `GitHub Actions`, `Firebase App Distribution`을 통한 CI/CD 구축
-- [x] `GitHub Actions`, `Google Play Console`을 통한 구글 플레이스토어 배포 자동화 구축
+- [x] Staging 환경 - `GitHub Actions`, `Firebase App Distribution`을 통한 CI/CD 구축
+- [x] Production 환경 - `GitHub Actions`, `Google Play Console`을 통한 구글 플레이스토어 배포 자동화 구축
 
-### 테스트 환경
+### Staging 환경
 <img src="/imgs/1.png">
 
-### 운영 환경
+### Production 환경
 <img src="/imgs/2.png">
